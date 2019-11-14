@@ -1,10 +1,19 @@
-<div id="login">
-    <div class="container">
+<div id="login" (keydown.enter)="onKeyDown()">
+    <div class="container animated bounceInDown">
         <h1 class="title">
             Login
         </h1>
         <div>
-            <input type="text" placeholder="Email" />
+            <input [(ngModel)]="email" type="text" placeholder="Email" />
         </div>
+        <div>
+            <input [(ngModel)]="password" type="password" placeholder="Passwort" />
+        </div>
+        <div>
+            <button type="button" (click)="onLogin()">Weiter</button>
+        </div>
+        <p>
+            Du hast noch keinen Account? Klick <a>hier</a> und erstelle deinen Gratis-Account.
+        </p>
     </div>
 </div>
