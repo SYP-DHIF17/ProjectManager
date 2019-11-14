@@ -7,6 +7,8 @@ darkgray = #333
 gray = #555
 lightgray = #888
 
+font = 'Roboto'
+
 html, body
     display block
     width 100%
@@ -14,7 +16,15 @@ html, body
     overflow hidden
     padding 0
     margin 0
-    font-family 'Roboto'
+    font-family font
+
+input,
+textarea
+   font-family font
+
+input
+input:focus
+   outline none
 
 input[type="button"], button{
    outline:none;
@@ -28,3 +38,11 @@ input[type="button"]:focus,
 button:focus {
   opacity .8
 }
+
+a,
+a:hover
+   text-decoration none
+
+mat-sidenav-container
+   width: 100%;
+   height: 100%;

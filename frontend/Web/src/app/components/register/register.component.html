@@ -4,16 +4,19 @@
             Registrierung
         </h1>
         <div>
-            <input [(ngModel)]="email" type="text" placeholder="Email" />
+            <input [(ngModel)]="email" type="text" placeholder="Email" style="margin-top: 5px;" />
         </div>
         <div>
-            <input [(ngModel)]="password" type="password" placeholder="Passwort" />
+            <input [(ngModel)]="password_1" type="password" placeholder="Passwort" />
         </div>
         <div>
-            <button type="button" (click)="onLogin()">Weiter</button>
+            <input [(ngModel)]="password_2" type="password" placeholder="Passwort wiederholen" />
+        </div>
+        <div>
+            <button type="button" (click)="onRegister()">Weiter</button>
         </div>
         <p>
-            Du hast noch keinen Account? Klick <a>hier</a> und erstelle deinen Gratis-Account.
+            Du hast bereits keinen Account? Klick <a [routerLink]="[ '/login' ]">hier</a>, um dich einzuloggen.
         </p>
     </div>
     <div class="logo">
