@@ -7,9 +7,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  email: string;
+  password: string;
 
-  ngOnInit() {
+  constructor(){
+
   }
 
+  ngOnInit(): void{
+
+  }
+
+  onLogin(): void{
+    this.makeLoginRequest();
+  }
+
+  onKeyDown(): void{
+    this.makeLoginRequest();
+  }
+
+  private makeLoginRequest(): void{
+
+  }
 }
