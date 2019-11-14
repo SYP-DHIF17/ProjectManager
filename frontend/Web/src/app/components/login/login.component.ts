@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/providers/loader/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -7,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  email: string;
-  password: string;
+  email: string = '';
+  password: string = '';
 
-  constructor(){
+  constructor(private loader: LoaderService){
 
   }
 
@@ -27,6 +28,10 @@ export class LoginComponent implements OnInit {
   }
 
   private makeLoginRequest(): void{
+    if(this.email === '' || this.password === ''){
+      return;
+    }
 
+    this.loader.setVisible(true);
   }
 }
