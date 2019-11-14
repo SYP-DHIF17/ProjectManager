@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoaderService } from 'src/app/providers/loader/loader.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void{
-
+        
   }
 
   onLogin(): void{
