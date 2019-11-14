@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoaderService } from 'src/app/providers/loader/loader.service';
-import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-login',
