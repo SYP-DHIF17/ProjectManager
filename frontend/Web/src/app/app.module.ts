@@ -13,6 +13,7 @@ import { MatSidenavModule } from "@angular/material/sidenav"
 import { HttpClientModule } from "@angular/common/http";
 import { ManagementPanelComponent } from './components/managament-panel/management-panel/management-panel.component';
 import { SidebarComponent } from './components/managament-panel/sidebar/sidebar.component';
+import { HeaderComponent } from './components/managament-panel/header/header.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SidebarComponent } from './components/managament-panel/sidebar/sidebar.
     LoaderComponent,
     RegisterComponent,
     ManagementPanelComponent,
-    SidebarComponent
+    SidebarComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

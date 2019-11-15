@@ -1,0 +1,112 @@
+@import "../management-panel/management-panel.component.styl";
+@import "../../../../styles.styl";
+
+#header
+	height 130px
+	box-sizing border-box
+	padding 30px
+
+#inner-header
+	border-radius 8px
+	background: white
+	width: 100%;
+	height: 100%;
+	box-shadow shadow_container
+	display: flex
+	flex-direction: row
+	align-items: stretch
+	justify-content: space-between
+	
+	button
+		color: #9599A0 !important
+
+	&>div
+		height: 100%
+		line-height: 100%;
+	
+	.left-side, .right-side
+		display: flex
+		flex-direction: row
+		align-items: center
+		height: 100%
+
+		&>div
+			border-right: 1px solid #EDF4F5
+			border-left: 1px solid #EDF4F5
+
+	.button-field
+		height: 100%
+
+		button
+			cursor: pointer
+			transition: all 200ms
+			display: flex
+			align-items: center
+			justify-content: center
+			height: 100%
+			padding: 0 20px
+			box-sizing: border-box
+
+			img
+				height: 40px
+				width: 40px
+				margin-left: 15px
+
+			&:hover
+				background: rgba(#dadada, 0.8)
+
+	.left-side
+		&>div:first-child
+			border-left: none
+
+	.right-side
+		justify-content: right
+		width: auto
+
+		.button-field.flag
+			width: 70px
+			min-width: 0
+
+			i
+				font-size: 20px
+
+		&>div:last-child
+			border-right: none
+
+	.button-field
+		height: 100%
+		min-width: 100px
+
+		button 
+			width: 100%
+			height: 100%
+
+#new-project
+	height: 100%
+	font-size: 12px
+	
+	button 
+		font-family: font
+		font-weight bolder
+		display: flex
+		height: 100%;
+		align-items: center
+
+		#plus
+			background: linear-gradient(180deg, #4576E0 0%, #4576E0 0.01%, rgba(81, 132, 234, 0.614583) 99.99%, #659AFA 100%);
+			height: 40px
+			width: 40px
+			border-radius: 20px
+			line-height: 40px
+			color: white
+			margin-right 15px
+			font-size: 12px
+			box-shadow: shadow_icon
+
+			&:focus
+				opacity: 1
+
+			i 
+				font-size: 15px
+				height: 40px
+				width: 40px
