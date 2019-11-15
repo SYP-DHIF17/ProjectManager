@@ -11,13 +11,17 @@ import { RegisterComponent } from './components/register/register.component';
 import { MatSidenavModule } from "@angular/material/sidenav"
 
 import { HttpClientModule } from "@angular/common/http";
+import { ManagementPanelComponent } from './components/managament-panel/management-panel/management-panel.component';
+import { SidebarComponent } from './components/managament-panel/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LoaderComponent,
-    RegisterComponent
+    RegisterComponent,
+    ManagementPanelComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
