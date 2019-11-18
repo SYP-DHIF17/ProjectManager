@@ -17,11 +17,12 @@
             <div class="button-field flag">
                 <button>
                     <i class="fas fa-flag"></i>
+                    <span *ngIf="amountUnseenMessages > 0">{{ amountUnseenMessages }}</span>
                 </button>
             </div>
             <div class="button-field">
                 <button>
-                    username
+                    Max Mustermann
                     <img src="../../../../assets/test-user.png" alt="user" />
                 </button>
             </div>

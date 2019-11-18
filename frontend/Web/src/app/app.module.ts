@@ -13,7 +13,8 @@ import { MatSidenavModule } from "@angular/material/sidenav"
 import { HttpClientModule } from "@angular/common/http";
 import { ManagementPanelComponent } from './components/managament-panel/management-panel/management-panel.component';
 import { SidebarComponent } from './components/managament-panel/sidebar/sidebar.component';
-import { HeaderComponent } from './components/managament-panel/header/header.component';
+import { HeaderComponent } from './components/managament-panel/dashboard/header/header.component';
+import { DashboardComponent } from './components/managament-panel/dashboard/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HeaderComponent } from './components/managament-panel/header/header.com
     RegisterComponent,
     ManagementPanelComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

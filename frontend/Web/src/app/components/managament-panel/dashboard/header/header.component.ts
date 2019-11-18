@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  amountUnseenMessages: number = 2;
 
-  ngOnInit() {
+  constructor(){
+
+  }
+
+  ngOnInit(): void{
+
   }
 
 }
