@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { APIUrls } from './other/apiurls';
 import { StorageService } from './providers/storage/storage.service';
 import { User } from './models/user';
-import { LoggedInUser } from './models/logged-in-user';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +17,7 @@ export class HttpService {
 
   private get(path: string, headers: HttpHeaders): Observable<any>{
     if(!headers){
-      let user :LoggedInUser = <LoggedInUser>this.storage.getObject('USER');
-      headers = new HttpHeaders();
-      headers.append('Content-Type', 'application/json');
-      headers.append('authentication', user.token);
+      
     }
 
     return this.http.get(path, { headers: headers });
@@ -29,10 +25,7 @@ export class HttpService {
 
   private post(path: string, body: object, headers: HttpHeaders = null): Observable<any>{
     if(!headers){
-      let user :LoggedInUser = <LoggedInUser>this.storage.getObject('USER');
-      headers = new HttpHeaders();
-      headers.append('Content-Type', 'application/json');
-      headers.append('authentication', user.token);
+      
     }
 
     return this.http.post(path, body, { headers: headers });
