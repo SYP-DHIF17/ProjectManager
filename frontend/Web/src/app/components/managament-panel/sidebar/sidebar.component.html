@@ -1,52 +1,64 @@
 <div id="sidebar">
     <div class="logo"></div>
     <div class="nav">
-        <div class="dashboard icon icon-active">
-            <i class="fas fa-tachometer-alt"></i>
-        </div>
-        <h3>
-            Navigation
-        </h3>
+        <a [routerLink]="['/panel']">
+            <div class="dashboard icon icon-active">
+                <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <h3>
+                Navigation
+            </h3>
+        </a>
         <ul>
             <li class="icon">
-                <div>
-                    <i class="fas fa-clipboard-list"></i>
-                </div>
-                <span>
-                    Projekte
-                </span>
+                <a [routerLink]="['/projects']">
+                    <div>
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <span>
+                        Projekte
+                    </span>
+                </a>
             </li>
             <li class="icon" (click)="test($event)">
-                <div>
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <span>
-                    Aufgaben
-                </span>
+                <a [routerLink]="['/tasks']">
+                    <div>
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <span>
+                        Aufgaben
+                    </span>
+                </a>
             </li>
             <li class="icon">
-                <div>
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <span>
-                    Kalendar
-                </span>
+                <a [routerLink]="['/calendar']">
+                    <div>
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <span>
+                        Kalendar
+                    </span>
+                </a>
             </li>
             <li class="icon">
-                <div>
-                    <i class="fas fa-ticket-alt"></i>
-                </div>
-                <span>
-                    Tickets
-                </span>
+                <a [routerLink]="['/tickets']">
+                    <div>
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <span>
+                        Tickets
+                    </span>
+                </a>
             </li>
             <li class="icon">
-                <div>
-                    <i class="fas fa-user-friends"></i>
-                </div>
-                <span>
-                    Teams
-                </span>
+                <a [routerLink]="['/teams']">
+                    <div>
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <span>
+                        Teams
+                    </span>
+                </a>
             </li>
         </ul>
     </div>
