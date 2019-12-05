@@ -8,7 +8,6 @@ import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderComponent } from './components/loader/loader.component';
 import { RegisterComponent } from './components/register/register.component';
-import { MatSidenavModule } from "@angular/material/sidenav"
 
 import { HttpClientModule } from "@angular/common/http";
 import { ManagementPanelComponent } from './components/managament-panel/management-panel/management-panel.component';
@@ -33,7 +32,6 @@ import { DashboardComponent } from './components/managament-panel/dashboard/dash
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSidenavModule,
     HttpClientModule
   ],
   providers: [],
