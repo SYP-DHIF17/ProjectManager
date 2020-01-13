@@ -1,0 +1,61 @@
+@import "animate.styl"
+
+primary_dark = #4576E0
+primary_light = #659AFA
+secondary_dark = #EDF4F5
+secondary_light = #F3F8FE
+darkgray = #333
+gray = rgba(49, 60, 77, .8)
+lightgray = #cbced9
+
+seperation_border = #EDF4F5
+
+shadow_icon = 0px 0px 5px rgba(34, 34, 34, 0.35)
+
+font = 'Quicksand', sans-serif
+
+html, body
+    display block
+    width 100%
+    height 100%
+    overflow hidden
+    padding 0
+    margin 0
+    font-family font
+
+input,
+textarea
+   font-family font
+
+input
+input:focus
+   outline none
+
+input[type="button"], button{
+   outline:none;
+}
+input[type="button"]::-moz-focus-inner,
+button::-moz-focus-inner {
+   border: 0;
+}
+
+input[type="button"]:focus,
+button:focus {
+  opacity .85
+}
+
+button, textarea
+	outline: none
+	border: none
+	background: transparent
+
+a,
+a:hover
+   text-decoration none
+
+ul,
+li
+  padding 0
+  margin 0
+  list-style none
+  

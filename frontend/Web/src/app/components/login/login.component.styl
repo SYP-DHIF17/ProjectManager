@@ -1,0 +1,114 @@
+@import "../../../styles.styl"
+
+#login
+    width 100%
+    height 100%
+    background primary_dark
+    display flex
+    justify-content center
+    align-content center
+    align-items center
+
+    .container
+        width 440px
+        height auto
+        padding 20px
+        background white
+        display flex
+        flex-direction column
+        border-radius 14px
+        justify-content center
+        box-shadow 0px 0px 25px rgba(0, 0, 0, 0.25)
+
+        .title
+            display block
+            width 100%
+            text-align center
+            color gray
+            padding 15px 0px
+            margin 0px
+            font-weight 500
+            text-transform uppercase
+
+        div
+            width 85%
+            padding-top 10px
+            text-align center
+            margin 0 auto
+            margin-bottom 20px
+
+            input
+                width 250px
+                border none
+                margin 0 auto
+                text-align left
+                border-bottom solid 1px lightgray
+                padding 10px 20px
+                font-size 18px
+                color gray
+                font-weight normal
+                transition all 200ms
+
+                &::placeholder
+                    font-weight 300
+
+                &:focus::placeholder
+                    color primary_dark
+
+                &:focus
+                    color primary_dark
+                    border-color primary_dark
+
+            button
+                width 300px
+                background primary_dark
+                padding 10px 20px
+                border none
+                color white
+                border-radius 8px
+                text-transform uppercase
+                font-size 18px
+                margin-top: 20px
+                cursor pointer
+                transition all 300ms
+
+                &:hover
+                    opacity .9
+
+    p
+        color gray
+        width 300px
+        margin 0 auto
+        margin-top 10px
+        text-align center
+        line-height 20px
+        font-size 14px
+        padding-bottom 10px
+
+        a
+            color primary_dark
+            font-weight 600
+            cursor pointer
+            transition all 200ms
+
+            &:hover
+                opacity 0.7
+
+    .logo
+        img
+            width 120px
+            height auto
+            position absolute
+            top -10px
+            left 0px
+
+    .copyright
+        span
+            display block
+            position absolute
+            bottom 30px
+            left 0px
+            width 100%
+            text-align center
+            color white
+            font-size: 14px
