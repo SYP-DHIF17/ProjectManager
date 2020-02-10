@@ -4,3 +4,43 @@
     h5
         padding 10px 0px
         text-align center
+
+    .details
+        width 100%
+        height auto
+        display flex
+        flex-direction column
+        padding-top 15px
+
+        .details-inner
+            width 100%
+            height auto
+            padding 5px 0px
+            flex-direction row
+            display flex
+            justify-content space-between
+            align-items flex-start
+            align-content flex-start
+
+            .left
+                width 60%
+                color gray
+                font-weight 600
+
+            .right
+                width 40%
+
+                section
+                    color gray
+                    font-weight 500
+
+                a
+                    color primary_dark
+                    transition all 200ms
+                    cursor pointer
+                    font-weight 600
+                    display block 
+                    padding-top 10px
+
+                    &:hover
+                        opacity .8

@@ -15,6 +15,7 @@ import { SidebarComponent } from './components/management-panel/sidebar/sidebar.
 import { HeaderComponent } from './components/management-panel/dashboard/header/header.component';
 import { DashboardComponent } from './components/management-panel/dashboard/dashboard/dashboard.component';
 import { VersionComponent } from './components/management-panel/dashboard/version/version.component';
+import { TicketsComponent } from './components/management-panel/dashboard/tickets/tickets.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { VersionComponent } from './components/management-panel/dashboard/versio
     SidebarComponent,
     HeaderComponent,
     DashboardComponent,
-    VersionComponent
+    VersionComponent,
+    TicketsComponent
   ],
   imports: [
     BrowserModule,
