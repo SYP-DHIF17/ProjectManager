@@ -13,7 +13,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^9.0.2",
-    "@angular/cdk": "^8.1.4",
+    "@angular/cdk": "^8.2.3",
     "@angular/common": "~9.0.2",
     "@angular/compiler": "~9.0.2",
     "@angular/core": "~9.0.2",
@@ -23,7 +23,7 @@
     "@angular/router": "~9.0.2",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.5.4",
-    "tslib": "^1.10.0",
+    "tslib": "^1.11.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -32,7 +32,7 @@
     "@angular/compiler-cli": "~9.0.2",
     "@angular/language-service": "~9.0.2",
     "@types/jasmine": "~3.3.8",
-    "@types/jasminewd2": "~2.0.3",
+    "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.4.0",
@@ -41,8 +41,8 @@
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
-    "karma-jasmine-html-reporter": "^1.4.0",
-    "protractor": "~5.4.0",
+    "karma-jasmine-html-reporter": "^1.5.2",
+    "protractor": "^5.4.3",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.7.5"
