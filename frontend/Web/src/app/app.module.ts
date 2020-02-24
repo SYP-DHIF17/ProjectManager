@@ -10,10 +10,12 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { RegisterComponent } from './components/register/register.component';
 
 import { HttpClientModule } from "@angular/common/http";
-import { ManagementPanelComponent } from './components/managament-panel/management-panel/management-panel.component';
-import { SidebarComponent } from './components/managament-panel/sidebar/sidebar.component';
-import { HeaderComponent } from './components/managament-panel/dashboard/header/header.component';
-import { DashboardComponent } from './components/managament-panel/dashboard/dashboard/dashboard.component';
+import { ManagementPanelComponent } from './components/management-panel/management-panel/management-panel.component';
+import { SidebarComponent } from './components/management-panel/sidebar/sidebar.component';
+import { HeaderComponent } from './components/management-panel/dashboard/header/header.component';
+import { DashboardComponent } from './components/management-panel/dashboard/dashboard/dashboard.component';
+import { VersionComponent } from './components/management-panel/dashboard/version/version.component';
+import { TicketsComponent } from './components/management-panel/dashboard/tickets/tickets.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { DashboardComponent } from './components/managament-panel/dashboard/dash
     ManagementPanelComponent,
     SidebarComponent,
     HeaderComponent,
-    DashboardComponent
+    DashboardComponent,
+    VersionComponent,
+    TicketsComponent
   ],
   imports: [
     BrowserModule,
