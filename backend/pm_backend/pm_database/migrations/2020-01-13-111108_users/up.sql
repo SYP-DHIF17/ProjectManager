@@ -10,5 +10,9 @@ CREATE TABLE users
 
     email      VARCHAR(100) NOT NULL UNIQUE,
     password   VARCHAR(122) NOT NULL,      --hashed
-    is_active  BOOLEAN      NOT NULL
+    is_active  BOOLEAN      NOT NULL,
+
+    birthdate DATE NOT NULL,
+
+    left_on   DATE
 );

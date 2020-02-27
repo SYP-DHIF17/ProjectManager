@@ -1,4 +1,10 @@
 table! {
+    customers (customer_id) {
+        customer_id -> Uuid,
+    }
+}
+
+table! {
     milestones (id) {
         id -> Uuid,
         created_on -> Timestamp,
@@ -19,12 +25,16 @@ table! {
         email -> Varchar,
         password -> Varchar,
         is_active -> Bool,
+        birthdate -> Date,
+        left_on -> Nullable<Date>,
     }
 }
 
+joinable!(customers -> users (customer_id));
 joinable!(milestones -> users (created_by));
 
 allow_tables_to_appear_in_same_query!(
+    customers,
     milestones,
     users,
 );
