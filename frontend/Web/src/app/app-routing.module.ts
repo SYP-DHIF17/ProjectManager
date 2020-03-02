@@ -6,11 +6,11 @@ import { ManagementPanelComponent } from './components/management-panel/manageme
 import { DashboardComponent } from './components/management-panel/dashboard/dashboard/dashboard.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '',
+  //   redirectTo: '/login',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'login',
     component: LoginComponent
@@ -20,14 +20,14 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'panel',
+    path: '',
     component: ManagementPanelComponent,
     children: [
       {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
-      },  
+      },
       {
         path: 'dashboard',
         component: DashboardComponent

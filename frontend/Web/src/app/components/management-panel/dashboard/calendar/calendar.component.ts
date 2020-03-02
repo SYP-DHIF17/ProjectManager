@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+
+export type CalendarSize = "small" | "large";
 
 @Component({
   selector: 'app-calendar',
@@ -9,18 +11,33 @@ export class CalendarComponent implements OnInit, OnDestroy {
   time: Date;
   timeUpdate: any;
 
-  constructor(){
+  @Input()
+  size: CalendarSize
+
+  constructor() {
 
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.time = new Date();
     this.timeUpdate = setInterval((): void => {
       this.time = new Date();
-    }, 1000);
+    }, 900);
   }
 
   ngOnDestroy(): void {
     clearInterval(this.timeUpdate);
+  }
+
+  getCurrentDay(): string {
+    return this.time.toLocaleDateString("de-DE", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour12: false,
+      hour: "numeric",
+      minute: "numeric"
+    });
   }
 }
