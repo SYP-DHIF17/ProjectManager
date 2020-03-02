@@ -1,9 +1,9 @@
 -- Your SQL goes here
 CREATE TABLE users
 (
-    id         UUID         NOT NULL PRIMARY KEY,
+    user_id         UUID         NOT NULL PRIMARY KEY,
     created_on TIMESTAMP    NOT NULL,
-    created_by UUID REFERENCES users (id), -- Can be null!
+    created_by UUID REFERENCES users (user_id), -- Can be null!
 
     firstname  VARCHAR(100) NOT NULL,
     lastname   VARCHAR(100) NOT NULL,

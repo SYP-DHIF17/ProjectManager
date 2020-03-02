@@ -1,6 +1,7 @@
 table! {
     customers (customer_id) {
         customer_id -> Uuid,
+        company -> Varchar,
     }
 }
 
