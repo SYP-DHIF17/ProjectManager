@@ -16,6 +16,7 @@ import { HeaderComponent } from './components/management-panel/dashboard/header/
 import { DashboardComponent } from './components/management-panel/dashboard/dashboard/dashboard.component';
 import { VersionComponent } from './components/management-panel/dashboard/version/version.component';
 import { TicketsComponent } from './components/management-panel/dashboard/tickets/tickets.component';
+import { CalendarComponent } from './components/management-panel/dashboard/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { TicketsComponent } from './components/management-panel/dashboard/ticket
     HeaderComponent,
     DashboardComponent,
     VersionComponent,
-    TicketsComponent
+    TicketsComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
