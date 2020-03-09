@@ -1,10 +1,10 @@
-use crate::schema::users;
+use crate::schema::{users, employees, customers};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 use diesel::*;
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, AsChangeset, Clone)]
+#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, Clone)]
 #[table_name = "users"]
 #[primary_key(user_id)]
 pub struct User {
@@ -24,7 +24,7 @@ pub struct User {
 }
 
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, AsChangeset, Clone)]
+#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, Clone)]
 #[table_name = "customers"]
 #[primary_key(customer_id)]
 pub struct Customer {
@@ -33,11 +33,10 @@ pub struct Customer {
     pub company: String,
 }
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, AsChangeset, Clone)]
+#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, Clone)]
 #[table_name = "employees"]
 #[primary_key(employee_id)]
 pub struct Employee {
     #[serde(rename = "employeeID")]
     pub employee_id: Uuid,
-
 }
