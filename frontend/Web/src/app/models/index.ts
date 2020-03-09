@@ -10,3 +10,4 @@ export * from "./ticket/ticket";
 export * from "./todo/todo";
 export * from "./user/user";
 export * from "./workpackage/workpackage";
+export * from "./event/event";

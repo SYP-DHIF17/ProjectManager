@@ -1,6 +1,5 @@
 export interface User {
   readonly userId: string;
-  readonly createdOn: Date;
   readonly createdBy: string;
   firstname: string;
   lastname: string;
