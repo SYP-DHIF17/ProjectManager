@@ -1,20 +1,19 @@
 -- Your SQL goes here
 CREATE TABLE users
 (
-    user_id         UUID         NOT NULL PRIMARY KEY,
+    user_id    UUID         NOT NULL PRIMARY KEY,
     created_on TIMESTAMP    NOT NULL,
-    created_by UUID REFERENCES users (user_id), -- Can be null!
 
     firstname  VARCHAR(100) NOT NULL,
     lastname   VARCHAR(100) NOT NULL,
 
     email      VARCHAR(100) NOT NULL UNIQUE,
-    password   VARCHAR(122) NOT NULL,      --hashed
+    password   VARCHAR(122) NOT NULL, --hashed
     is_active  BOOLEAN      NOT NULL,
 
-    birthdate DATE NOT NULL,
+    birthdate  DATE         NOT NULL,
 
-    left_on   DATE
+    left_on    DATE
 );
 
 -- Your SQL goes here
@@ -32,9 +31,9 @@ CREATE TABLE employees
 CREATE TABLE todos
 (
     todo_id     UUID PRIMARY KEY,
-    created_on  date                          NOT NULL,
-    title       VARCHAR(100)                  NOT NULL,
-    description VARCHAR(100)                  NOT NULL,
+    created_on  date                                    NOT NULL,
+    title       VARCHAR(100)                            NOT NULL,
+    description VARCHAR(100)                            NOT NULL,
     employee_id UUID REFERENCES employees (employee_id) NOT NULL
 );
 

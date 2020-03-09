@@ -91,7 +91,6 @@ table! {
     users (user_id) {
         user_id -> Uuid,
         created_on -> Timestamp,
-        created_by -> Nullable<Uuid>,
         firstname -> Varchar,
         lastname -> Varchar,
         email -> Varchar,
