@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoaderService } from 'src/app/providers/loader/loader.service';
+import { LoaderService } from '@providers';
 
 @Component({
   selector: 'app-login',
@@ -11,24 +11,24 @@ export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(private loader: LoaderService){
+  constructor(private loader: LoaderService) {
 
   }
 
-  ngOnInit(): void{
-        
+  ngOnInit(): void {
+
   }
 
-  onLogin(): void{
+  onLogin(): void {
     this.makeLoginRequest();
   }
 
-  onKeyDown(): void{
+  onKeyDown(): void {
     this.makeLoginRequest();
   }
 
-  private makeLoginRequest(): void{
-    if(this.email === '' || this.password === ''){
+  private makeLoginRequest(): void {
+    if (this.email === '' || this.password === '') {
       return;
     }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ticket } from 'src/app/models/ticket';
+import { Ticket } from '@models';
 
 @Component({
   selector: 'app-tickets',
@@ -14,11 +14,11 @@ export class TicketsComponent implements OnInit {
     new Ticket(null, 'Neue ABGs, muss noch online eingeführt werden')
   ];
 
-  constructor(){
+  constructor() {
 
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
 
   }
 
