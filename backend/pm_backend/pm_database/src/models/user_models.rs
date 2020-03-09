@@ -22,3 +22,22 @@ pub struct User {
     #[serde(rename = "leftOn")]
     pub left_on: Option<chrono::NaiveDate>,
 }
+
+
+#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, AsChangeset, Clone)]
+#[table_name = "customers"]
+#[primary_key(customer_id)]
+pub struct Customer {
+    #[serde(rename = "customerID")]
+    pub customer_id: Uuid,
+    pub company: String,
+}
+
+#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, AsChangeset, Clone)]
+#[table_name = "employees"]
+#[primary_key(employee_id)]
+pub struct Employee {
+    #[serde(rename = "employeeID")]
+    pub employee_id: Uuid,
+
+}
