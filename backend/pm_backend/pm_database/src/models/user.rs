@@ -2,15 +2,10 @@ use crate::schema::{users, employees, customers};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use diesel::*;
-
-#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, Clone)]
-#[table_name = "users"]
-#[primary_key(user_id)]
+#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct User {
     #[serde(rename = "userID")]
-    pub user_id: Uuid,
-    #[serde(rename = "createdOn")]
+    pub user_id: Uuid, #[serde(rename = "createdOn")]
     pub created_on: chrono::NaiveDateTime,
     pub firstname: String,
     pub lastname: String,
@@ -24,19 +19,15 @@ pub struct User {
 }
 
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, Clone)]
-#[table_name = "customers"]
-#[primary_key(customer_id)]
+#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct Customer {
     #[serde(rename = "customerID")]
-    pub customer_id: Uuid,
+    pub user_id: Uuid,
     pub company: String,
 }
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, Clone)]
-#[table_name = "employees"]
-#[primary_key(employee_id)]
+#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct Employee {
     #[serde(rename = "employeeID")]
-    pub employee_id: Uuid,
+    pub user_id: Uuid,
 }

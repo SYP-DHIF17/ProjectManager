@@ -1,12 +1,8 @@
-use crate::schema::{users, employees, customers};
+use crate::schema::{users, employees, customers, todos};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use diesel::*;
-
-#[derive(Identifiable, Queryable, PartialEq, Debug, Insertable, Serialize, Deserialize, Associations, Clone)]
-#[table_name = "todos"]
-#[primary_key(todo_id)]
+#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct Todo {
     #[serde(rename = "todoID")]
     pub todo_id: Uuid,

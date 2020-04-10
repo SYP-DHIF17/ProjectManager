@@ -1,13 +1,13 @@
 table! {
-    customers (customer_id) {
-        customer_id -> Uuid,
+    customers (user_id) {
+        user_id -> Uuid,
         company -> Varchar,
     }
 }
 
 table! {
-    employees (employee_id) {
-        employee_id -> Uuid,
+    employees (user_id) {
+        user_id -> Uuid,
     }
 }
 
@@ -45,9 +45,9 @@ table! {
 }
 
 table! {
-    teammembers (team_id, employee_id) {
+    teammembers (team_id, user_id) {
         team_id -> Uuid,
-        employee_id -> Uuid,
+        user_id -> Uuid,
     }
 }
 
@@ -83,7 +83,7 @@ table! {
         created_on -> Date,
         title -> Varchar,
         description -> Varchar,
-        employee_id -> Uuid,
+        user_id -> Uuid,
     }
 }
 
@@ -111,18 +111,18 @@ table! {
     }
 }
 
-joinable!(customers -> users (customer_id));
-joinable!(employees -> users (employee_id));
+joinable!(customers -> users (user_id));
+joinable!(employees -> users (user_id));
 joinable!(milestones -> project_parts (project_part_id));
 joinable!(milestones -> users (created_by));
 joinable!(project_parts -> projects (project_id));
-joinable!(teammembers -> employees (employee_id));
+joinable!(teammembers -> employees (user_id));
 joinable!(teammembers -> teams (team_id));
 joinable!(teamtasks -> project_parts (project_part_id));
 joinable!(teamtasks -> teams (team_id));
 joinable!(tickets -> users (user_id));
 joinable!(tickets -> workpackages (workpackage_id));
-joinable!(todos -> employees (employee_id));
+joinable!(todos -> employees (user_id));
 
 allow_tables_to_appear_in_same_query!(
     customers,
