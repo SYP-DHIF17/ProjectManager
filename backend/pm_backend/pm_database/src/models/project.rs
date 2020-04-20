@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
+use tokio_pg_mapper_derive::PostgresMapper;
 use uuid::Uuid;
 
-#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
+#[pg_mapper(table = "projects")]
 pub struct Project {
 
     #[serde(rename = "projectID")]
@@ -29,7 +31,8 @@ pub struct Project {
     pub creator: Uuid,
 }
 
-#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
+#[pg_mapper(table = "project_parts")]
 pub struct ProjectPart {
     #[serde(rename = "projectPartID")]
     pub project_part_id: Uuid,
@@ -38,7 +41,8 @@ pub struct ProjectPart {
     pub project_id: Uuid,
 }
 
-#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
+#[pg_mapper(table = "teamtasks")]
 pub struct TeamTask{
     #[serde(rename = "projectPartID")]
     pub project_part_id: Uuid,

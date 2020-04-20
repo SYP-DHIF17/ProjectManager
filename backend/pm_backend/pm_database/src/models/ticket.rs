@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
+use tokio_pg_mapper_derive::PostgresMapper;
 use uuid::Uuid;
 
-#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
+#[pg_mapper(table = "tickets")]
 pub struct Ticket {
     #[serde(rename = "ticketID")]
     pub ticket_id: Uuid,

@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
+use tokio_pg_mapper_derive::PostgresMapper;
 use uuid::Uuid;
 
-#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
+#[pg_mapper(table = "users")]
 pub struct User {
     #[serde(rename = "userID")]
     pub user_id: Uuid, #[serde(rename = "createdOn")]
@@ -18,14 +20,16 @@ pub struct User {
 }
 
 
-#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
+#[pg_mapper(table = "customers")]
 pub struct Customer {
     #[serde(rename = "customerID")]
     pub customer_id: Uuid,
     pub company: String,
 }
 
-#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
+#[pg_mapper(table = "employees")]
 pub struct Employee {
     #[serde(rename = "employeeID")]
     pub employee_id: Uuid,
