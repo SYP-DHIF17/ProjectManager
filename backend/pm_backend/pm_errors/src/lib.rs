@@ -1,7 +1,10 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+use derive_more::{Display, From};
+
+mod error_response;
+mod error_conversion;
+
+#[derive(Debug, Display, From)]
+pub enum APIError {
+    #[display(fmt = "Internal Server Error")]
+    InternalServerError,
 }
