@@ -1,8 +1,7 @@
-use crate::schema::{users, employees, customers};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct User {
     #[serde(rename = "userID")]
     pub user_id: Uuid, #[serde(rename = "createdOn")]
@@ -19,15 +18,15 @@ pub struct User {
 }
 
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct Customer {
     #[serde(rename = "customerID")]
-    pub user_id: Uuid,
+    pub customer_id: Uuid,
     pub company: String,
 }
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct Employee {
     #[serde(rename = "employeeID")]
-    pub user_id: Uuid,
+    pub employee_id: Uuid,
 }

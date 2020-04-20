@@ -1,7 +1,7 @@
-use crate::schema::{users, employees, customers};
 use serde::{Deserialize, Serialize};
+use uuid::Uuid;
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct Team {
     #[serde(rename = "teamID")]
     pub team_id: Uuid,
@@ -10,7 +10,7 @@ pub struct Team {
 
 
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct Teammember {
     #[serde(rename = "teamID")]
     pub team_id: Uuid, // ToDo REFERENCES teams (team_id),

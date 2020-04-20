@@ -1,8 +1,7 @@
-use crate::schema::{users, employees, customers, todos};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Identifiable, Queryable, PartialEq, Debug, Serialize, Deserialize, Clone)]
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct Todo {
     #[serde(rename = "todoID")]
     pub todo_id: Uuid,
@@ -15,5 +14,4 @@ pub struct Todo {
     
     #[serde(rename = "employeeID")]
     pub employee_id: Uuid // ToDo: REFERENCES employees (employee_id)
-    
 }
