@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 pm_errors = { path="../pm_errors" }
+pm_debug = { path="../pm_debug" }
 
 actix-rt = "1.0.0"
 actix-web = { version="2.0.0", features=["openssl"] }

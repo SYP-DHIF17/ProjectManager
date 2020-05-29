@@ -5,6 +5,7 @@ members = [
     "pm_database",
     "pm_errors",
     "pm_testing",
+    "pm_debug",
 ]
 
 [profile.release]
