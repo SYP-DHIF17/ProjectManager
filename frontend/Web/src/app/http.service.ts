@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { APIUrls } from './other/apiurls';
+import URLS from '@shared/URLS';
 import { StorageService } from './providers/storage/storage.service';
-import { User } from './models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +10,21 @@ import { User } from './models/user';
 export class HttpService {
 
   constructor(private http: HttpClient,
-              private storage :StorageService){
-    
+    private storage: StorageService) {
+
   }
 
-  private get(path: string, headers: HttpHeaders): Observable<any>{
-    if(!headers){
-      
+  private get(path: string, headers: HttpHeaders): Observable<any> {
+    if (!headers) {
+
     }
 
     return this.http.get(path, { headers: headers });
   }
 
-  private post(path: string, body: object, headers: HttpHeaders = null): Observable<any>{
-    if(!headers){
-      
+  private post(path: string, body: object, headers: HttpHeaders = null): Observable<any> {
+    if (!headers) {
+
     }
 
     return this.http.post(path, body, { headers: headers });
@@ -35,7 +34,7 @@ export class HttpService {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 
-    return this.post(APIUrls.USER.LOGIN, {
+    return this.post(URLS.USER.LOGIN, {
       email,
       password
     }, headers);
@@ -45,7 +44,7 @@ export class HttpService {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 
-    return this.post(APIUrls.USER.REGISTER, {
+    return this.post(URLS.USER.REGISTER, {
       email,
       password
     }, headers)
