@@ -17,6 +17,8 @@ pub async fn login<'a>(
     pool: web::Data<Pool>,              //data of web server
 ) -> Result<HttpResponse, APIError> {
     let client: Client = get_db_client(pool).await?; // connection to db
+
+    println!("hello");
     let data: (Uuid, String) = query_one_map(
         &client,
         include_str!("../../../../sql/queries/retrieve_queries/get_user_for_id.sql"),
@@ -25,6 +27,8 @@ pub async fn login<'a>(
         |row| Ok((row.get::<_, Uuid>("id"), row.get::<_, String>("hash"))),
     )
     .await?;
+
+    println!("hello 2");
 
     let (user_id, hash) = data;
 

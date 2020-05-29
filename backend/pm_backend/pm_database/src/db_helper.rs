@@ -26,7 +26,15 @@ pub async fn query_one_map<T>(
     error: APIError,
     mapper: fn(&tokio_postgres::Row) -> Result<T, APIError>,
 ) -> Result<T, APIError> {
-    let stmt = client.prepare(&statement).await?;
+    let stmt = client.prepare(&statement).await;
+
+    let stmt = match stmt {
+        Ok(val) => Ok(val),
+        Err(err) => {
+            println!("{:?}", err);
+            Err(err)
+        }
+    }?;
 
     //Get one row, if there's none, return with error
     let row = client.query_one(&stmt, params).await.map_err(|_| error)?;
