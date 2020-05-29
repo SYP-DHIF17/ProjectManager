@@ -19,13 +19,15 @@ pub async fn query_one<T: FromTokioPostgresRow>(
     Ok(T::from_row(row)?)
 }
 
-pub async fn query_one_map<T>(
+pub async fn query_one_map<T, M>(
     client: &Client,
     statement: &str,
     params: &[&(dyn ToSql + Sync)],
     error: APIError,
-    mapper: fn(&tokio_postgres::Row) -> Result<T, APIError>,
-) -> Result<T, APIError> {
+    mapper: M,
+) -> Result<T, APIError> 
+    where M: Fn(&tokio_postgres::Row) -> Result<T, APIError>
+{
     let stmt = client.prepare(&statement).await?;
 
     //Get one row, if there's none, return with error
@@ -60,12 +62,14 @@ pub async fn query_multiple<T: FromTokioPostgresRow>(
         .collect::<Vec<T>>())
 }
 
-pub async fn query_multiple_map<T>(
+pub async fn query_multiple_map<T, M>(
     client: &Client,
     statement: &str,
     params: &[&(dyn ToSql + Sync)],
-    mapper: fn(&tokio_postgres::Row) -> Result<T, APIError>,
-) -> Result<Vec<T>, APIError> {
+    mapper: M,
+) -> Result<Vec<T>, APIError> 
+    where M: Fn(&tokio_postgres::Row) -> Result<T, APIError>
+{
     let stmt = client.prepare(statement).await?;
 
     Ok(client
