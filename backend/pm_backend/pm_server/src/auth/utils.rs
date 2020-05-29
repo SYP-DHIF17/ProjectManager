@@ -1,4 +1,4 @@
-use crate::auth::auth_user::AuthUser;
+use crate::auth::AuthUser;
 
 use biscuit::errors::Error as BQError;
 use biscuit::jwa::*;

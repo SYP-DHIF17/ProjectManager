@@ -1,0 +1,1 @@
+SELECT user_id AS "id", password AS "hash" FROM users WHERE email = $1;

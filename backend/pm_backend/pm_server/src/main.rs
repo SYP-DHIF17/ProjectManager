@@ -1,9 +1,10 @@
-mod urls;
-mod handlers;
-mod data;
 mod auth;
-mod secrets;
+mod data;
+mod handlers;
 mod https_middleware;
+mod secrets;
+mod urls;
+mod utils;
 fn main() {
     println!("Hello, world!");
 }

@@ -9,4 +9,6 @@ pub enum APIError {
     InternalServerError,
     #[display(fmt = "Unauthorized")]
     Unauthorized,
+    #[display(fmt = "Database Error")]
+    PGError,
 }

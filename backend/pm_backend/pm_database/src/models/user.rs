@@ -19,18 +19,3 @@ pub struct User {
     pub left_on: Option<chrono::NaiveDate>,
 }
 
-
-#[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
-#[pg_mapper(table = "customers")]
-pub struct Customer {
-    #[serde(rename = "customerID")]
-    pub customer_id: Uuid,
-    pub company: String,
-}
-
-#[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
-#[pg_mapper(table = "employees")]
-pub struct Employee {
-    #[serde(rename = "employeeID")]
-    pub employee_id: Uuid,
-}

@@ -16,8 +16,8 @@ pub struct Team {
 #[pg_mapper(table = "teammembers")]
 pub struct Teammember {
     #[serde(rename = "teamID")]
-    pub team_id: Uuid, // ToDo REFERENCES teams (team_id),
+    pub team_id: Uuid, 
 
     #[serde(rename = "employeeID")]
-    pub employee_id: Uuid, // ToDo REFERENCES employees (employee_id),
+    pub employee_id: Uuid,
 }
