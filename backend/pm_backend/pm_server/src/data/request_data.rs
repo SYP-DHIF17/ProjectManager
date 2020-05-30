@@ -31,7 +31,7 @@ impl From<CreateUserRequest> for User {
 
         Self {
             user_id: Uuid::new_v4(),
-            created_on: Local::now().naive_local(),
+            created_on: Local::now().date().naive_local(),
             is_active: true,
             left_on: None,
             firstname,

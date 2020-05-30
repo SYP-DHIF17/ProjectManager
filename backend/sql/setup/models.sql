@@ -6,7 +6,7 @@ CREATE TABLE users
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR (100) NOT NULL,
     email VARCHAR (100) NOT NULL UNIQUE,
-    password VARCHAR (100) NOT NULL,
+    password VARCHAR (300) NOT NULL,
     birthdate date NOT NULL,
     is_active boolean NOT NULL
 );
@@ -22,7 +22,7 @@ CREATE TABLE teammembers
 (
     team_id uuid REFERENCES teams (team_id),
     user_id uuid REFERENCES users (user_id),
-    PRIMARY KEY (team_id, employee_id)
+    PRIMARY KEY (team_id, user_id)
 );
 
 CREATE TABLE projects

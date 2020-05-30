@@ -7,7 +7,7 @@ use uuid::Uuid;
 pub struct User {
     #[serde(rename = "userID")]
     pub user_id: Uuid, #[serde(rename = "createdOn")]
-    pub created_on: chrono::NaiveDateTime,
+    pub created_on: chrono::NaiveDate,
     pub firstname: String,
     pub lastname: String,
     pub email: String,
