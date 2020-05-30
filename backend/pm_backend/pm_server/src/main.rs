@@ -1,4 +1,4 @@
-mod auth;
+mod auth_user;
 mod config;
 mod data;
 mod handlers;

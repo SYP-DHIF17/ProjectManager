@@ -1,10 +1,15 @@
-use pm_errors::APIError;
 use actix_web::*;
 use futures::future::{err, ok, Ready};
+use pm_errors::APIError;
+use serde::{Deserialize, Serialize};
+use uuid::Uuid;
 
-use crate::auth::utils::decode_token;
-use crate::auth::AuthUser;
+use crate::utils::jwt_utils::decode_token;
 
+#[derive(Deserialize, Serialize, Clone)]
+pub struct AuthUser {
+    pub user_id: Uuid,
+}
 
 impl FromRequest for AuthUser {
     type Error = APIError;

@@ -1,7 +1,7 @@
 use actix_web::{web, HttpResponse};
 
-use crate::auth::utils::create_token;
-use crate::auth::AuthUser;
+use crate::utils::jwt_utils::create_token;
+use crate::auth_user::AuthUser;
 use crate::data::request_data::LoginRequest;
 use crate::data::response_data::TokenResponse;
 use crate::utils::hashing_utils::verify;
@@ -44,5 +44,5 @@ pub async fn login<'a>(
     })
     .await?;
 
-    Ok(HttpResponse::Ok().finish())
+    Ok(HttpResponse::Ok().json(response))
 }

@@ -1,4 +1,4 @@
-use crate::auth::AuthUser;
+use crate::auth_user::AuthUser;
 
 use biscuit::errors::Error as BQError;
 use biscuit::jwa::*;
@@ -8,7 +8,7 @@ use chrono::{DateTime, Duration, SecondsFormat, Utc};
 use std::str::FromStr;
 use crate::secrets::JWT_SECRET;
 
-pub static DAYS_OFFSET: i64 = 3;
+pub const DAYS_OFFSET: i64 = 3;
 
 type MyCompact = biscuit::jws::Compact<biscuit::ClaimsSet<AuthUser>, biscuit::Empty>;
 
@@ -29,7 +29,7 @@ pub fn create_token(user: AuthUser) -> (String, String) {
     let expected_claims = ClaimsSet::<AuthUser> {
         registered: RegisteredClaims {
             issuer: Some(FromStr::from_str("localhost").unwrap()),
-            subject: Some(FromStr::from_str("CMS").unwrap()),
+            subject: Some(FromStr::from_str("Vortex").unwrap()),
             audience: Some(SingleOrMultiple::Single(
                 FromStr::from_str("localhost").unwrap(),
             )),
