@@ -1,12 +1,12 @@
-use crate::auth_user::AuthUser;
+use crate::data::AuthUser;
 
+use crate::secrets::JWT_SECRET;
 use biscuit::errors::Error as BQError;
 use biscuit::jwa::*;
 use biscuit::jws::*;
 use biscuit::*;
 use chrono::{DateTime, Duration, SecondsFormat, Utc};
 use std::str::FromStr;
-use crate::secrets::JWT_SECRET;
 
 pub const DAYS_OFFSET: i64 = 3;
 
@@ -55,4 +55,3 @@ pub fn create_token(user: AuthUser) -> (String, String) {
 fn get_new_timestamp() -> DateTime<Utc> {
     Utc::now() + Duration::days(DAYS_OFFSET)
 }
-

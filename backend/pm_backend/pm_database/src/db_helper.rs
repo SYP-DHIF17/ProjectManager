@@ -80,7 +80,7 @@ pub async fn query_multiple_map<T, M>(
         .collect::<Vec<T>>())
 }
 
-pub async fn get_db_client(pool: web::Data<Pool>) -> Result<Client, APIError> {
+pub async fn get_db_client(pool: &web::Data<Pool>) -> Result<Client, APIError> {
     pool.get().await.map_err(|_| APIError::PGError)
 }
 

@@ -1,7 +1,7 @@
 use actix_web::{web, HttpResponse};
 
 use crate::utils::jwt_utils::create_token;
-use crate::auth_user::AuthUser;
+use crate::data::AuthUser;
 use crate::data::request_data::LoginRequest;
 use crate::data::response_data::TokenResponse;
 use crate::utils::hashing_utils::verify;
@@ -12,11 +12,11 @@ use pm_errors::APIError;
 use std::include_str;
 use uuid::Uuid;
 
-pub async fn login<'a>(
+pub async fn login(
     auth_data: web::Json<LoginRequest>, //request body
     pool: web::Data<Pool>,              //data of web server
 ) -> Result<HttpResponse, APIError> {
-    let client: Client = get_db_client(pool).await?; // connection to db
+    let client: Client = get_db_client(&pool).await?; // connection to db
 
     let data: (Uuid, String) = query_one_map(
         &client,

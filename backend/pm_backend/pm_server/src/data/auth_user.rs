@@ -6,7 +6,7 @@ use uuid::Uuid;
 
 use crate::utils::jwt_utils::decode_token;
 
-#[derive(Deserialize, Serialize, Clone)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct AuthUser {
     pub user_id: Uuid,
 }

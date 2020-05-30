@@ -18,4 +18,3 @@ pub struct User {
     #[serde(rename = "leftOn")]
     pub left_on: Option<chrono::NaiveDate>,
 }
-
