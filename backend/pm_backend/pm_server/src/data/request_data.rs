@@ -42,3 +42,11 @@ impl From<CreateUserRequest> for User {
         }
     }
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ChangePasswordRequest {
+    #[serde(rename = "oldPassword")]
+    pub old_password: String,
+    #[serde(rename = "newPassword")]
+    pub new_password: String,
+}
