@@ -43,9 +43,7 @@ pub async fn query_none(
     params: &[&(dyn ToSql + Sync)],
 ) -> Result<(), APIError> {
     let stmt = client.prepare(&statement).await?;
-    let res = client.query_opt(&stmt, params).await;
-    pm_debug::pe(&res);
-    res?;
+    client.query_opt(&stmt, params).await?;
     Ok(())
 }
 
