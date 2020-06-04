@@ -7,9 +7,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddProjectComponent implements OnInit {
 
-  constructor() { }
+    name: string = '';
+    description: string = '';
+    budget: number = 0;
+    leader: string = '';
+    startDate: string = '';
+    endDate: string = '';
+    addMember: string = '';
+    members: string[] = [];
 
-  ngOnInit(): void {
-  }
+    constructor() {
 
+    }
+
+    ngOnInit(): void {
+
+    }
+
+    public addMemberToProject(): void {
+        this.members.push(this.addMember);
+        this.addMember = '';
+    }
+
+    public removeMember(member: string): void {
+        this.members.splice(this.members.indexOf(member), 1);
+    }
+
+    public createProject(): void {
+        
+    }
 }

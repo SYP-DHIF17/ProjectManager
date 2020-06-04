@@ -1,1 +1,42 @@
-<div id="add-project"></div>
+<div id="add-project">
+    <h1>Add Project</h1>
+    <div>
+        <input type="text" placeholder="Name" [(ngModel)]="name">
+    </div>
+    <div>
+        <textarea [(ngModel)]="description" placeholder="Beschreibung"></textarea>
+    </div>
+    <div>
+        <p>Budget (in €)</p>
+        <input type="number" placeholder="Budget" [(ngModel)]="budget">
+    </div>
+    <div>
+        <input type="text" placeholder="Teamleiter (für selbst -> Feld leer lassen)" [(ngModel)]="leader">
+    </div>
+    <div>
+        <p>Von</p>
+        <input type="date" placeholder="Von" [(ngModel)]="startDate">
+    </div>
+    <div>
+        <p>Bis</p>
+        <input type="date" placeholder="Bis" [(ngModel)]="endDate">
+    </div>
+    <div>
+        <p>Mitglieder</p>
+        <div>
+            <input class="add" type="text" placeholder="Mitglieder-Email" [(ngModel)]="addMember">
+            <button (click)="addMemberToProject()">Hinzufügen</button>
+        </div>
+        <div>
+            <ul>
+                <li *ngFor="let member of members">
+                    <span>{{member}}</span>
+                    <i (click)="removeMember(member)" class="fas fa-times"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <button id="create" (click)="createProject()">Erstellen</button>
+    </div>
+</div>
