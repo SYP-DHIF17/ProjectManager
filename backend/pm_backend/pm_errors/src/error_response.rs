@@ -9,6 +9,7 @@ impl ResponseError for APIError {
             }
             APIError::Unauthorized => HttpResponse::Unauthorized().body(format!("{}", self)),
             APIError::PGError => HttpResponse::InternalServerError().body(format!("{}", self)),
+            APIError::NotFound => HttpResponse::NotFound().body(format!("{}", self)),
         }
     }
 }

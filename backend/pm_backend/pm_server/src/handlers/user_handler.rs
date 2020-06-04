@@ -1,6 +1,7 @@
 use actix_web::{web, HttpResponse};
 
 use crate::data::request_data::*;
+use crate::data::response_data::UserInfo;
 use crate::data::AuthUser;
 use deadpool_postgres::{Client, Pool};
 use pm_database::db_helper::get_db_client;
@@ -75,4 +76,13 @@ pub async fn update_password(
     query_none(&client, include_str!("../../../../sql/queries/update_queries/update_password.sql"), &[&new_hash, &auth_user.user_id]).await?;
 
     Ok(HttpResponse::Ok().finish())
+}
+
+pub async fn get_info(
+    auth_user: AuthUser,
+    pool: web::Data<Pool>,
+) -> Result<HttpResponse, APIError>{
+    let client: Client = get_db_client(&pool).await?; // connection to db
+    let user: UserInfo = query_one(&client, include_str!("../../../../sql/queries/retrieve_queries/get_user_info_for_id.sql"), &[&auth_user.user_id], APIError::NotFound).await?;
+    Ok(HttpResponse::Ok().json(user))
 }

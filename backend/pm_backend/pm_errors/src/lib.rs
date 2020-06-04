@@ -11,4 +11,8 @@ pub enum APIError {
     Unauthorized,
     #[display(fmt = "Database Error")]
     PGError,
+    #[display(fmt = "Not Found")]
+    NotFound,
 }
+
+impl std::error::Error for APIError {}

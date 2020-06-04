@@ -8,7 +8,8 @@ pub fn auth_urls_config(cfg: &mut web::ServiceConfig) {
 
 pub fn user_urls_config(cfg: &mut web::ServiceConfig) {
     cfg.service(
-        web::scope("/users")
+        web::scope("/user")
+            .service(web::resource("").route(web::get().to(get_info)))
             .service(web::resource("/create").route(web::post().to(create_user)))
             .service(web::resource("/update-pw").route(web::post().to(update_password))),
     );
