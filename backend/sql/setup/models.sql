@@ -42,7 +42,7 @@ CREATE TABLE teammembers
 CREATE TABLE project_parts
 (
     project_part_id uuid PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE team_parts -- Links project parts and teams
@@ -69,7 +69,7 @@ CREATE TABLE workpackages
     name VARCHAR(100) NOT NULL,
     start_date date NOT NULL,
     planned_enddate date NOT NULL,
-    real_enddate date
+    real_enddate date,
 
     project_part_id UUID REFERENCES project_parts (project_part_id) NOT NULL
 );
