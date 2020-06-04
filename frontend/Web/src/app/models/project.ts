@@ -1,3 +1,5 @@
+import { User } from './user';
+
 export interface Project {
   readonly projectId: string;
   name: string;
@@ -5,5 +7,7 @@ export interface Project {
   plannedEndDate: Date;
   realEndDate?: Date;
   overallBudget: number;
-  leader: string;
+
+  // leader stuff
+  userID: User;
 }

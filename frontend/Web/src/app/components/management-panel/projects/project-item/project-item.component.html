@@ -1,5 +1,5 @@
-<div class="project-item">
-    <h2>{{ projectName }}</h2>
-    <h3>Start: {{ projectStarted.toLocaleString() }}</h3>
-    <h3>Ende: {{ projectEnd.toLocaleString() }}</h3>
+<div class="project-item" *ngIf="project">
+    <h2>{{ project.name }}</h2>
+    <h3>Start: {{ project.startDate.toLocaleString() }}</h3>
+    <h3>Ende: {{ project.plannedEnddate.toLocaleString() }}</h3>
 </div>

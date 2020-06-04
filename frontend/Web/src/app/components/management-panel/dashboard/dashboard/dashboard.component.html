@@ -9,7 +9,17 @@
             </div>
         </div>
         <div class="content-right">
-            <app-project-list className="card"></app-project-list>
+            <div class="card">
+                <h4>Projects</h4>
+                <div class="project-list">
+                    <a
+                        [routerLink]="['/project', project.projectId]"
+                        *ngFor="let project of projects"
+                    >
+                        {{ project.name }}
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

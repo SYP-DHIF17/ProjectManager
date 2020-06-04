@@ -17,8 +17,8 @@ import { DashboardComponent } from './components/management-panel/dashboard/dash
 import { VersionComponent } from './components/management-panel/dashboard/version/version.component';
 import { ProjectsComponent } from './components/management-panel/projects/projects.component';
 import { ProjectItemComponent } from './components/management-panel/projects/project-item/project-item.component';
-import { ProjectListComponent } from './components/management-panel/dashboard/project-list/project-list.component';
 import { AddProjectComponent } from './components/management-panel/projects/add-project/add-project.component';
+import { ProjectDetailsComponent } from './components/management-panel/dashboard/project-details/project-details.component';
 
 @NgModule({
   declarations: [
@@ -33,8 +33,8 @@ import { AddProjectComponent } from './components/management-panel/projects/add-
     VersionComponent,
     ProjectsComponent,
     ProjectItemComponent,
-    ProjectListComponent,
-    AddProjectComponent
+    AddProjectComponent,
+    ProjectDetailsComponent
   ],
   imports: [
     BrowserModule,
