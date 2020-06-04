@@ -2,9 +2,8 @@ export interface Project {
   readonly projectId: string;
   name: string;
   startDate: Date;
-  plannedEnddate: Date;
-  realEnddate: Date;
+  plannedEndDate: Date;
+  realEndDate?: Date;
   overallBudget: number;
   leader: string;
-  readonly creator: string;
 }

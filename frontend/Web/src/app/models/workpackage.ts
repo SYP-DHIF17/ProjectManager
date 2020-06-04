@@ -1,4 +1,4 @@
-export class Workpackage {
+export interface Workpackage {
   workpackageId: string;
   name: string;
   startDate: Date;
