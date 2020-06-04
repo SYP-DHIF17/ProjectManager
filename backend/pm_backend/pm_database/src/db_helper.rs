@@ -52,7 +52,9 @@ pub async fn query_multiple<T: FromTokioPostgresRow>(
     statement: &str,
     params: &[&(dyn ToSql + Sync)],
 ) -> Result<Vec<T>, APIError> {
-    let stmt = client.prepare(statement).await?;
+    let stmt = client.prepare(statement).await;
+    pm_debug::pe(&stmt);
+    let stmt = stmt?;
 
     Ok(client
         .query(&stmt, params)

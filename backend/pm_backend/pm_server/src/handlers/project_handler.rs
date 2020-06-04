@@ -1,14 +1,12 @@
 use actix_web::{web, HttpResponse};
 
-use crate::data::request_data::*;
 use crate::data::AuthUser;
-use deadpool_postgres::{Client, Pool};
+use deadpool_postgres::Pool;
 use pm_database::db_helper::get_db_client;
 use pm_database::db_helper::*;
 use pm_errors::APIError;
 use std::include_str;
-use pm_database::models::project::Project;
-use uuid::Uuid;
+use crate::data::response_data::ProjectResponse;
 
 pub async fn create_project(
     // create_data: web::Json<CreateUserRequest>,
@@ -28,11 +26,11 @@ pub async fn create_project(
     Ok(HttpResponse::Ok().finish())
 }
 
-pub async fn get_project(
+pub async fn get_projects(
     pool: web::Data<Pool>,
-    project_id: web::Path<Uuid>
+    current_user: AuthUser,
 ) -> Result<HttpResponse, APIError> {
     let client = get_db_client(&pool).await?;
-    let project:Project = query_one(&client, "SELECT * FROM projects WHERE project_id = $1", &[&project_id.into_inner()], APIError::NotFound).await?;
-    Ok(HttpResponse::Ok().finish())
+    let project:Vec<ProjectResponse> = query_multiple(&client, include_str!("../../../../sql/queries/retrieve_queries/get_project_for_id.sql"), &[&current_user.user_id]).await?;
+    Ok(HttpResponse::Ok().json(project))
 }

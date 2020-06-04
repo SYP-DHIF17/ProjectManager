@@ -19,7 +19,7 @@ pub fn user_urls_config(cfg: &mut web::ServiceConfig) {
 pub fn project_urls_config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/project")
-            .route("/{id}", web::get().to(get_project))
+            .route("", web::get().to(get_projects))
             .route("", web::post().to(create_project)),
     );
 }
