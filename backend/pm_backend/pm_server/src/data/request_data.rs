@@ -44,9 +44,14 @@ impl From<CreateUserRequest> for User {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ChangePasswordRequest {
+pub struct ChangeUserRequest {
+
     #[serde(rename = "oldPassword")]
-    pub old_password: String,
+    pub old_password: String, // always required
+
     #[serde(rename = "newPassword")]
-    pub new_password: String,
+    pub new_password: Option<String>,
+    pub firstname: Option<String>,
+    pub lastname: Option<String>,
+    pub email: Option<String>,
 }

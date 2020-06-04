@@ -30,7 +30,7 @@ pub async fn create_user(
 }
 
 pub async fn update_password(
-    auth_data: web::Json<ChangePasswordRequest>,
+    auth_data: web::Json<ChangeUserRequest>,
     pool: web::Data<Pool>,
     auth_user: AuthUser, // the user whose password is to be altered
 ) -> Result<HttpResponse, APIError> 
@@ -42,7 +42,7 @@ pub async fn update_password(
        4. update password
      */
 
-    let ChangePasswordRequest {old_password, new_password} = auth_data.into_inner(); 
+    let ChangeUserRequest {old_password, new_password, firstname, lastname, email} = auth_data.into_inner(); 
     let client: Client = get_db_client(&pool).await?; // connection to db
 
     // 1.
@@ -50,13 +50,14 @@ pub async fn update_password(
         &client,
         include_str!("../../../../sql/queries/retrieve_queries/get_user_hash_for_id.sql"),
         &[&auth_user.user_id],
-        APIError::Unauthorized,
+        APIError::NotFound,
         |row| Ok(row.get::<_, String>("hash")),
     )
     .await?;
 
     // --- 2. ---
 
+    
     // Is password correct?
     let res:bool = web::block(move || {
         Ok(verify(&db_hash[..], &old_password))
@@ -67,13 +68,31 @@ pub async fn update_password(
         return Err(APIError::Unauthorized);
     }
 
-    // 3. create new hash
-    let new_hash:String = web::block(move || {
-        Ok(hash_password(&new_password))
-    }).await??;
+    // Update password
+    if let Some(new_password) = new_password {
+        // 3. create new hash
+        let new_hash:String = web::block(move || {
+            Ok(hash_password(&new_password))
+        }).await??;
 
-    // 4. update password
-    query_none(&client, include_str!("../../../../sql/queries/update_queries/update_password.sql"), &[&new_hash, &auth_user.user_id]).await?;
+        // 4. update password
+        query_none(&client, include_str!("../../../../sql/queries/update_queries/update_password.sql"), &[&new_hash, &auth_user.user_id]).await?;
+    }
+
+    // Update firstname
+    if let Some(firstname) = firstname { // moves firstname
+        query_none(&client, include_str!("../../../../sql/queries/update_queries/update_firstname.sql"), &[&firstname, &auth_user.user_id]).await?;
+    }
+
+    // Update lastname
+    if let Some(lastname) = lastname {
+        query_none(&client, include_str!("../../../../sql/queries/update_queries/update_lastname.sql"), &[&lastname, &auth_user.user_id]).await?;
+    }
+
+    // Update email
+    if let Some(email) = email {
+        query_none(&client, include_str!("../../../../sql/queries/update_queries/update_email.sql"), &[&email, &auth_user.user_id]).await?;
+    }
 
     Ok(HttpResponse::Ok().finish())
 }
