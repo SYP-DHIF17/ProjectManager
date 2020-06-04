@@ -1,7 +1,6 @@
 use crate::utils::hashing_utils;
-use chrono::*;
 use pm_database::models::user::User;
-use ::serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -31,9 +30,7 @@ impl From<CreateUserRequest> for User {
 
         Self {
             user_id: Uuid::new_v4(),
-            created_on: Local::now().date().naive_local(),
-            is_active: true,
-            left_on: None,
+            created_on: chrono::Local::now().date().naive_local(),
             firstname,
             lastname,
             email,
@@ -45,7 +42,6 @@ impl From<CreateUserRequest> for User {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ChangeUserRequest {
-
     #[serde(rename = "oldPassword")]
     pub old_password: String, // always required
 

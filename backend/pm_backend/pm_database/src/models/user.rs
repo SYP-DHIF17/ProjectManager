@@ -6,15 +6,12 @@ use uuid::Uuid;
 #[pg_mapper(table = "users")]
 pub struct User {
     #[serde(rename = "userID")]
-    pub user_id: Uuid, #[serde(rename = "createdOn")]
+    pub user_id: Uuid,
+    #[serde(rename = "createdOn")]
     pub created_on: chrono::NaiveDate,
     pub firstname: String,
     pub lastname: String,
     pub email: String,
     pub password: String,
-    #[serde(rename = "isActive")]
-    pub is_active: bool,
     pub birthdate: chrono::NaiveDate,
-    #[serde(rename = "leftOn")]
-    pub left_on: Option<chrono::NaiveDate>,
 }

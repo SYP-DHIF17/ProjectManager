@@ -7,8 +7,8 @@ use pm_database::db_helper::get_db_client;
 use pm_database::db_helper::*;
 use pm_errors::APIError;
 use std::include_str;
-use crate::utils::hashing_utils::*;
-use pm_database::models::user::User;
+use pm_database::models::project::Project;
+use uuid::Uuid;
 
 pub async fn create_project(
     // create_data: web::Json<CreateUserRequest>,
@@ -25,5 +25,14 @@ pub async fn create_project(
 
     // query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_user.sql"), &[&user_id, &created_on, &left_on, &firstname, &lastname, &email, &password ,&birthdate, &is_active]).await?;
     
+    Ok(HttpResponse::Ok().finish())
+}
+
+pub async fn get_project(
+    pool: web::Data<Pool>,
+    project_id: web::Path<Uuid>
+) -> Result<HttpResponse, APIError> {
+    let client = get_db_client(&pool).await?;
+    let project:Project = query_one(&client, "SELECT * FROM projects WHERE project_id = $1", &[&project_id.into_inner()], APIError::NotFound).await?;
     Ok(HttpResponse::Ok().finish())
 }

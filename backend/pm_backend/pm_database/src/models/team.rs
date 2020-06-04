@@ -7,17 +7,19 @@ use uuid::Uuid;
 pub struct Team {
     #[serde(rename = "teamID")]
     pub team_id: Uuid,
-    pub name: String
+    pub name: String,
+    #[serde(rename = "projectID")]
+    pub project_id: Uuid,
+    #[serde(rename = "leaderID")]
+    pub leader_id: Uuid,
 }
-
-
 
 #[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
 #[pg_mapper(table = "teammembers")]
-pub struct Teammember {
+pub struct TeamMember {
     #[serde(rename = "teamID")]
-    pub team_id: Uuid, 
+    pub team_id: Uuid,
 
-    #[serde(rename = "employeeID")]
-    pub employee_id: Uuid,
+    #[serde(rename = "userID")]
+    pub user_id: Uuid,
 }

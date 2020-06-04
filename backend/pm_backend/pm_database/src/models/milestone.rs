@@ -8,16 +8,10 @@ pub struct MileStone {
     #[serde(rename = "milestoneID")]
     pub milestone_id: Uuid,
 
-    #[serde(rename = "createdOn")]
-    pub created_on: chrono::NaiveDateTime,
-
-    #[serde(rename = "createdBy")]
-    pub created_by: Uuid,
-
-    pub amount: i32,
+    pub position: i32,
 
     #[serde(rename = "reachDate")]
-    pub reach_date: chrono::NaiveDateTime,
+    pub reach_date: chrono::NaiveDate,
 
     pub name: String,
 

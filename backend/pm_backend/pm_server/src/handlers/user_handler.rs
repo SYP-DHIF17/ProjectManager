@@ -22,9 +22,9 @@ pub async fn create_user(
     }).await?;
 
     let client = get_db_client(&pool).await?;
-    let User{user_id, created_on, left_on, firstname, lastname, email, password, birthdate, is_active} = user;
+    let User{user_id, created_on, firstname, lastname, email, password, birthdate } = user;
 
-    query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_user.sql"), &[&user_id, &created_on, &left_on, &firstname, &lastname, &email, &password ,&birthdate, &is_active]).await?;
+    query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_user.sql"), &[&user_id, &created_on, &firstname, &lastname, &email, &password ,&birthdate]).await?;
     
     Ok(HttpResponse::Ok().finish())
 }

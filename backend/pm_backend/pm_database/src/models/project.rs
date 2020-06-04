@@ -12,23 +12,18 @@ pub struct Project {
     pub name: String,
 
     #[serde(rename = "startDate")]
-    pub start_date: chrono::NaiveDateTime,
+    pub start_date: chrono::NaiveDate,
 
     #[serde(rename = "plannedEndDate")]
-    pub planned_enddate: chrono::NaiveDateTime,
+    pub planned_enddate: chrono::NaiveDate,
 
     #[serde(rename = "realEndDate")]
-    pub real_enddate: chrono::NaiveDateTime,
+    pub real_enddate: Option<chrono::NaiveDate>,
 
     #[serde(rename = "overallBudget")]
     pub overall_budget: i32,
 
-    #[serde(rename = "createdOn")]
-    pub created_on: chrono::NaiveDateTime,
-
     pub leader: Uuid,
-
-    pub creator: Uuid,
 }
 
 #[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
@@ -37,12 +32,10 @@ pub struct ProjectPart {
     #[serde(rename = "projectPartID")]
     pub project_part_id: Uuid,
     pub name: String,
-    #[serde(rename = "projectID")]
-    pub project_id: Uuid,
 }
 
 #[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
-#[pg_mapper(table = "teamtasks")]
+#[pg_mapper(table = "team_parts")]
 pub struct TeamTask{
     #[serde(rename = "projectPartID")]
     pub project_part_id: Uuid,
