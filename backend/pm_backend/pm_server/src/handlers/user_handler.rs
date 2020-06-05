@@ -10,6 +10,7 @@ use pm_errors::APIError;
 use std::include_str;
 use crate::utils::hashing_utils::*;
 use pm_database::models::user::User;
+use uuid::Uuid;
 
 pub async fn create_user(
     create_data: web::Json<CreateUserRequest>,
@@ -103,5 +104,16 @@ pub async fn get_info(
 ) -> Result<HttpResponse, APIError>{
     let client: Client = get_db_client(&pool).await?; // connection to db
     let user: UserInfo = query_one(&client, include_str!("../../../../sql/queries/retrieve_queries/get_user_info_for_id.sql"), &[&auth_user.user_id], APIError::NotFound).await?;
+    Ok(HttpResponse::Ok().json(user))
+}
+
+pub async fn get_info_for_user(
+    _auth_user: AuthUser,
+    pool: web::Data<Pool>,
+    user: web::Path<Uuid>,
+) -> Result<HttpResponse, APIError>{
+    let user_id = user.into_inner();
+    let client: Client = get_db_client(&pool).await?; // connection to db
+    let user: UserInfo = query_one(&client, include_str!("../../../../sql/queries/retrieve_queries/get_user_info_for_id.sql"), &[&user_id], APIError::NotFound).await?;
     Ok(HttpResponse::Ok().json(user))
 }

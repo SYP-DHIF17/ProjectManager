@@ -11,6 +11,7 @@ pub fn user_urls_config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/user")
             .route("", web::get().to(get_info))
+            .route("/{id}", web::get().to(get_info_for_user))
             .route("", web::put().to(update_password))
             .route("", web::post().to(create_user)),
     );
