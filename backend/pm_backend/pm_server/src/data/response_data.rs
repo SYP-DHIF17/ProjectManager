@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use tokio_pg_mapper_derive::PostgresMapper;
 use uuid::Uuid;
+use std::collections::HashSet;
 
 use tokio_pg_mapper::{Error, FromTokioPostgresRow};
 use tokio_postgres::row::Row as TokioRow;
@@ -68,4 +69,36 @@ impl FromTokioPostgresRow for ProjectResponse {
     fn sql_table_fields() -> String {
         String::new()
     }
+}
+
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+pub struct TeamQueryResult {
+    pub project_id: Uuid,
+    pub leader_id: Uuid,
+    pub name: String,
+    pub user_id: Option<Uuid>,
+    pub team_id: Uuid,
+}
+
+
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+pub struct TeamResponse {
+    pub project_id: Uuid,
+    pub leader_id: Uuid,
+    pub name: String,
+    pub members: HashSet<Option<Uuid>>,
+    pub team_id: Uuid,
+}
+
+impl TeamResponse {
+    pub fn from_result(res: TeamQueryResult, members:HashSet<Option<Uuid>>) -> Self {
+        let TeamQueryResult{project_id, leader_id, name, team_id, ..} = res;
+        Self {
+          members,
+          project_id,
+          leader_id,
+          name,
+          team_id
+        }
+    }   
 }
