@@ -20,7 +20,7 @@ import { ProjectItemComponent } from './components/management-panel/projects/pro
 import { AddProjectComponent } from './components/management-panel/projects/add-project/add-project.component';
 import { ProjectDetailsComponent } from './components/management-panel/dashboard/project-details/project-details.component';
 import { NgbModule, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,7 @@ import { NgbModule, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstr
     NgbModule,
     NgbDatepickerModule,
     NgbTimepickerModule,
-    // FontAwesomeModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

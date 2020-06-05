@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoaderService, UserService } from '@providers';
 import { Router } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear()
   };
+  faCalendar = faCalendar;
 
   constructor(private loader: LoaderService,
     private _user: UserService,
