@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoaderService } from '@providers';
+import { LoaderService, UserService } from '@providers';
+import { Router } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-register',
@@ -8,11 +10,20 @@ import { LoaderService } from '@providers';
 })
 export class RegisterComponent implements OnInit {
 
+  firstname: string = '';
+  lastname: string = '';
   email: string = '';
   password_1: string = '';
   password_2: string = '';
+  startDate: NgbDateStruct = {
+    day: new Date().getDate(),
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear()
+  };
 
-  constructor(private loader: LoaderService) {
+  constructor(private loader: LoaderService,
+    private _user: UserService,
+    private _router: Router) {
 
   }
 
@@ -24,15 +35,22 @@ export class RegisterComponent implements OnInit {
     this.makeRegisterRequest();
   }
 
+  // why does this function exist??? @elitru?
   onKeyDown(): void {
     this.makeRegisterRequest();
   }
 
   private makeRegisterRequest(): void {
-    if (this.email === '' || this.password_1 === '' || this.password_2 == '' ||
+    if (!this.email ||
+      !this.password_1! ||
+      !this.password_2 ||
+      !this.firstname ||
+      !this.lastname ||
       (this.password_1 != this.password_2)) {
       return;
     }
+
+    const r = this._user.register(this.firstname, this.lastname, this.email, this.password_1, new Date())
 
     this.loader.setVisible(true);
   }

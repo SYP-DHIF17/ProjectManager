@@ -19,6 +19,8 @@ import { ProjectsComponent } from './components/management-panel/projects/projec
 import { ProjectItemComponent } from './components/management-panel/projects/project-item/project-item.component';
 import { AddProjectComponent } from './components/management-panel/projects/add-project/add-project.component';
 import { ProjectDetailsComponent } from './components/management-panel/dashboard/project-details/project-details.component';
+import { NgbModule, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,11 @@ import { ProjectDetailsComponent } from './components/management-panel/dashboard
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
+    NgbDatepickerModule,
+    NgbTimepickerModule,
+    // FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

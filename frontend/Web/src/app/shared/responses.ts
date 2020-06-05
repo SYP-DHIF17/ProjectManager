@@ -1,17 +1,7 @@
-export interface Response {
-  code: number;
-  data: any;
-}
+import { User } from '@models';
 
-export interface RegisterResponse extends Response {
-  data: {
-    success: boolean;
-  }
-}
-
-export interface LoginResponse extends Response {
-  data: {
-    token: string;
-    success: boolean;
-  }
+export interface LoginResponse {
+  token: string;
+  expiration: string;
+  user: User;
 }

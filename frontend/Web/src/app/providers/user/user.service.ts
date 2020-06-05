@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '@models';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { URLS, RegisterResponse, LoginResponse } from '@shared';
+import { URLS, LoginResponse } from '@shared';
 import { StorageService } from '@providers';
 
 @Injectable({
@@ -37,9 +37,9 @@ export class UserService {
     // return !(token == '' || token == null || user == '' || user == null || tokenExpiration == '' || tokenExpiration == null || (new Date(tokenExpiration) < new Date()));
   }
 
-  public login(username: string, password: string): Observable<LoginResponse> {
+  public login(email: string, password: string): Observable<LoginResponse> {
     return this._http.post(URLS.USER.LOGIN, {
-      username,
+      email,
       password
     }, {
       headers: {
@@ -48,7 +48,7 @@ export class UserService {
     }) as Observable<LoginResponse>;
   }
 
-  public register(firstname: string, lastname: string, email: string, password: string, birthdate: Date): Observable<RegisterResponse> {
+  public register(firstname: string, lastname: string, email: string, password: string, birthdate: Date): Observable<any> {
     return this._http.post(URLS.USER.REGISTER, {
       firstname,
       lastname,
@@ -59,7 +59,7 @@ export class UserService {
       headers: {
         'Access-Control-Allow-Origin': '*'
       }
-    }) as Observable<RegisterResponse>;
+    });
   }
 
   // public changePassword(password: string): Observable<any> {
