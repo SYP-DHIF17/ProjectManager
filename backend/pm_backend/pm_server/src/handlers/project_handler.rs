@@ -9,19 +9,20 @@ use std::include_str;
 use crate::data::response_data::ProjectResponse;
 
 pub async fn create_project(
-    // create_data: web::Json<CreateUserRequest>,
-    // pool: web::Data<Pool>,
+    create_data: web::Json<CreateUserRequest>,
+    pool: web::Data<Pool>,
 ) -> Result<HttpResponse, APIError> 
 {
     // wrapped in block since the password is hashed during conversion
-    // let user:User = web::block(|| {
-    //     Ok(create_data.into_inner().into())
-    // }).await?;
+    let project:Project = web::block(|| {
+        Ok(create_data.into_inner().into())
+    }).await?;
 
-    // let client = get_db_client(&pool).await?;
+    let client = get_db_client(&pool).await?;
     // let User{user_id, created_on, left_on, firstname, lastname, email, password, birthdate, is_active} = user;
+    let Project{project_id, name, start_date, planned_enddate, real_enddate, overall_budget, leader} = project;
 
-    // query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_user.sql"), &[&user_id, &created_on, &left_on, &firstname, &lastname, &email, &password ,&birthdate, &is_active]).await?;
+    query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_project.sql"), &[&project_id, &name, &start_date, &planned_enddate, &overall_budget, &leader]).await?;
     
     Ok(HttpResponse::Ok().finish())
 }
