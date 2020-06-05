@@ -1,4 +1,5 @@
 use crate::utils::hashing_utils;
+use pm_database::models::project::Project;
 use pm_database::models::user::User;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -50,4 +51,38 @@ pub struct ChangeUserRequest {
     pub firstname: Option<String>,
     pub lastname: Option<String>,
     pub email: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateProjectRequest {
+    pub name: String,
+    #[serde(rename = "startDate")]
+    pub start_date: chrono::NaiveDate,
+    #[serde(rename = "plannedEndDate")]
+    pub planned_enddate: chrono::NaiveDate,
+    #[serde(rename = "overallBudget")]
+    pub overall_budget: i32,
+}
+
+pub struct CreateProjectWrapper(pub CreateProjectRequest, pub Uuid);
+
+impl From<CreateProjectWrapper> for Project {
+    fn from(req: CreateProjectWrapper) -> Self {
+        let CreateProjectWrapper(req, leader) = req;
+        let CreateProjectRequest {
+            name,
+            start_date,
+            planned_enddate,
+            overall_budget,
+        } = req;
+        Self {
+            project_id: Uuid::new_v4(),
+            name,
+            start_date,
+            planned_enddate,
+            real_enddate: None,
+            overall_budget,
+            leader,
+        }
+    }
 }

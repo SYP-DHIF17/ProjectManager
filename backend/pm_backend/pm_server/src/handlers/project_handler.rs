@@ -7,22 +7,20 @@ use pm_database::db_helper::*;
 use pm_errors::APIError;
 use std::include_str;
 use crate::data::response_data::ProjectResponse;
+use crate::data::request_data::*;
+use pm_database::models::project::Project;
 
 pub async fn create_project(
-    create_data: web::Json<CreateUserRequest>,
+    create_data: web::Json<CreateProjectRequest>,
     pool: web::Data<Pool>,
-) -> Result<HttpResponse, APIError> 
-{
-    // wrapped in block since the password is hashed during conversion
-    let project:Project = web::block(|| {
-        Ok(create_data.into_inner().into())
-    }).await?;
+    auth_user: AuthUser,
+) -> Result<HttpResponse, APIError> { 
+    let AuthUser {user_id} = auth_user;
+    let wrapper = CreateProjectWrapper(create_data.into_inner(), user_id);
+    let project:Project = wrapper.into();
 
     let client = get_db_client(&pool).await?;
-    // let User{user_id, created_on, left_on, firstname, lastname, email, password, birthdate, is_active} = user;
-    let Project{project_id, name, start_date, planned_enddate, real_enddate, overall_budget, leader} = project;
-
-    query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_project.sql"), &[&project_id, &name, &start_date, &planned_enddate, &overall_budget, &leader]).await?;
+    query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_project.sql"), &[&project.project_id, &project.name, &project.start_date, &project.planned_enddate, &project.overall_budget, &project.leader]).await?;
     
     Ok(HttpResponse::Ok().finish())
 }

@@ -18,7 +18,7 @@ CREATE TABLE projects
     start_date date NOT NULL,
     planned_enddate date NOT NULL,
     real_enddate date, -- Can be null since it's not known beforehand
-    overall_budget NUMERIC NOT NULL,
+    overall_budget int NOT NULL,
     leader uuid REFERENCES users (user_id) NOT NULL
 );
 
