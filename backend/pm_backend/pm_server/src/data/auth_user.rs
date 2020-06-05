@@ -32,3 +32,15 @@ impl FromRequest for AuthUser {
         };
     }
 }
+
+impl From<AuthUser> for Uuid {
+    fn from(user: AuthUser) -> Self {
+        user.user_id
+    }
+}
+
+impl From<Uuid> for AuthUser {
+    fn from(user_id: Uuid) -> Self {
+        Self { user_id }
+    }
+}
