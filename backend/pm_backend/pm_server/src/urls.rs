@@ -1,13 +1,21 @@
 use crate::handlers::auth_handler::*;
 use crate::handlers::project_handler::*;
+use crate::handlers::team_handler::*;
 use crate::handlers::user_handler::*;
 use actix_web::web;
 
-pub fn auth_urls_config(cfg: &mut web::ServiceConfig) {
+pub fn url_config(cfg: &mut web::ServiceConfig) {
+    auth_urls_config(cfg);
+    user_urls_config(cfg);
+    project_urls_config(cfg);
+    team_urls_config(cfg);
+}
+
+fn auth_urls_config(cfg: &mut web::ServiceConfig) {
     cfg.service(web::scope("/auth").route("/login", web::post().to(login)));
 }
 
-pub fn user_urls_config(cfg: &mut web::ServiceConfig) {
+fn user_urls_config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/user")
             .route("", web::get().to(get_info))
@@ -17,11 +25,19 @@ pub fn user_urls_config(cfg: &mut web::ServiceConfig) {
     );
 }
 
-pub fn project_urls_config(cfg: &mut web::ServiceConfig) {
+fn project_urls_config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/project")
             .route("", web::get().to(get_projects))
             .route("", web::post().to(create_project))
             .route("/{id}", web::put().to(update_project)),
+    );
+}
+
+fn team_urls_config(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::scope("/team")
+            //.route("", web::post().to(create_team))
+            .route("", web::post().to(create_team)),
     );
 }

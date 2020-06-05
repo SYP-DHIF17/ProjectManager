@@ -35,6 +35,7 @@ pub struct ProjectResponse {
     pub lastname: String,
     pub email: String,
 }
+
 impl FromTokioPostgresRow for ProjectResponse {
     fn from_row(row: TokioRow) -> Result<Self, Error> {
         Self::from_row_ref(&row)

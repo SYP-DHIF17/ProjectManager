@@ -13,7 +13,7 @@ use chrono::NaiveDateTime;
 use tokio_postgres::NoTls;
 
 use crate::https_middleware::RedirectHTTPS;
-use crate::urls::*;
+use crate::urls::url_config;
 
 // PRODUCTION
 pub static HTTP_PORT: &'static str = ":8080";
@@ -46,9 +46,7 @@ async fn main() -> std::io::Result<()> {
             )]))*/
             .service(
                 web::scope("/api") 
-                .configure(auth_urls_config)
-                .configure(user_urls_config)
-                .configure(project_urls_config)
+                .configure(url_config)
             )
     })
     .bind("0.0.0.0".to_owned() + HTTP_PORT)?

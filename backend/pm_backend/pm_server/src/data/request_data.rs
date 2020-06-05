@@ -106,3 +106,8 @@ pub struct RealEndDateChange {
     pub change: bool,
     pub date: Option<chrono::NaiveDate>,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateTeamRequest {
+    pub name: String,
+}
