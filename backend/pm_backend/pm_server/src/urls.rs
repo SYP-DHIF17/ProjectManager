@@ -30,14 +30,15 @@ fn project_urls_config(cfg: &mut web::ServiceConfig) {
         web::scope("/project")
             .route("", web::get().to(get_projects))
             .route("", web::post().to(create_project))
-            .route("/{id}", web::put().to(update_project)),
+            .route("/{id}", web::put().to(update_project))
+            .route("/{id}/teams", web::post().to(create_team)),
     );
 }
 
 fn team_urls_config(cfg: &mut web::ServiceConfig) {
-    cfg.service(
+    /*cfg.service(
         web::scope("/team")
             //.route("", web::post().to(create_team))
             .route("", web::post().to(create_team)),
-    );
+    );*/
 }

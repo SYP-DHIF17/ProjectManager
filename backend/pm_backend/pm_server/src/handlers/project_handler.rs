@@ -16,7 +16,7 @@ pub async fn create_project(
     pool: web::Data<Pool>,
     auth_user: AuthUser,
 ) -> Result<HttpResponse, APIError> { 
-    let wrapper = CreateProjectWrapper(create_data.into_inner(), auth_user.into()); // the second inner converts the auth_user into the underlying uuid
+    let wrapper = CreateProjectWrapper(create_data.into_inner(), auth_user.into()); // the second into converts the auth_user into the underlying uuid
     let project:Project = wrapper.into();
 
     let client = get_db_client(&pool).await?;
