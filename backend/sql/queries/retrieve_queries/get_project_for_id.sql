@@ -13,4 +13,5 @@ INNER JOIN teammembers tm ON u.user_id = tm.user_id
 INNER JOIN teams t ON tm.team_id = t.team_id
 INNER JOIN projects p ON p.project_id = t.project_id
 INNER JOIN users lu ON p.leader = lu.user_id
-WHERE u.user_id = $1;
+WHERE u.user_id = $1
+  OR leader_id = $1;

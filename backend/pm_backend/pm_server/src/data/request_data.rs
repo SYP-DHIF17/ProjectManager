@@ -86,3 +86,23 @@ impl From<CreateProjectWrapper> for Project {
         }
     }
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ChangeProjectRequest {
+    pub name: Option<String>,
+
+    #[serde(rename = "plannedEndDate")]
+    pub planned_enddate: Option<chrono::NaiveDate>,
+
+    #[serde(rename = "realEndDateChange")]
+    pub real_enddate_change: RealEndDateChange,
+
+    #[serde(rename = "overallBudget")]
+    pub overall_budget: Option<i32>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct RealEndDateChange {
+    pub change: bool,
+    pub date: Option<chrono::NaiveDate>,
+}

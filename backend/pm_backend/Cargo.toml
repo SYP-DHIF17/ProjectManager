@@ -4,7 +4,6 @@ members = [
     "pm_server",
     "pm_database",
     "pm_errors",
-    "pm_testing",
     "pm_debug",
 ]
 
