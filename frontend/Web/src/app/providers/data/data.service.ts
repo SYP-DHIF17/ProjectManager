@@ -3,6 +3,7 @@ import { Project, User } from '@models';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URLS } from '@shared';
+import { UserService } from '../user/user.service';
 
 let headers = new HttpHeaders({
   "Content-Type": "application/json; charset=utf-8",
@@ -15,32 +16,37 @@ let headers = new HttpHeaders({
 })
 export class DataService {
 
-  public user: BehaviorSubject<User> = new BehaviorSubject(undefined as User);
   public projects: BehaviorSubject<Project[]> = new BehaviorSubject([]);
 
-  constructor(private _http: HttpClient) { }
-
-  login(username: string, password: string) {
-    this._http.post(URLS.USER.LOGIN, {
-      username, password
-    }, { headers })
-    // TODO make the login
-    // .subscribe()
-  }
-
-  logout() {
-    headers = headers.delete("auth-header");
-    this.user.next(undefined);
+  constructor(private _http: HttpClient, private _user: UserService) {
+    // handle the login token
+    _user.token.subscribe((token) => {
+      if (token) {
+        headers = headers.set("auth-header", token);
+      } else {
+        headers = headers.delete("auth-header");
+      }
+    })
   }
 
   getProjects(then = () => { }) {
-    if (!this.user.getValue()) return;
+    if (!this._user.isLoggedIn()) return;
 
     const s = this._http.get(URLS.PROJECTS.ALL, { headers })
       .subscribe((projects: Project[]) => {
         this.projects.next(projects);
         then();
         s.unsubscribe();
-      })
+      }, this.errorHandler)
+  }
+
+  errorHandler(err: any) {
+    // this._dialog.dialog.show(
+    //   "error",
+    //   "Server Error",
+    //   "An server error occured! Please contact the admin and send him the output in the console."
+    // );
+    // TODO implement the dialog
+    console.error(JSON.stringify(err));
   }
 }

@@ -7,7 +7,15 @@ export interface Project {
   plannedEndDate: Date;
   realEndDate?: Date;
   overallBudget: number;
+  leaderID: string;
 
   // leader stuff
   userID: User;
+}
+
+export interface ProjectChangeRequest extends Project {
+  realEndDateChange: {
+    change: boolean;
+    date: Date;
+  }
 }

@@ -5,23 +5,26 @@ import { Injectable } from '@angular/core';
 })
 export class StorageService {
 
-  constructor(){
-
+  constructor() {
   }
 
-  public put(key: string, value: any): void{
+  public put(key: string, value: any): void {
     localStorage.setItem(key, value);
   }
 
-  public putObject(key: string, value :object): void{
+  public putObject(key: string, value: object): void {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  public get(key: string): any{
+  public get(key: string): any {
     return localStorage.getItem(key);
   }
 
-  public getObject(key: string): object{
+  public getObject(key: string): object {
     return JSON.parse(localStorage.getItem(key));
+  }
+
+  public clear(): void {
+    localStorage.clear;
   }
 }
