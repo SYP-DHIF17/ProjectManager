@@ -76,6 +76,24 @@ pub async fn update_team(
     pool: web::Data<Pool>,
     auth_user: AuthUser,
     affected_team: web::Path<Uuid>,
+    change_data: web::Json<UpdateTeamRequest>,
 ) -> Result<HttpResponse, APIError> {
-    todo!()
+    let client = get_db_client(&pool).await?;
+    let affected_team = affected_team.into_inner();
+    let current_leader:Uuid = query_one_map(&client, "SELECT leader_id FROM teams WHERE team_id = $1;", &[&affected_team], APIError::NotFound,
+    |row| Ok(row.get("leader_id"))).await?;
+
+    // make sure the current user actually leads the team
+    if current_leader != auth_user.user_id {
+        return Err(APIError::Unauthorized);
+    }
+
+    let change_data = change_data.into_inner();
+
+    // Name present --> update it
+    if let Some(name) = change_data.name {
+        query_none(&client, "UPDATE teams SET name = $1 WHERE team_id = $2;", &[&name, &affected_team]).await?;
+    }
+
+    Ok(HttpResponse::Ok().finish())
 }

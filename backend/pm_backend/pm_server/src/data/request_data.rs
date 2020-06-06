@@ -111,3 +111,8 @@ pub struct RealEndDateChange {
 pub struct CreateTeamRequest {
     pub name: String,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct UpdateTeamRequest {
+    pub name: Option<String>,
+}

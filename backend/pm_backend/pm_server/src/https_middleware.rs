@@ -12,6 +12,7 @@ pub struct RedirectHTTPS {
 }
 
 impl RedirectHTTPS {
+    #[allow(dead_code)]
     pub fn with_replacements(replacements: &[(String, String)]) -> Self {
         RedirectHTTPS {
             replacements: replacements.to_vec(),

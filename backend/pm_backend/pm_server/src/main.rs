@@ -12,6 +12,7 @@ use actix_web::{web, App, HttpServer};
 use chrono::NaiveDateTime;
 use tokio_postgres::NoTls;
 
+#[allow(unused_imports)]
 use crate::https_middleware::RedirectHTTPS;
 use crate::urls::url_config;
 

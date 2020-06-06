@@ -39,6 +39,6 @@ fn project_urls_config(cfg: &mut web::ServiceConfig) {
 fn team_urls_config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/team")
-          .route("/{id}", web::post().to(update_team)),
+          .route("/{id}", web::put().to(update_team)),
     );
 }
