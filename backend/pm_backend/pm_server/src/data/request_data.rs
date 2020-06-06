@@ -116,3 +116,8 @@ pub struct CreateTeamRequest {
 pub struct UpdateTeamRequest {
     pub name: Option<String>,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AddTeamMemberRequest {
+    pub user: Uuid,
+}

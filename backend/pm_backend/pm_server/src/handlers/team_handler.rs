@@ -97,3 +97,27 @@ pub async fn update_team(
 
     Ok(HttpResponse::Ok().finish())
 }
+
+pub async fn add_member_to_team(
+    pool: web::Data<Pool>,
+    auth_user: AuthUser,
+    affected_team: web::Path<Uuid>,
+    new_member: web::Json<AddTeamMemberRequest>,
+) -> Result<HttpResponse, APIError> {
+    let client = get_db_client(&pool).await?;
+    let affected_team = affected_team.into_inner();
+    let current_leader:Uuid = query_one_map(&client, "SELECT leader_id FROM teams WHERE team_id = $1;", &[&affected_team], APIError::NotFound,
+    |row| Ok(row.get("leader_id"))).await?;
+
+    // make sure the current user actually leads the team
+    if current_leader != auth_user.user_id {
+        return Err(APIError::Unauthorized);
+    }
+
+    let new_member = new_member.into_inner();
+
+    query_none(&client, "INSERT INTO teammembers (team_id, user_id) VALUES ($1, $2);", &[&affected_team, &new_member.user]).await?;
+
+
+    Ok(HttpResponse::Ok().finish())
+}
