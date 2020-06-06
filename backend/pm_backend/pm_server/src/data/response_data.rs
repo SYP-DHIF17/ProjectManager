@@ -1,7 +1,8 @@
+use pm_database::models::user::User;
 use serde::{Deserialize, Serialize};
+use std::collections::HashSet;
 use tokio_pg_mapper_derive::PostgresMapper;
 use uuid::Uuid;
-use std::collections::HashSet;
 
 use tokio_pg_mapper::{Error, FromTokioPostgresRow};
 use tokio_postgres::row::Row as TokioRow;
@@ -10,6 +11,7 @@ use tokio_postgres::row::Row as TokioRow;
 pub struct TokenResponse {
     pub token: String,
     pub expiration: String,
+    pub user: ResponseUser,
 }
 
 #[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
@@ -80,7 +82,6 @@ pub struct TeamQueryResult {
     pub team_id: Uuid,
 }
 
-
 #[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
 pub struct TeamResponse {
     pub project_id: Uuid,
@@ -91,14 +92,55 @@ pub struct TeamResponse {
 }
 
 impl TeamResponse {
-    pub fn from_result(res: TeamQueryResult, members:HashSet<Option<Uuid>>) -> Self {
-        let TeamQueryResult{project_id, leader_id, name, team_id, ..} = res;
+    pub fn from_result(res: TeamQueryResult, members: HashSet<Option<Uuid>>) -> Self {
+        let TeamQueryResult {
+            project_id,
+            leader_id,
+            name,
+            team_id,
+            ..
+        } = res;
         Self {
-          members,
-          project_id,
-          leader_id,
-          name,
-          team_id
+            members,
+            project_id,
+            leader_id,
+            name,
+            team_id,
         }
-    }   
+    }
+}
+
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+pub struct ResponseUser {
+    #[serde(rename = "userID")]
+    pub user_id: Uuid,
+    #[serde(rename = "createdOn")]
+    pub created_on: chrono::NaiveDate,
+    pub firstname: String,
+    pub lastname: String,
+    pub email: String,
+    pub birthdate: chrono::NaiveDate,
+}
+
+impl From<User> for ResponseUser {
+    fn from(user: User) -> Self {
+        let User {
+            user_id,
+            created_on,
+            firstname,
+            lastname,
+            email,
+            birthdate,
+            ..
+        } = user;
+
+        Self {
+            user_id,
+            created_on,
+            firstname,
+            lastname,
+            email,
+            birthdate,
+        }
+    }
 }

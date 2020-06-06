@@ -6,11 +6,10 @@ use crate::data::request_data::LoginRequest;
 use crate::data::response_data::TokenResponse;
 use crate::utils::hashing_utils::verify;
 use deadpool_postgres::{Client, Pool};
-use pm_database::db_helper::get_db_client;
-use pm_database::db_helper::query_one_map;
+use pm_database::db_helper::*;
 use pm_errors::APIError;
 use std::include_str;
-use uuid::Uuid;
+use pm_database::models::user::User;
 
 pub async fn login(
     auth_data: web::Json<LoginRequest>, //request body
@@ -18,26 +17,25 @@ pub async fn login(
 ) -> Result<HttpResponse, APIError> {
     let client: Client = get_db_client(&pool).await?; // connection to db
 
-    let data: (Uuid, String) = query_one_map(
+    let user: User = query_one(
         &client,
         include_str!("../../../../sql/queries/retrieve_queries/get_user_for_id.sql"),
         &[&auth_data.email],
         APIError::Unauthorized,
-        |row| Ok((row.get::<_, Uuid>("id"), row.get::<_, String>("hash"))),
     )
     .await?;
 
-    let (user_id, hash) = data;
-
+    let user_id = user.user_id.clone();
     //make sure the heavy work happens on the thread pool
     let response: TokenResponse = web::block(move || {
-        if verify(&hash[..], &auth_data.password)? {
+        if verify(&user.password[..], &auth_data.password)? {
             //First element --> token, second element --> Expiration Timestamp
             let token_tuple = create_token(AuthUser { user_id });
 
             return Ok(TokenResponse {
                 token: token_tuple.0,
                 expiration: token_tuple.1,
+                user: user.into()
             });
         }
         Err(APIError::Unauthorized)
