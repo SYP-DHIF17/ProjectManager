@@ -1,18 +1,26 @@
 @import "../../../../../styles.styl"
 
 #dashboard
+    display flex
+    flex-direction column
+    height 100%
     .content
-        padding 0px 30px 30px 30px
-        width calc(100% - 60px)
+        padding 0px 25px 25px 25px
+        width 100%
         height auto
         display flex
         flex-direction row
         flex-wrap wrap
         justify-content space-between
+        flex-grow 1
+
+        & > div
+            flex-grow 1
+            flex-basis 0
 
         .content-left
+            margin-right: 5px
             display flex
-            width 55%
             height auto
             justify-content space-between
             flex-wrap wrap
@@ -25,3 +33,6 @@
             #calendar
                 width 100%
                 margin-top 30px
+
+        .content-right
+            margin-left 5px

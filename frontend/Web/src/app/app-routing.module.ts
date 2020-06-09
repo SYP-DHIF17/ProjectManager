@@ -4,6 +4,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ManagementPanelComponent } from './components/management-panel/management-panel/management-panel.component';
 import { DashboardComponent } from './components/management-panel/dashboard/dashboard/dashboard.component';
+import { ProjectsComponent } from './components/management-panel/projects/projects.component';
+import { AddProjectComponent } from './components/management-panel/projects/add-project/add-project.component';
+import { ProjectDetailsComponent } from '@components/management-panel/dashboard/project-details/project-details.component';
 
 const routes: Routes = [
   // {
@@ -31,6 +34,18 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
+      },
+      {
+        path: 'projects',
+        component: ProjectsComponent
+      },
+      {
+        path: 'add-project',
+        component: AddProjectComponent
+      },
+      {
+        path: 'project/:id',
+        component: ProjectDetailsComponent
       }
     ]
   }

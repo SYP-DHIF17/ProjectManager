@@ -7,11 +7,18 @@
             <div id="version" class="card">
                 <app-version></app-version>
             </div>
-            <div id="tickets" class="card">
-                <app-tickets></app-tickets>
-            </div>
-            <div id="calendar" class="card">
-                <app-calendar size="small"></app-calendar>
+        </div>
+        <div class="content-right">
+            <div class="card">
+                <h4>Projects</h4>
+                <div class="project-list">
+                    <a
+                        [routerLink]="['/project', project.projectId]"
+                        *ngFor="let project of projects"
+                    >
+                        {{ project.name }}
+                    </a>
+                </div>
             </div>
         </div>
     </div>

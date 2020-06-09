@@ -15,8 +15,12 @@ import { SidebarComponent } from './components/management-panel/sidebar/sidebar.
 import { HeaderComponent } from './components/management-panel/dashboard/header/header.component';
 import { DashboardComponent } from './components/management-panel/dashboard/dashboard/dashboard.component';
 import { VersionComponent } from './components/management-panel/dashboard/version/version.component';
-import { TicketsComponent } from './components/management-panel/dashboard/tickets/tickets.component';
-import { CalendarComponent } from './components/management-panel/dashboard/calendar/calendar.component';
+import { ProjectsComponent } from './components/management-panel/projects/projects.component';
+import { ProjectItemComponent } from './components/management-panel/projects/project-item/project-item.component';
+import { AddProjectComponent } from './components/management-panel/projects/add-project/add-project.component';
+import { ProjectDetailsComponent } from './components/management-panel/dashboard/project-details/project-details.component';
+import { NgbModule, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -29,8 +33,10 @@ import { CalendarComponent } from './components/management-panel/dashboard/calen
     HeaderComponent,
     DashboardComponent,
     VersionComponent,
-    TicketsComponent,
-    CalendarComponent
+    ProjectsComponent,
+    ProjectItemComponent,
+    AddProjectComponent,
+    ProjectDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,11 @@ import { CalendarComponent } from './components/management-panel/dashboard/calen
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
+    NgbDatepickerModule,
+    NgbTimepickerModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
