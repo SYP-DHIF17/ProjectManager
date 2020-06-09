@@ -1,7 +1,7 @@
 [package]
-name = "pm_testing"
+name = "pm_debug"
 version = "0.1.0"
-authors = ["realSuffix <linmad17@htl-kaindorf.at>"]
+authors = ["Martin Linhard <linmad17@htl-kaindorf.at>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
