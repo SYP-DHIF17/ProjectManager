@@ -12,10 +12,3 @@ export interface Project {
   // leader stuff
   userID: User;
 }
-
-export interface ProjectChangeRequest extends Project {
-  realEndDateChange: {
-    change: boolean;
-    date: Date;
-  }
-}

@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   email: string = '';
   password_1: string = '';
   password_2: string = '';
-  startDate: NgbDateStruct = {
+  birthdate: NgbDateStruct = {
     day: new Date().getDate(),
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear()
@@ -52,7 +52,38 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const r = this._user.register(this.firstname, this.lastname, this.email, this.password_1, new Date())
+    const { firstname, lastname, email, password_1, birthdate } = this;
+    const { year, month, day } = birthdate;
+
+    const r = this._user.register({
+      firstname,
+      lastname,
+      email,
+      password: password_1,
+      birthdate: new Date(year, month - 1, day)
+    })
+      .subscribe(() => {
+        r.unsubscribe();
+        const login = this._user.login(
+          this.email,
+          this.password_1
+        )
+          .subscribe(res => {
+            login.unsubscribe();
+            this._user.token.next(res.token);
+            this._user.tokenExpiration.next(new Date(res.expiration));
+            this._user.user.next(res.user);
+            this._user.save();
+            this._router.navigateByUrl("/")
+          }, err => {
+            // TODO display err msg
+            console.error(err);
+          });
+      }, err => {
+        // TODO make err dialog
+        console.error(err);
+      });
+
 
     this.loader.setVisible(true);
   }

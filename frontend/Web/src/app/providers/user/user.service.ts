@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URLS, LoginResponse } from '@shared';
 import { StorageService } from '@providers';
+import { CreateUserRequest, LoginRequest } from 'app/shared/requests';
 
 @Injectable({
   providedIn: 'root'
@@ -37,25 +38,16 @@ export class UserService {
     // return !(token == '' || token == null || user == '' || user == null || tokenExpiration == '' || tokenExpiration == null || (new Date(tokenExpiration) < new Date()));
   }
 
-  public login(email: string, password: string): Observable<LoginResponse> {
-    return this._http.post(URLS.USER.LOGIN, {
-      email,
-      password
-    }, {
+  public login(login: LoginRequest): Observable<LoginResponse> {
+    return this._http.post<LoginResponse>(URLS.USER.LOGIN, login, {
       headers: {
         'Access-Control-Allow-Origin': '*'
       }
-    }) as Observable<LoginResponse>;
+    });
   }
 
-  public register(firstname: string, lastname: string, email: string, password: string, birthdate: Date): Observable<any> {
-    return this._http.post(URLS.USER.REGISTER, {
-      firstname,
-      lastname,
-      password,
-      email,
-      birthdate
-    }, {
+  public register(user: CreateUserRequest): Observable<any> {
+    return this._http.post(URLS.USER.REGISTER, user, {
       headers: {
         'Access-Control-Allow-Origin': '*'
       }

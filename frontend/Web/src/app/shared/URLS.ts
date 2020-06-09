@@ -6,6 +6,9 @@ export class URLS {
     public static readonly REGISTER: string = URLS.BASE + '/register';
     // TODO get a better name for the url lol
     public static readonly INFO: string = URLS.BASE + '/user';
+    public static ID(userID: string) {
+      return `${this.INFO}/${userID}`;
+    }
   }
 
   public static PROJECTS = class {
@@ -30,6 +33,9 @@ export class URLS {
     }
     public static ID(partID: string): string {
       return URLS.BASE + `/part/${partID}`;
+    }
+    public static WITHTEAM(partID: string, teamID: string) {
+      return this.ID(partID) + `/${teamID}`;
     }
   }
 
