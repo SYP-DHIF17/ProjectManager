@@ -11,7 +11,7 @@
         <input type="number" placeholder="Budget" [(ngModel)]="budget">
     </div>
     <div>
-        <input type="text" placeholder="Teamleiter (für selbst -> Feld leer lassen)" [(ngModel)]="leader">
+        <input type="email" placeholder="Teamleiter (Email)" [(ngModel)]="leader">
     </div>
     <div>
         <p>Von</p>
@@ -20,21 +20,6 @@
     <div>
         <p>Bis</p>
         <input type="date" placeholder="Bis" [(ngModel)]="endDate">
-    </div>
-    <div>
-        <p>Mitglieder</p>
-        <div>
-            <input class="add" type="text" placeholder="Mitglieder-Email" [(ngModel)]="addMember">
-            <button (click)="addMemberToProject()">Hinzufügen</button>
-        </div>
-        <div>
-            <ul>
-                <li *ngFor="let member of members">
-                    <span>{{member}}</span>
-                    <i (click)="removeMember(member)" class="fas fa-times"></i>
-                </li>
-            </ul>
-        </div>
     </div>
     <div>
         <button id="create" (click)="createProject()">Erstellen</button>

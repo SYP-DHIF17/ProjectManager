@@ -65,8 +65,10 @@ export class RegisterComponent implements OnInit {
       .subscribe(() => {
         r.unsubscribe();
         const login = this._user.login(
-          this.email,
-          this.password_1
+          {
+            email: this.email,
+            password: this.password_1
+          }
         )
           .subscribe(res => {
             login.unsubscribe();

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Project, User, Team, ProjectPart, Workpackage } from '@models';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { URLS } from '@shared';
+import { URLS, CreateTeamResponse } from '@shared';
 import { UserService } from '../user/user.service';
 import { CreateProjectRequest, ChangeUserRequest, ChangeProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddTeamMemberRequest, AddProjectPart, ChangeProjectPart, AddWorkPackage, ChangeWorkPackage } from 'app/shared/requests';
 
@@ -105,13 +105,13 @@ export class DataService {
       }, this.errorHandler);
   }
 
-  createTeam(projectID: string, request: CreateTeamRequest, then = () => { }) {
+  createTeam(projectID: string, request: CreateTeamRequest, then = (teamID: string) => { }) {
     if (!this._user.isLoggedIn()) return;
 
     const s = this._http.post(URLS.TEAMS.ALL(projectID), request, { headers })
-      .subscribe(() => {
+      .subscribe((response: CreateTeamResponse) => {
         s.unsubscribe();
-        then();
+        then(response.teamID);
       }, this.errorHandler);
   }
 
@@ -128,9 +128,8 @@ export class DataService {
   addTeamMember(teamID: string, request: AddTeamMemberRequest, then = () => { }) {
     if (!this._user.isLoggedIn()) return;
 
-    const s = this._http.post(URLS.TEAMS.ID(teamID), request, { headers })
+    return this._http.post(URLS.TEAMS.ID(teamID), request, { headers })
       .subscribe(() => {
-        s.unsubscribe();
         then();
       }, this.errorHandler);
   }

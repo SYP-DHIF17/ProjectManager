@@ -23,16 +23,6 @@ export class AddProjectComponent implements OnInit {
     ngOnInit(): void {
 
     }
-
-    public addMemberToProject(): void {
-        this.members.push(this.addMember);
-        this.addMember = '';
-    }
-
-    public removeMember(member: string): void {
-        this.members.splice(this.members.indexOf(member), 1);
-    }
-
     public createProject(): void {
         
     }

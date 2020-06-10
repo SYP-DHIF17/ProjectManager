@@ -1,0 +1,15 @@
+<div id="notification-popup" [hidden]="!isVisible">
+    <div class="container" [ngClass]="{'success': type == 'success', 'warning': type == 'warning', 'error': type == 'error'}">
+        <div class="top">
+            <p>
+                {{ title }}
+            </p>
+            <div class="close" (click)="isVisible = false">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="text">
+            {{ text }}
+        </div>
+    </div>
+</div>

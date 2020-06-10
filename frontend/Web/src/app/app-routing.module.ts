@@ -7,6 +7,7 @@ import { DashboardComponent } from './components/management-panel/dashboard/dash
 import { ProjectsComponent } from './components/management-panel/projects/projects.component';
 import { AddProjectComponent } from './components/management-panel/projects/add-project/add-project.component';
 import { ProjectDetailsComponent } from '@components/management-panel/dashboard/project-details/project-details.component';
+import { AddTeamComponent } from '@components/management-panel/projects/add-team/add-team.component';
 
 const routes: Routes = [
   // {
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path: 'project/:id',
         component: ProjectDetailsComponent
+      },
+      {
+          path: 'project/:id/teams/add',
+          component: AddTeamComponent
       }
     ]
   }

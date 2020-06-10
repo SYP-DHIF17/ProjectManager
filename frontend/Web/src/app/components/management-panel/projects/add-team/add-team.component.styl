@@ -1,12 +1,13 @@
 @import "../../../../../styles.styl"
 
-#add-project
+#add-team
     width 100%
     height 100%
-    padding 30px
+    box-sizing border-box
+    padding 30px 60px
 
     h1
-        font-size 26px
+        font-size 28px
         color primary_dark
 
     input,
@@ -16,7 +17,7 @@
         background white
         border solid 1px lightgray
         padding 10px
-        margin-bottom 15px
+        margin-bottom 25px
         border-radius 4px
 
     textarea
@@ -25,7 +26,7 @@
     p
         margin 0
         padding-bottom 5px
-        padding-left 5px
+        padding-left 2px
 
     button
         color white
@@ -34,12 +35,6 @@
         padding 10px
         margin-left 10px
         border-radius 4px
-
-    .add
-        border-bottom-right-radius 0
-        border-bottom-left-radius 0
-        border-bottom none
-        margin 0
 
     #create
         width 600px
@@ -51,12 +46,31 @@
         &:hover
             opacity .8
 
+    #cancel
+        width 600px
+        margin 0
+        margin-top 30px
+        font-size 17px
+        transition all 300ms
+        background #e34c42
+
+        &:hover
+            opacity .8
+
+    .add
+        border-bottom-right-radius 0
+        border-bottom-left-radius 0
+        border-bottom none
+        margin 0
+
     ul
         width 600px
         background white
         border solid 1px lightgray
         padding 10px
         border-top none
+        border-bottom-right-radius 4px
+        border-bottom-left-radius 4px
 
         i
             color #888

@@ -38,7 +38,7 @@ constructor(private _loader: LoaderService,
     this._loader.setVisible(true);
 
     // login part
-    const s = this._user.login(this.email, this.password).subscribe((res: LoginResponse) => {
+    const s = this._user.login({email: this.email, password: this.password}).subscribe((res: LoginResponse) => {
       s.unsubscribe();
       this._user.user.next(res.user);
       this._user.token.next(res.token);

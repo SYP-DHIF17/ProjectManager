@@ -1,0 +1,28 @@
+<div id="add-team">
+    <h1>Team anlegen</h1>
+    <div>
+        <p>Team-Name</p>
+        <input type="text" placeholder="Alpha" [(ngModel)]="teamName">
+    </div>
+    <div>
+        <p>Mitglieder</p>
+        <div>
+            <input class="add" type="text" placeholder="Mitglieder-Email" [(ngModel)]="memberEmail">
+            <button (click)="addMember()">Hinzufügen</button>
+        </div>
+        <div>
+            <ul>
+                <li *ngFor="let member of members">
+                    <span>{{member}}</span>
+                    <i (click)="removeMember(member)" class="fas fa-times"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <button id="cancel" (click)="cancel()">Abbrechen</button>
+    </div>
+    <div>
+        <button id="create" (click)="createTeam()">Erstellen</button>
+    </div>
+</div>

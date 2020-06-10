@@ -1,0 +1,17 @@
+<div id="dialog" *ngIf="isVisible">
+    <div class="dialog-box">
+        <div class="dialog-title" [ngClass]="{'red': type == 'error', 'green': type == 'success' }">
+            <p>{{ title }}</p>
+        </div>
+        <div class="dialog-text">
+            <p>{{ text }}</p>
+        </div>
+        <div class="btn-ok" [ngClass]="{'invisible': type == 'question'}">
+            <button (click)="onOk()">OK</button>
+        </div>
+        <div class="btn-question" [ngClass]="{'invisible': type != 'question'}">
+            <button (click)="onYes()">Ja</button>
+            <button (click)="onNo()">Nein</button>
+        </div>
+    </div>
+</div>

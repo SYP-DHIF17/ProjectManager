@@ -5,3 +5,11 @@ export interface LoginResponse {
   expiration: string;
   user: User;
 }
+
+export interface CreateTeamResponse {
+    teamID: string;
+}
+
+export interface AddMemberToTeamResponse {
+
+}
