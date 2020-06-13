@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Project, User, Team, ProjectPart, Workpackage } from '@models';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URLS, CreateTeamResponse } from '@shared';
 import { UserService } from '../user/user.service';
 import { CreateProjectRequest, ChangeUserRequest, ChangeProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddTeamMemberRequest, AddProjectPart, ChangeProjectPart, AddWorkPackage, ChangeWorkPackage } from 'app/shared/requests';
+import { map } from 'rxjs/operators';
 
 let headers = new HttpHeaders({
   "Content-Type": "application/json; charset=utf-8",
@@ -213,5 +214,16 @@ export class DataService {
     // );
     // TODO implement the dialog
     console.error(JSON.stringify(err));
+  }
+
+  getObservableProjects(): Observable<Project[]> {
+    return of(this.projects.getValue());
+  }
+
+  getProjectFromID(id: string) {
+    return this.getObservableProjects()
+      .pipe(
+        map(projects => projects.find(project => project.projectId === id))
+      );
   }
 }

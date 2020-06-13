@@ -1,5 +1,13 @@
 <div id="project-details" *ngIf="project">
     <h2>{{ project.name }}</h2>
+    <div class="short-info">
+        <div class="date">
+            Startdate: {{ project.startDate.toLocaleDateString() }}
+        </div>
+        <div class="date">
+            Planned Enddate: {{ project.plannedEndDate.toLocaleDateString() }}
+        </div>
+    </div>
 </div>
 <div id="project-details" *ngIf="!project">
     Project not found!

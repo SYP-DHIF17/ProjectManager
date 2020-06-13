@@ -22,16 +22,8 @@ export class ProjectDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this._route.paramMap.pipe(
-      switchMap(params => {
-        const projects = this._data.projects.getValue();
-        for (const project of projects) {
-          if (project.projectId == params.get("id")) {
-            this.project = project;
-          }
-        }
-        return new Observable(null);
-      })
-    );
+      switchMap(params => this._data.getProjectFromID(params.get("id")))
+    ).subscribe(project => this.project = project);
   }
 
 }
