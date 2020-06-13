@@ -3,9 +3,11 @@
         <button [routerLink]="['/add-project']">Add Project</button>
     </div>
     <div class="projects">
-        <!-- TODO: ngFor with projects -->
-        <div (click)="onSelectProject()">
-            <app-project-item></app-project-item>
-        </div>
+        <a
+            *ngFor="let project of projects"
+            [routerLink]="['/project', project.projectId]"
+        >
+            <app-project-item [project]="project"></app-project-item>
+        </a>
     </div>
 </div>
