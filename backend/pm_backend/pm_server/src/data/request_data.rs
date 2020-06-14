@@ -121,3 +121,13 @@ pub struct UpdateTeamRequest {
 pub struct AddTeamMemberRequest {
     pub user: Uuid,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AddProjectPartToTeamRequest {
+    pub project_part_id: Uuid,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateProjectPartRequest<'a> {
+    pub name: &'a str,
+}

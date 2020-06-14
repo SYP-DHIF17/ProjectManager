@@ -3,7 +3,7 @@ use actix_web::{web, HttpResponse};
 use crate::data::request_data::*;
 use crate::data::response_data::*;
 use crate::data::AuthUser;
-use deadpool_postgres::Pool;
+use deadpool_postgres::{Pool, Client};
 use itertools::Itertools;
 use pm_database::db_helper::get_db_client;
 use pm_database::db_helper::*;
@@ -80,13 +80,8 @@ pub async fn update_team(
 ) -> Result<HttpResponse, APIError> {
     let client = get_db_client(&pool).await?;
     let affected_team = affected_team.into_inner();
-    let current_leader:Uuid = query_one_map(&client, "SELECT leader_id FROM teams WHERE team_id = $1;", &[&affected_team], APIError::NotFound,
-    |row| Ok(row.get("leader_id"))).await?;
 
-    // make sure the current user actually leads the team
-    if current_leader != auth_user.user_id {
-        return Err(APIError::Unauthorized);
-    }
+    authorize_team_leader(&affected_team, &auth_user.user_id, &client).await?;
 
     let change_data = change_data.into_inner();
 
@@ -106,13 +101,8 @@ pub async fn add_member_to_team(
 ) -> Result<HttpResponse, APIError> {
     let client = get_db_client(&pool).await?;
     let affected_team = affected_team.into_inner();
-    let current_leader:Uuid = query_one_map(&client, "SELECT leader_id FROM teams WHERE team_id = $1;", &[&affected_team], APIError::NotFound,
-    |row| Ok(row.get("leader_id"))).await?;
 
-    // make sure the current user actually leads the team
-    if current_leader != auth_user.user_id {
-        return Err(APIError::Unauthorized);
-    }
+    authorize_team_leader(&affected_team, &auth_user.user_id, &client).await?;
 
     let new_member = new_member.into_inner();
 
@@ -120,4 +110,34 @@ pub async fn add_member_to_team(
 
 
     Ok(HttpResponse::Ok().finish())
+}
+
+pub async fn add_project_part_to_team(
+    pool: web::Data<Pool>,
+    affected_team: web::Path<Uuid>,
+    project_part_id: web::Json<AddProjectPartToTeamRequest>,
+    auth_user: AuthUser,
+) -> Result<HttpResponse, APIError> {
+    let client = get_db_client(&pool).await?;
+    let affected_team:Uuid = affected_team.into_inner();
+    let affected_project_part:Uuid = project_part_id.into_inner().project_part_id;
+    authorize_team_leader(&affected_team, &auth_user.user_id, &client).await?; // make sure current user leads the team
+    query_none(&client, "INSERT INTO team_parts(project_part_id, team_id) VALUES ($1, $2);", &[&affected_project_part, &affected_team]).await?;
+    Ok(HttpResponse::Ok().finish())
+}
+
+/// This function returns an error in case the current user doesn't lead the specified team
+async fn authorize_team_leader(
+    affected_team: &Uuid,
+    affected_user: &Uuid,
+    client: &Client
+) -> Result<(), APIError>{
+    let current_leader:Uuid = query_one_map(client, "SELECT leader_id FROM teams WHERE team_id = $1;", &[&affected_team], APIError::NotFound,
+    |row| Ok(row.get("leader_id"))).await?;
+
+    // make sure the current user actually leads the team
+    if current_leader != *affected_user {
+        return Err(APIError::Unauthorized);
+    }
+    Ok(())
 }
