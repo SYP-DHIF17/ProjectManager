@@ -1,5 +1,9 @@
 <div id="sidebar">
-    <div class="logo"></div>
+    <div class="logo">
+        <a [routerLink]="['/']">
+            <img src="/assets/logo/logo.png" alt="Logo" />
+        </a>
+    </div>
     <div class="nav">
         <a [routerLink]="['/panel']">
             <div class="dashboard icon icon-active">
@@ -27,26 +31,6 @@
                     </div>
                     <span>
                         Aufgaben
-                    </span>
-                </a>
-            </li>
-            <li class="icon">
-                <a [routerLink]="['/calendar']">
-                    <div>
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <span>
-                        Kalendar
-                    </span>
-                </a>
-            </li>
-            <li class="icon">
-                <a [routerLink]="['/tickets']">
-                    <div>
-                        <i class="fas fa-ticket-alt"></i>
-                    </div>
-                    <span>
-                        Tickets
                     </span>
                 </a>
             </li>

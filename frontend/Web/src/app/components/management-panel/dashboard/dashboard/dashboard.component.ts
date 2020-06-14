@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Project } from '@models';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.styl']
 })
 export class DashboardComponent implements OnInit {
+
+  public projects: Project[] = [];
 
   constructor() { }
 
