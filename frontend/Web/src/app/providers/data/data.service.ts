@@ -4,8 +4,9 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URLS, CreateTeamResponse } from '@shared';
 import { UserService } from '../user/user.service';
-import { CreateProjectRequest, ChangeUserRequest, ChangeProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddTeamMemberRequest, AddProjectPart, ChangeProjectPart, AddWorkPackage, ChangeWorkPackage } from 'app/shared/requests';
+import { CreateProjectRequest, ChangeUserRequest, ChangeProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddTeamMemberRequest, AddProjectPart, ChangeProjectPart, AddWorkPackage, ChangeWorkPackage } from '@shared';
 import { map } from 'rxjs/operators';
+import { DialogService } from '@providers/dialog/dialog.service';
 
 let headers = new HttpHeaders({
   "Content-Type": "application/json; charset=utf-8",
@@ -22,7 +23,7 @@ export class DataService {
   public teams: BehaviorSubject<Team[]> = new BehaviorSubject([]);
   public parts: BehaviorSubject<ProjectPart[]> = new BehaviorSubject([]);
 
-  constructor(private _http: HttpClient, private _user: UserService) {
+  constructor(private _http: HttpClient, private _user: UserService, private _dialog: DialogService) {
     // handle the login token
     _user.token.subscribe((token) => {
       if (token) {
@@ -207,12 +208,11 @@ export class DataService {
   }
 
   errorHandler(err: any) {
-    // this._dialog.dialog.show(
-    //   "error",
-    //   "Server Error",
-    //   "An server error occured! Please contact the admin and send him the output in the console."
-    // );
-    // TODO implement the dialog
+    this._dialog.dialog.show(
+      "error",
+      "Server Error",
+      "An server error occured! Please contact the admin and send him the output in the console. (Ctrl+Shift+I to open the developer console)"
+    );
     console.error(JSON.stringify(err));
   }
 

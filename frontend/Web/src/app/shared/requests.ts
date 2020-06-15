@@ -1,5 +1,3 @@
-import { User, Project } from '@models';
-
 export interface LoginRequest {
   email: string;
   password: string;

@@ -8,7 +8,4 @@ export interface Project {
   realEndDate?: Date;
   overallBudget: number;
   leaderID: string;
-
-  // leader stuff
-  userID: User;
 }

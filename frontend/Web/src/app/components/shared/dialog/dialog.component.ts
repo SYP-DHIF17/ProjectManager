@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DialogResult } from '../dialog-result.enum';
 
+export type DialogType = "error" | "success" | "question";
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
@@ -10,19 +11,19 @@ export class DialogComponent implements OnInit {
   @Output() public dialogResult: EventEmitter<DialogResult> = new EventEmitter<DialogResult>();
 
   isVisible: boolean = false;
-  type: string = 'success';
+  type: DialogType = 'success';
   title: string = '';
   text: string = '';
 
-  constructor(){
+  constructor() {
 
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
 
   }
 
-  public show(type: string, title: string, text: string): EventEmitter<DialogResult>{
+  public show(type: DialogType, title: string, text: string): EventEmitter<DialogResult> {
     this.type = type;
     this.title = title;
     this.text = text;
@@ -30,17 +31,17 @@ export class DialogComponent implements OnInit {
     return this.dialogResult;
   }
 
-  onOk(): void{
+  onOk(): void {
     this.isVisible = false;
     this.dialogResult.emit(DialogResult.OK);
   }
 
-  onYes(): void{
+  onYes(): void {
     this.isVisible = false;
     this.dialogResult.emit(DialogResult.YES);
   }
 
-  onNo(): void{
+  onNo(): void {
     this.isVisible = false;
     this.dialogResult.emit(DialogResult.NO);
   }

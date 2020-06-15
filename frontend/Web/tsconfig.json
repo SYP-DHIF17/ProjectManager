@@ -15,9 +15,13 @@
         "lib": ["es2018", "dom"],
         "paths": {
             "@models": ["app/models"],
-            "@components/*": ["app/components/*"],
+            "@components": ["app/components"],
             "@providers": ["app/providers"],
-            "@shared": ["app/shared"]
+            "@shared": ["app/shared"],
+            "@models/*": ["app/models/*"],
+            "@components/*": ["app/components/*"],
+            "@providers/*": ["app/providers/*"],
+            "@shared/*": ["app/shared/*"]
         }
     },
     "angularCompilerOptions": {

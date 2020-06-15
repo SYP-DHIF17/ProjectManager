@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '@models';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { URLS, LoginResponse } from '@shared';
-import { StorageService } from '@providers';
-import { CreateUserRequest, LoginRequest } from 'app/shared/requests';
+import { HttpClient } from '@angular/common/http';
+import { URLS, LoginResponse, CreateUserRequest, LoginRequest } from '@shared';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +33,7 @@ export class UserService {
     let user = this._storage.get("VORTEX.USER.USER");
     let tokenExpiration = this._storage.get("VORTEX.USER.EXPIRE");
 
-    return !(token || user || tokenExpiration) // should also work
+    return !(token || user || tokenExpiration || (new Date(tokenExpiration) < new Date())) // should also work
     // return !(token == '' || token == null || user == '' || user == null || tokenExpiration == '' || tokenExpiration == null || (new Date(tokenExpiration) < new Date()));
   }
 
