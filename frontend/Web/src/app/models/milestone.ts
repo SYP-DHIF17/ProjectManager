@@ -1,9 +1,7 @@
 export interface Milestone {
   readonly milestoneId: string;
-  position: number;
   name: string;
+  description: string;
   projectPartId: string;
-  startDate: Date;
-  plannedEndDate: Date;
-  realEndDate: Date;
+  reachDate: Date;
 }

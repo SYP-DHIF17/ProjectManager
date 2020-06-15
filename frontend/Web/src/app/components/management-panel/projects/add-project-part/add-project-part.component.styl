@@ -1,0 +1,92 @@
+@import "../../../../../styles.styl"
+
+#add-project-part
+    width 100%
+    height 100%
+    padding 30px
+    display flex
+    justify-content space-between
+    align-content flex-start
+    align-items flex-start
+
+    h1, h2
+        font-size 28px
+        color primary_dark
+        padding-top 0px
+        margin-top 0px
+        padding-bottom 10px
+
+    h2
+        font-size 20px
+        padding-top 20px
+        padding-bottom 0px
+
+    input,
+    textarea
+        width 600px
+        resize none
+        background white
+        border solid 1px lightgray
+        padding 10px
+        margin-bottom 15px
+        border-radius 4px
+
+    textarea
+        height 150px
+
+    p
+        margin 0
+        padding-bottom 5px
+        padding-left 5px
+
+    button
+        color white
+        cursor pointer
+        background primary_dark
+        padding 10px
+        margin-left 10px
+        border-radius 4px
+
+    #create
+        width 600px
+        margin 0
+        margin-top 50px
+        font-size 17px
+        transition all 300ms
+
+    .left
+        width 50%
+
+        .work-packages,
+        .milestones
+            background white
+            width 600px
+            padding 12px
+            border-radius 4px
+            border solid 1px lightgray
+
+            li
+                cursor pointer
+                background white
+                padding 6px 10px
+                transition all 300ms
+                border-radius 3px
+                color #333
+
+                i
+                    padding-right 8px
+                    cursor pointer
+                    transition all 300ms
+                    
+                    &:hover
+                        color red
+
+                .add:hover
+                    color #333
+
+            li.selected
+                background secondary_dark
+    .right
+        width 50%
+        height 100%
+        overflow auto

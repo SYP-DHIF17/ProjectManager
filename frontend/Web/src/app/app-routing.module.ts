@@ -8,6 +8,7 @@ import { ProjectsComponent } from './components/management-panel/projects/projec
 import { AddProjectComponent } from './components/management-panel/projects/add-project/add-project.component';
 import { ProjectDetailsComponent } from '@components/management-panel/dashboard/project-details/project-details.component';
 import { AddTeamComponent } from '@components/management-panel/projects/add-team/add-team.component';
+import { AddProjectPartComponent } from '@components/management-panel/projects/add-project-part/add-project-part.component';
 
 const routes: Routes = [
   // {
@@ -51,6 +52,10 @@ const routes: Routes = [
       {
           path: 'project/:id/teams/add',
           component: AddTeamComponent
+      },
+      {
+        path: 'project/:id/parts/add',
+        component: AddProjectPartComponent
       }
     ]
   }

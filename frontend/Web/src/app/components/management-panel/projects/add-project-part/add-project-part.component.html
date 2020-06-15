@@ -1,0 +1,75 @@
+<div id="add-project-part">
+    <div class="left">
+        <h1>Projektabschnitt hinzufügen</h1>
+        <div>
+            <input type="text" placeholder="Name" [(ngModel)]="name">
+        </div>
+        <div>
+            <p>Position</p>
+            <input type="number" placeholder="Position" [(ngModel)]="position">
+        </div>
+        <h2>Arbeitspakete</h2>
+        <div class="work-packages">
+            <ul>
+                <li *ngFor="let entry of workpackages" 
+                    [ngClass]="{'selected': entry.selected}"
+                    (click)="onChangeSelectionForWorkpackage(entry)">
+                    <i *ngIf="entry.data.workpackageId != 'add'"
+                       class="far fa-trash-alt"
+                       (click)="onDeleteWorkpackage(entry)"></i>
+                    <i class="fas fa-plus add" *ngIf="entry.data.workpackageId == 'add'"></i>
+                    {{entry.data.name}}
+                </li>
+            </ul>
+        </div>
+        <h2>Meilensteine</h2>
+        <div class="milestones">
+            <ul>
+                <li *ngFor="let entry of milestones" 
+                    [ngClass]="{'selected': entry.selected}"
+                    (click)="onChangeSelectionForMilestones(entry)">
+                    <i *ngIf="entry.data.milestoneId != 'add'"
+                       class="far fa-trash-alt"
+                       (click)="onDeleteMilestone(entry)"></i>
+                    <i class="fas fa-plus add" *ngIf="entry.data.milestoneId == 'add'"></i>
+                    {{entry.data.name}}
+                </li>
+            </ul>
+        </div>
+        <button id="create" (click)="onSave()">Speichern</button>
+    </div>
+    <div class="right">
+        <div>
+            <h2>Arbeitspaket</h2>
+            <div>
+                <input type="text" placeholder="Name" [(ngModel)]="editableWorkpackage.name">
+            </div>
+            <div>
+                <textarea placeholder="Beschreibung" [(ngModel)]="editableWorkpackage.description"></textarea>
+            </div>
+            <div>
+                <p>Start-Datum</p>
+                <input type="date" placeholder="Start-Date" [(ngModel)]="editableWorkpackage.startDate">
+            </div>
+            <div>
+                <p>Geplantes End-Datum</p>
+                <input type="date" placeholder="End-Date" [(ngModel)]="editableWorkpackage.plannedEndDate">
+            </div>
+            <button id="create" style="margin-top: 10px" (click)="onSaveWorkpackage()">Speichern</button>
+        </div>
+        <div>
+            <h2 style="margin-top: 50px">Meilenstein</h2>
+            <div>
+                <input type="text" placeholder="Name" [(ngModel)]="editableMilestone.name">
+            </div>
+            <div>
+                <textarea placeholder="Beschreibung" [(ngModel)]="editableMilestone.description"></textarea>
+            </div>
+            <div>
+                <p>Geplante Fertigstellung</p>
+                <input type="date" placeholder="Reach-Date" [(ngModel)]="editableMilestone.reachDate">
+            </div>
+            <button id="create" style="margin-top: 10px" (click)="onSaveMilestone()">Speichern</button>
+        </div>
+    </div>
+</div>

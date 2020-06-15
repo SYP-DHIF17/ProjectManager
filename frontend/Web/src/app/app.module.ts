@@ -24,6 +24,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AddTeamComponent } from './components/management-panel/projects/add-team/add-team.component';
 import { NotificationPopUpComponent } from '@components/shared/notification-pop-up/notification-pop-up.component';
 import { DialogComponent } from '@components/shared/dialog/dialog.component';
+import { AddProjectPartComponent } from './components/management-panel/projects/add-project-part/add-project-part.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DialogComponent } from '@components/shared/dialog/dialog.component';
     ProjectDetailsComponent,
     AddTeamComponent,
     NotificationPopUpComponent,
-    DialogComponent
+    DialogComponent,
+    AddProjectPartComponent
   ],
   imports: [
     BrowserModule,
