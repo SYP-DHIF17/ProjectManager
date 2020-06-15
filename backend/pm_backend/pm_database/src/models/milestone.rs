@@ -8,8 +8,6 @@ pub struct MileStone {
     #[serde(rename = "milestoneID")]
     pub milestone_id: Uuid,
 
-    pub position: i32,
-
     #[serde(rename = "reachDate")]
     pub reach_date: chrono::NaiveDate,
 
@@ -17,4 +15,6 @@ pub struct MileStone {
 
     #[serde(rename = "projectPartID")]
     pub project_part_id: Uuid,
+
+    pub description: String,
 }

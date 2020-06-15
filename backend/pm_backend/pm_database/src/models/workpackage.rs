@@ -23,4 +23,6 @@ pub struct WorkPackage {
 
     #[serde(rename = "projectPartID")]
     pub project_part_id: Uuid,
+
+    pub description: String,
 }
