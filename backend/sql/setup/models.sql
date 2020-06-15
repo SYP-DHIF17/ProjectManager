@@ -66,7 +66,6 @@ CREATE TABLE milestones
 CREATE TABLE workpackages
 (
     workpackage_id UUID PRIMARY KEY,
-    position INTEGER NOT NULL,
     name VARCHAR(100) NOT NULL,
     start_date date NOT NULL,
     planned_enddate date NOT NULL,

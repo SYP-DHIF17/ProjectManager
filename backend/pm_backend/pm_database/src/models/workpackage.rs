@@ -8,8 +8,6 @@ pub struct WorkPackage {
     #[serde(rename = "workpackageID")]
     pub workpackage_id: Uuid,
 
-    pub position: i32,
-
     pub name: String,
 
     #[serde(rename = "startDate")]
