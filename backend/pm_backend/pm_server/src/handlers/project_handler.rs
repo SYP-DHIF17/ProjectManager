@@ -15,12 +15,12 @@ pub async fn create_project(
     create_data: web::Json<CreateProjectRequest>,
     pool: web::Data<Pool>,
     auth_user: AuthUser,
-) -> Result<HttpResponse, APIError> { 
+) -> Result<HttpResponse, APIError> {
     let wrapper = CreateProjectWrapper(create_data.into_inner(), auth_user.into()); // the second into converts the auth_user into the underlying uuid
     let project:Project = wrapper.into();
 
     let client = get_db_client(&pool).await?;
-    query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_project.sql"), &[&project.project_id, &project.name, &project.start_date, &project.planned_enddate, &project.overall_budget, &project.leader]).await?;
+    query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_project.sql"), &[&project.name, &project.start_date, &project.planned_enddate, &project.overall_budget, &project.leader]).await?;
     
     Ok(HttpResponse::Ok().finish())
 }

@@ -30,7 +30,7 @@ impl From<CreateUserRequest> for User {
         } = req;
 
         Self {
-            user_id: Uuid::new_v4(),
+            user_id: crate::utils::create_void_uuid(),
             created_on: chrono::Local::now().date().naive_local(),
             firstname,
             lastname,
@@ -76,7 +76,7 @@ impl From<CreateProjectWrapper> for Project {
             overall_budget,
         } = req;
         Self {
-            project_id: Uuid::new_v4(),
+            project_id: crate::utils::create_void_uuid(),
             name,
             start_date,
             planned_enddate,
@@ -118,6 +118,12 @@ pub struct UpdateTeamRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct UpdateProjectPartRequest {
+    pub name: Option<String>,
+    pub position: Option<i32>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct AddTeamMemberRequest {
     pub user: Uuid,
 }
@@ -128,6 +134,7 @@ pub struct AddProjectPartToTeamRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct CreateProjectPartRequest<'a> {
-    pub name: &'a str,
+pub struct CreateProjectPartRequest {
+    pub name: String,
+    pub position: i32,
 }

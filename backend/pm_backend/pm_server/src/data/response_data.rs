@@ -144,3 +144,39 @@ impl From<User> for ResponseUser {
         }
     }
 }
+
+
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+pub struct ProjectPartResponse {
+    #[serde(rename = "projectPartID")]
+    pub project_part_id: Uuid,
+    pub name: String,
+    pub position: i32
+}
+
+impl FromTokioPostgresRow for ProjectPartResponse {
+    fn from_row(row: TokioRow) -> Result<Self, Error> {
+        Self::from_row_ref(&row)
+    }
+
+    fn from_row_ref(row: &TokioRow) -> Result<Self, Error> {
+        let val = Self {
+            project_part_id: row.get("project_part_id"),
+            name: row.get("name"),
+            position: row.get("position"),
+        };
+        Ok(val)
+    }
+
+    fn sql_table() -> String {
+        String::from("project_part_response")
+    }
+
+    fn sql_fields() -> String {
+        String::new()
+    }
+
+    fn sql_table_fields() -> String {
+        String::new()
+    }
+}

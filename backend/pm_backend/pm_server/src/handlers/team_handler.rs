@@ -20,11 +20,11 @@ pub async fn create_team(
 ) -> Result<HttpResponse, APIError> {
     let client = get_db_client(&pool).await?;
     let project_id = project_id.into_inner();
-    let team_id = Uuid::new_v4();
+
     query_none(
         &client,
         include_str!("../../../../sql/queries/insert_queries/insert_team.sql"),
-        &[&team_id, &project_id, &auth_user.user_id, &create_data.name],
+        &[&project_id, &auth_user.user_id, &create_data.name],
     )
     .await?;
 
@@ -114,20 +114,18 @@ pub async fn add_member_to_team(
 
 pub async fn add_project_part_to_team(
     pool: web::Data<Pool>,
-    affected_team: web::Path<Uuid>,
-    project_part_id: web::Json<AddProjectPartToTeamRequest>,
+    affected_items: web::Path<(Uuid, Uuid)>,
     auth_user: AuthUser,
 ) -> Result<HttpResponse, APIError> {
     let client = get_db_client(&pool).await?;
-    let affected_team:Uuid = affected_team.into_inner();
-    let affected_project_part:Uuid = project_part_id.into_inner().project_part_id;
+    let (affected_project_part, affected_team) = affected_items.into_inner();
     authorize_team_leader(&affected_team, &auth_user.user_id, &client).await?; // make sure current user leads the team
     query_none(&client, "INSERT INTO team_parts(project_part_id, team_id) VALUES ($1, $2);", &[&affected_project_part, &affected_team]).await?;
     Ok(HttpResponse::Ok().finish())
 }
 
 /// This function returns an error in case the current user doesn't lead the specified team
-async fn authorize_team_leader(
+pub async fn authorize_team_leader(
     affected_team: &Uuid,
     affected_user: &Uuid,
     client: &Client
