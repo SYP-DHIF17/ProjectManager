@@ -16,8 +16,8 @@ export class AddProjectPartComponent implements OnInit {
             data: {
                 name: 'Arbeitspaket hinzufügen...',
                 description: '',
-                plannedEnddate: null,
-                realEnddate: null,
+                plannedEndDate: null,
+                realEndDate: null,
                 startDate: null,
                 workpackageId: 'add'
             },
@@ -86,7 +86,7 @@ export class AddProjectPartComponent implements OnInit {
             this.editableWorkpackage = {
                 name: entry.data.name,
                 description: entry.data.description,
-                plannedEndDate: entry.data.plannedEnddate.toISOString().split('T')[0],
+                plannedEndDate: entry.data.plannedEndDate.toISOString().split('T')[0],
                 startDate: entry.data.startDate.toISOString().split('T')[0],
             };
         }
@@ -156,10 +156,10 @@ export class AddProjectPartComponent implements OnInit {
                 {
                     data: {
                         name: this.editableWorkpackage.name,
-                        plannedEnddate: endDate,
+                        plannedEndDate: endDate,
                         startDate: startDate,
                         workpackageId: null,
-                        realEnddate: null,
+                        realEndDate: null,
                         description: this.editableWorkpackage.description
                     },
                     selected: false
@@ -172,7 +172,7 @@ export class AddProjectPartComponent implements OnInit {
                 if (this.workpackages[i].selected) {
                     let entry: Workpackage = this.workpackages[i].data;
                     entry.name = this.editableWorkpackage.name;
-                    entry.plannedEnddate = endDate;
+                    entry.plannedEndDate = endDate;
                     entry.startDate = startDate;
                     break;
                 }

@@ -40,7 +40,8 @@ export interface CreateTeamRequest {
   name: string;
 }
 
-export interface UpdateTeamRequest extends CreateTeamRequest {
+export interface UpdateTeamRequest {
+  name?: string;
 }
 
 export interface AddTeamMemberRequest {
@@ -48,21 +49,25 @@ export interface AddTeamMemberRequest {
 }
 
 export interface AddProjectPart {
-
+  name: string;
+  position: number;
 }
 
 export interface ChangeProjectPart {
-
-}
-
-export interface AddTeamToProjectPart {
-
+  name?: string;
+  position?: number;
 }
 
 export interface AddWorkPackage {
-
+  name: string;
+  description: string;
+  plannedEndDate: Date;
+  realEndDate: Date;
+  startDate: Date;
 }
 
 export interface ChangeWorkPackage {
-
+  name?: string;
+  reachDate?: Date;
+  description?: string
 }

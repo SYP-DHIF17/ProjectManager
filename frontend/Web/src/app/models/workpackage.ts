@@ -3,6 +3,6 @@ export interface Workpackage {
   name: string;
   description: string;
   startDate: Date;
-  plannedEnddate: Date;
-  realEnddate: Date;
+  plannedEndDate: Date;
+  realEndDate: Date;
 }

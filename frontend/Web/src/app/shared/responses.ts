@@ -6,10 +6,6 @@ export interface LoginResponse {
   user: User;
 }
 
-export interface CreateTeamResponse {
-    teamID: string;
-}
-
-export interface AddMemberToTeamResponse {
-
+export interface DefaultResponse {
+  id: string;
 }

@@ -1,7 +1,6 @@
 import { User } from './user';
 
 export interface Team {
-  readonly teamId: string;
+  readonly teamID: string;
   name: string;
-  projectPartID: string;
 }
