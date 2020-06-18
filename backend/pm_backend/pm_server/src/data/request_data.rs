@@ -129,11 +129,6 @@ pub struct AddTeamMemberRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct AddProjectPartToTeamRequest {
-    pub project_part_id: Uuid,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
 pub struct CreateProjectPartRequest {
     pub name: String,
     pub position: i32,

@@ -6,10 +6,15 @@ use pm_database::db_helper::*;
 use pm_errors::APIError;
 use std::include_str;
 use crate::data::request_data::*;
+use crate::data::response_data::*;
 use uuid::Uuid;
 
-pub async fn get_milestones() -> Result<HttpResponse, APIError> {
-    todo!()
+pub async fn get_milestones(pool: web::Data<Pool>, project_part_id: web::Path<Uuid>)
+-> Result<HttpResponse, APIError> {
+    let project_part_id = project_part_id.into_inner();
+    let client = get_db_client(&pool).await?;
+    let all_milestones:Vec<ResponseMileStone> = query_multiple(&client, include_str!("../../../../sql/queries/retrieve_queries/get_milestones_for_pp.sql"), &[&project_part_id]).await?;
+    Ok(HttpResponse::Ok().json(all_milestones))
 }
 
 pub async fn create_milestone(
