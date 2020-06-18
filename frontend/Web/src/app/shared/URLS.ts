@@ -39,6 +39,16 @@ export class URLS {
     }
   }
 
+  public static MILESTONES = class {
+    public static ALL(partID: string): string {
+      return URLS.PROJECTPARTS.ID(partID) + "/milestones";
+    }
+
+    public static ID(milestoneID: string): string {
+      return URLS.BASE + `/milestone/${milestoneID}`;
+    }
+  }
+
   public static WORKPACKAGES = class {
     public static ALL(partID: string): string {
       return URLS.PROJECTPARTS.ID(partID) + `/workpackages`;

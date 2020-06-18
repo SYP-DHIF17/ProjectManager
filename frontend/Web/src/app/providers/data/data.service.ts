@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Project, User, Team, ProjectPart, Workpackage } from '@models';
+import { Project, User, Team, ProjectPart, Workpackage, Milestone, Milestone } from '@models';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { URLS, DefaultResponse } from '@shared';
+import { URLS, DefaultResponse, CreateMileStone, UpdateMileStone } from '@shared';
 import { UserService } from '../user/user.service';
-import { CreateProjectRequest, ChangeUserRequest, ChangeProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddTeamMemberRequest, AddProjectPart, ChangeProjectPart, AddWorkPackage, ChangeWorkPackage } from '@shared';
+import { CreateProjectRequest, UpdateUserRequest, UpdateProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddTeamMemberRequest, AddProjectPart, UpdateProjectPart, AddWorkPackage, UpdateWorkPackage } from '@shared';
 import { map } from 'rxjs/operators';
 import { DialogService } from '@providers/dialog/dialog.service';
 
@@ -23,6 +23,7 @@ export class DataService {
   public teams: BehaviorSubject<Team[]> = new BehaviorSubject([]);
   public parts: BehaviorSubject<ProjectPart[]> = new BehaviorSubject([]);
   public packages: BehaviorSubject<Workpackage[]> = new BehaviorSubject([]);
+  public milestones: BehaviorSubject<Milestone[]> = new BehaviorSubject([]);
 
   constructor(private _http: HttpClient, private _user: UserService, private _dialog: DialogService) {
     // handle the login token
@@ -46,7 +47,7 @@ export class DataService {
       }, this.errorHandler);
   }
 
-  changeSelf(newUser: ChangeUserRequest, then = () => { }) {
+  changeSelf(newUser: UpdateUserRequest, then = () => { }) {
     if (!this._user.isLoggedIn()) return;
 
     const s = this._http.put(URLS.USER.INFO, newUser, { headers })
@@ -77,19 +78,19 @@ export class DataService {
       }, this.errorHandler)
   }
 
-  createProject(request: CreateProjectRequest, then = () => { }) {
+  createProject(request: CreateProjectRequest, then = (projectID: string) => { }) {
     if (!this._user.isLoggedIn()) return;
 
     const s = this._http.post(URLS.PROJECTS.ALL, request, { headers })
       .subscribe((res: DefaultResponse) => {
         s.unsubscribe();
-        then();
         const project: Project = { ...request, projectId: res.id, leaderID: this._user.user.getValue().userId };
         this.projects.next([...this.projects.getValue(), project])
+        then(res.id);
       }, this.errorHandler);
   }
 
-  changeProject(id: string, request: ChangeProjectRequest, then = () => { }) {
+  changeProject(id: string, request: UpdateProjectRequest, then = () => { }) {
     if (!this._user.isLoggedIn()) return;
 
     const s = this._http.put(URLS.PROJECTS.ID(id), request, { headers })
@@ -116,9 +117,9 @@ export class DataService {
     const s = this._http.post(URLS.TEAMS.ALL(projectID), request, { headers })
       .subscribe((res: DefaultResponse) => {
         s.unsubscribe();
-        then(res.id);
         const team: Team = { ...request, teamID: res.id }
         this.teams.next([...this.teams.getValue(), team]);
+        then(res.id);
       }, this.errorHandler);
   }
 
@@ -164,7 +165,7 @@ export class DataService {
       }, this.errorHandler);
   }
 
-  changeProjectPart(partID: string, request: ChangeProjectPart, then = () => { }) {
+  changeProjectPart(partID: string, request: UpdateProjectPart, then = () => { }) {
     if (!this._user.isLoggedIn()) return;
 
     const s = this._http.put(URLS.PROJECTPARTS.ID(partID), request, { headers })
@@ -184,14 +185,47 @@ export class DataService {
       }, this.errorHandler);
   }
 
+  getMileStones(partID: string, then = () => { }) {
+    if (!this._user.isLoggedIn()) return;
+
+    const s = this._http.get(URLS.MILESTONES.ID(partID), { headers })
+      .subscribe((res: Milestone[]) => {
+        s.unsubscribe();
+        this.milestones.next(res);
+        then();
+      }, this.errorHandler)
+  }
+
+  addMileStone(partID: string, request: CreateMileStone, then = (milestoneID: string) => { }) {
+    if (!this._user.isLoggedIn()) return;
+
+    const s = this._http.post(URLS.MILESTONES.ALL(partID), request, { headers })
+      .subscribe((res: DefaultResponse) => {
+        s.unsubscribe();
+        const milestone: Milestone = { ...request, milestoneId: res.id, projectPartId: partID };
+        this.milestones.next([...this.milestones.getValue(), milestone])
+        then(res.id);
+      })
+  }
+
+  changeMileStone(milestoneID: string, request: UpdateMileStone, then = () => void) {
+    if (!this._user.isLoggedIn()) return;
+
+    const s = this._http.put(URLS.MILESTONES.ID(milestoneID), request, { headers })
+      .subscribe(() => {
+        s.unsubscribe();
+        then();
+      }, this.errorHandler)
+  }
+
   getWorkPackages(partID: string, then = () => { }) {
     if (!this._user.isLoggedIn()) return;
 
     const s = this._http.get(URLS.WORKPACKAGES.ALL(partID), { headers })
       .subscribe((packages: Workpackage[]) => {
         s.unsubscribe();
-        then();
         this.packages.next(packages);
+        then();
       }, this.errorHandler);
   }
 
@@ -207,7 +241,7 @@ export class DataService {
       }, this.errorHandler);
   }
 
-  changeWorkPackage(workpackageID: string, request: ChangeWorkPackage, then = () => { }) {
+  changeWorkPackage(workpackageID: string, request: UpdateWorkPackage, then = () => { }) {
     if (!this._user.isLoggedIn()) return;
 
     const s = this._http.put(URLS.WORKPACKAGES.ID(workpackageID), request, { headers })

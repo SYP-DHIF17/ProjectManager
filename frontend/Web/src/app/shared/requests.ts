@@ -11,7 +11,7 @@ export interface CreateUserRequest {
   birthdate: Date;
 }
 
-export interface ChangeUserRequest {
+export interface UpdateUserRequest {
   oldPassword: string;
   newPassword?: string;
   firstname?: string;
@@ -26,7 +26,7 @@ export interface CreateProjectRequest {
   overallBudget: number;
 }
 
-export interface ChangeProjectRequest {
+export interface UpdateProjectRequest {
   name: string;
   plannedEndDate: Date;
   overallBudget: number;
@@ -44,16 +44,12 @@ export interface UpdateTeamRequest {
   name?: string;
 }
 
-export interface AddTeamMemberRequest {
-  user: string;
-}
-
 export interface AddProjectPart {
   name: string;
   position: number;
 }
 
-export interface ChangeProjectPart {
+export interface UpdateProjectPart {
   name?: string;
   position?: number;
 }
@@ -66,8 +62,20 @@ export interface AddWorkPackage {
   startDate: Date;
 }
 
-export interface ChangeWorkPackage {
+export interface UpdateWorkPackage {
   name?: string;
   reachDate?: Date;
   description?: string
+}
+
+export interface CreateMileStone {
+  reachDate: Date;
+  name: string;
+  description: string;
+}
+
+export interface UpdateMileStone {
+  reachDate?: Date;
+  name?: string;
+  description?: string;
 }

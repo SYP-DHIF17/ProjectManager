@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'app/providers/dialog/dialog.service';
 import { DataService } from '@providers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-project',
@@ -10,23 +11,20 @@ import { DataService } from '@providers';
 export class AddProjectComponent implements OnInit {
 
   name: string = '';
-  description: string = '';
   budget: number = 0;
-  // leader: string = '';
   startDate: string = '';
   endDate: string = '';
   addMember: string = '';
   members: string[] = [];
 
-  constructor(private _dialog: DialogService, private _data: DataService) {
-
+  constructor(private _dialog: DialogService, private _data: DataService, private _router: Router) {
   }
 
   ngOnInit(): void {
 
   }
   public createProject(): void {
-    if (!(this.name || this.description || this.budget == 0 || this.startDate || this.endDate)) {
+    if (!(this.name || this.budget == 0 || this.startDate || this.endDate)) {
       this._dialog.dialog.show(
         "error",
         "Missing fields",
@@ -34,7 +32,7 @@ export class AddProjectComponent implements OnInit {
       );
     }
 
-    const { name, description, budget, startDate, endDate } = this;
+    const { name, budget, startDate, endDate } = this;
 
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -44,8 +42,8 @@ export class AddProjectComponent implements OnInit {
       overallBudget: budget,
       plannedEndDate: end,
       startDate: start
-    }, () => {
-      // TODO get id from creating
-    })
+    }, (projectID) => {
+      this._router.navigate(['/project', projectID])
+    });
   }
 }
