@@ -8,6 +8,7 @@ pub fn url_config(cfg: &mut web::ServiceConfig) {
     team_urls_config(cfg);
     project_part_urls_config(cfg);
     milestones_urls_config(cfg);
+    workpackages_urls_config(cfg);
 }
 
 fn auth_urls_config(cfg: &mut web::ServiceConfig) {
@@ -51,6 +52,8 @@ fn project_part_urls_config(cfg: &mut web::ServiceConfig) {
             .route("/{part_id}", web::put().to(update_project_part))
             .route("/{part_id}/milestones", web::post().to(create_milestone))
             .route("/{part_id}/milestones", web::get().to(get_milestones))
+            .route("/{part_id}/workpackages", web::post().to(create_workpackage))
+            .route("/{part_id}/workpackages", web::get().to(get_workpackages))
             // Careful: those with the fixed parts must be placed above
             // the one accepting a second UUID, as the /milestones would otherwise
             // be interpreted as a UUID!
@@ -65,5 +68,12 @@ fn milestones_urls_config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/milestone")
             .route("/{milestone_id}", web::put().to(update_milestone))
+    );
+}
+
+fn workpackages_urls_config(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::scope("/workpackage")
+            .route("/{workpackage_id}", web::put().to(update_workpackage))
     );
 }

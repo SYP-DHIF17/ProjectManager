@@ -220,3 +220,52 @@ impl FromTokioPostgresRow for ResponseMileStone {
         String::new()
     }
 }
+
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+pub struct ResponseWorkpackage {
+    #[serde(rename = "workpackageID")]
+    pub workpackage_id: Uuid,
+
+    pub name: String,
+
+    #[serde(rename = "startDate")]
+    pub start_date: chrono::NaiveDate,
+
+    #[serde(rename = "plannedEndDate")]
+    pub planned_enddate: chrono::NaiveDate,
+
+    #[serde(rename = "realEndDate")]
+    pub real_enddate: Option<chrono::NaiveDate>,
+
+    pub description: String,
+}
+
+impl FromTokioPostgresRow for ResponseWorkpackage {
+    fn from_row(row: TokioRow) -> Result<Self, Error> {
+        Self::from_row_ref(&row)
+    }
+
+    fn from_row_ref(row: &TokioRow) -> Result<Self, Error> {
+        let val = Self {
+            workpackage_id: row.get("workpackage_id"),
+            name: row.get("name"),
+            start_date: row.get("start_date"),
+            planned_enddate: row.get("planned_enddate"),
+            real_enddate: row.get("real_enddate"),
+            description: row.get("description"),
+        };
+        Ok(val)
+    }
+
+    fn sql_table() -> String {
+        String::from("milestone_response")
+    }
+
+    fn sql_fields() -> String {
+        String::new()
+    }
+
+    fn sql_table_fields() -> String {
+        String::new()
+    }
+}

@@ -153,3 +153,35 @@ pub struct UpdateMilestoneRequest {
 
     pub description: Option<String>,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateWorkpackageRequest {
+    pub name: String,
+
+    #[serde(rename = "startDate")]
+    pub start_date: chrono::NaiveDate,
+
+    #[serde(rename = "plannedEndDate")]
+    pub planned_enddate: chrono::NaiveDate,
+
+    #[serde(rename = "realEndDate")]
+    pub real_enddate: Option<chrono::NaiveDate>,
+
+    pub description: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct UpdateWorkpackageRequest {
+    pub name: Option<String>,
+
+    #[serde(rename = "startDate")]
+    pub start_date: Option<chrono::NaiveDate>,
+
+    #[serde(rename = "plannedEndDate")]
+    pub planned_enddate: Option<chrono::NaiveDate>,
+
+    #[serde(rename = "realEndDateChange")]
+    pub real_enddate_change: RealEndDateChange,
+
+    pub description: Option<String>,
+}
