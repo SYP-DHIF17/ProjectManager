@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Project, User, Team, ProjectPart, Workpackage, Milestone, Milestone } from '@models';
+import { Project, User, Team, ProjectPart, Workpackage, Milestone } from '@models';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { URLS, DefaultResponse, CreateMileStone, UpdateMileStone } from '@shared';
+import { URLS, DefaultResponse, CreateMileStone, UpdateMileStone, AddTeamMemberRequest } from '@shared';
 import { UserService } from '../user/user.service';
-import { CreateProjectRequest, UpdateUserRequest, UpdateProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddTeamMemberRequest, AddProjectPart, UpdateProjectPart, AddWorkPackage, UpdateWorkPackage } from '@shared';
+import { CreateProjectRequest, UpdateUserRequest, UpdateProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddProjectPart, UpdateProjectPart, AddWorkPackage, UpdateWorkPackage } from '@shared';
 import { map } from 'rxjs/operators';
 import { DialogService } from '@providers/dialog/dialog.service';
 
@@ -208,7 +208,7 @@ export class DataService {
       })
   }
 
-  changeMileStone(milestoneID: string, request: UpdateMileStone, then = () => void) {
+  changeMileStone(milestoneID: string, request: UpdateMileStone, then = () => { }) {
     if (!this._user.isLoggedIn()) return;
 
     const s = this._http.put(URLS.MILESTONES.ID(milestoneID), request, { headers })

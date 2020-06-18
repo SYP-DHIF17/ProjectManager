@@ -44,6 +44,10 @@ export interface UpdateTeamRequest {
   name?: string;
 }
 
+export interface AddTeamMemberRequest {
+  user: string;
+}
+
 export interface AddProjectPart {
   name: string;
   position: number;
