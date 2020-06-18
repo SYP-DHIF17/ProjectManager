@@ -1,8 +1,4 @@
-use crate::handlers::auth_handler::*;
-use crate::handlers::project_handler::*;
-use crate::handlers::project_part_handler::*;
-use crate::handlers::team_handler::*;
-use crate::handlers::user_handler::*;
+use crate::handlers::*;
 use actix_web::web;
 
 pub fn url_config(cfg: &mut web::ServiceConfig) {
@@ -51,10 +47,15 @@ fn team_urls_config(cfg: &mut web::ServiceConfig) {
 fn project_part_urls_config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/part")
+            .route("/{part_id}", web::put().to(update_project_part))
+            .route("/{part_id}/milestones", web::post().to(create_milestone))
+            .route("/{part_id}/milestones", web::get().to(get_milestones))
+            // Careful: those with the fixed parts must be placed above
+            // the one accepting a second UUID, as the /milestones would otherwise
+            // be interpreted as a UUID!
             .route(
                 "/{part_id}/{team_id}",
                 web::post().to(add_project_part_to_team),
-            )
-            .route("/{part_id}", web::put().to(update_project_part)),
+            ),
     );
 }

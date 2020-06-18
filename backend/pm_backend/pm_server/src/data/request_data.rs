@@ -138,3 +138,13 @@ pub struct CreateProjectPartRequest {
     pub name: String,
     pub position: i32,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateMileStoneRequest {
+    #[serde(rename = "reachDate")]
+    pub reach_date: chrono::NaiveDate,
+
+    pub name: String,
+
+    pub description: String,
+}
