@@ -143,3 +143,13 @@ pub struct CreateMileStoneRequest {
 
     pub description: String,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct UpdateMilestoneRequest {
+    #[serde(rename = "reachDate")]
+    pub reach_date: Option<chrono::NaiveDate>,
+
+    pub name: Option<String>,
+
+    pub description: Option<String>,
+}

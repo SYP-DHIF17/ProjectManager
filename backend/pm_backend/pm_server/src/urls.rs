@@ -7,6 +7,7 @@ pub fn url_config(cfg: &mut web::ServiceConfig) {
     project_urls_config(cfg);
     team_urls_config(cfg);
     project_part_urls_config(cfg);
+    milestones_urls_config(cfg);
 }
 
 fn auth_urls_config(cfg: &mut web::ServiceConfig) {
@@ -57,5 +58,12 @@ fn project_part_urls_config(cfg: &mut web::ServiceConfig) {
                 "/{part_id}/{team_id}",
                 web::post().to(add_project_part_to_team),
             ),
+    );
+}
+
+fn milestones_urls_config(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::scope("/milestone")
+            .route("/{milestone_id}", web::put().to(update_milestone))
     );
 }
