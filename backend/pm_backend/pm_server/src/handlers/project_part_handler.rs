@@ -32,13 +32,15 @@ pub async fn create_project_part(
 ) -> Result<HttpResponse, APIError> {
     let client = get_db_client(&pool).await?;
     let new_part = new_part.into_inner();
-    query_none(
+    let id = query_one_map(
         &client,
-        "INSERT INTO project_parts(name, position) VALUES($1, $2);",
+        "INSERT INTO project_parts(name, position) VALUES($1, $2) RETURNING project_part_id;",
         &[&new_part.name, &new_part.position],
+        APIError::PGError,
+        |row| Ok(row.get("project_part_id")),
     )
     .await?;
-    Ok(HttpResponse::Ok().finish())
+    Ok(HttpResponse::Ok().json(ResponseID::new(id)))
 }
 
 pub async fn update_project_part(

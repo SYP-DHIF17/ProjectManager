@@ -30,10 +30,13 @@ pub async fn create_milestone(
     authorize_team_leader(&client, &auth_user.user_id, &project_part_id).await?;
 
     // insert new milestone
-    query_none(&client, "INSERT INTO milestones(reach_date, name, description, project_part_id) VALUES($1, $2, $3, $4);",
-    &[&data.reach_date, &data.name, &data.description, &project_part_id]).await?;
+    let id = query_one_map(&client, "INSERT INTO milestones(reach_date, name, description, project_part_id) VALUES($1, $2, $3, $4) RETURNING milestone_id;",
+    &[&data.reach_date, &data.name, &data.description, &project_part_id],
+    APIError::PGError,
+    |row| Ok(row.get("milestone_id"))
+    ).await?;
 
-    Ok(HttpResponse::Ok().finish())
+    Ok(HttpResponse::Ok().json(ResponseID::new(id)))
 }
 
 pub async fn update_milestone(pool: web::Data<Pool>, milestone_id: web::Path<Uuid>, auth_user: AuthUser, data: web::Json<UpdateMilestoneRequest>)

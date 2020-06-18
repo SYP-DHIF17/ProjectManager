@@ -269,3 +269,14 @@ impl FromTokioPostgresRow for ResponseWorkpackage {
         String::new()
     }
 }
+
+#[derive(PartialEq, Debug, Serialize, Deserialize, Clone)]
+pub struct ResponseID {
+    id: Uuid,
+}
+
+impl ResponseID {
+    pub fn new(id: Uuid) -> Self {
+        Self {id}
+    }
+}

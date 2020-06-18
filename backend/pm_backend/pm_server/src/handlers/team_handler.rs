@@ -21,14 +21,16 @@ pub async fn create_team(
     let client = get_db_client(&pool).await?;
     let project_id = project_id.into_inner();
 
-    query_none(
+    let id = query_one_map(
         &client,
         include_str!("../../../../sql/queries/insert_queries/insert_team.sql"),
         &[&project_id, &auth_user.user_id, &create_data.name],
+        APIError::PGError,
+        |row| Ok(row.get("team_id"))
     )
     .await?;
 
-    Ok(HttpResponse::Ok().finish())
+    Ok(HttpResponse::Ok().json(ResponseID::new(id)))
 }
 
 pub async fn get_teams_for_project(

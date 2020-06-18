@@ -30,10 +30,13 @@ pub async fn create_workpackage(
     authorize_team_leader(&client, &auth_user.user_id, &project_part_id).await?;
 
     // insert new milestone
-    query_none(&client, "INSERT INTO workpackages(name, start_date, planned_enddate, description, real_enddate, project_part_id) VALUES($1, $2, $3, $4, $5, $6);",
-    &[&data.name, &data.start_date, &data.planned_enddate, &data.description, &data.real_enddate, &project_part_id]).await?;
+    let id = query_one_map(&client, "INSERT INTO workpackages(name, start_date, planned_enddate, description, real_enddate, project_part_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING workpackage_id;",
+    &[&data.name, &data.start_date, &data.planned_enddate, &data.description, &data.real_enddate, &project_part_id],
+    APIError::PGError,
+    |row| Ok(row.get("workpackage_id"))
+    ).await?;
 
-    Ok(HttpResponse::Ok().finish())
+    Ok(HttpResponse::Ok().json(ResponseID::new(id)))
 }
 
 pub async fn update_workpackage(pool: web::Data<Pool>, milestone_id: web::Path<Uuid>, auth_user: AuthUser, data: web::Json<UpdateWorkpackageRequest>)
