@@ -29,7 +29,7 @@ CREATE TABLE teams
     project_id uuid REFERENCES projects (project_id) NOT NULL,
     leader_id uuid REFERENCES users (user_id) NOT NULL,
 
-    name VARCHAR(100) NOT NULL
+    name VARCHAR(100) NOT NULL UNIQUE
 );
 
 CREATE TABLE teammembers

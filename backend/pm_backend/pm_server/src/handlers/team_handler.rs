@@ -116,11 +116,14 @@ pub async fn add_member_to_team(
 
 pub async fn add_project_part_to_team(
     pool: web::Data<Pool>,
-    affected_items: web::Path<(Uuid, Uuid)>,
+    affected_items: web::Path<(Uuid, String)>,
     auth_user: AuthUser,
 ) -> Result<HttpResponse, APIError> {
     let client = get_db_client(&pool).await?;
     let (affected_project_part, affected_team) = affected_items.into_inner();
+    let affected_team:Uuid = query_one_map(&client, "SELECT team_id FROM teams WHERE name = $1;", &[&affected_team], APIError::NotFound,
+            |row| Ok(row.get("team_id"))
+    ).await?;
     authorize_team_leader(&affected_team, &auth_user.user_id, &client).await?; // make sure current user leads the team
     query_none(&client, "INSERT INTO team_parts(project_part_id, team_id) VALUES ($1, $2);", &[&affected_project_part, &affected_team]).await?;
     Ok(HttpResponse::Ok().finish())

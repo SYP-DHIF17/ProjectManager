@@ -58,7 +58,7 @@ fn project_part_urls_config(cfg: &mut web::ServiceConfig) {
             // the one accepting a second UUID, as the /milestones would otherwise
             // be interpreted as a UUID!
             .route(
-                "/{part_id}/{team_id}",
+                "/{part_id}/{team_name}",
                 web::post().to(add_project_part_to_team),
             ),
     );
