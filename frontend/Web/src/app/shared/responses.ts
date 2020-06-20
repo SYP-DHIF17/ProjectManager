@@ -9,3 +9,7 @@ export interface LoginResponse {
 export interface DefaultResponse {
   id: string;
 }
+
+export interface AddMemberToTeamResponse {
+    
+}

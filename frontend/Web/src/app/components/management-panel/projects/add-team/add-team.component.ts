@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DataService } from '@providers';
+import { DataService, LoaderService } from '@providers';
 import { combineLatest } from 'rxjs';
 import { DialogService } from 'app/providers/dialog/dialog.service';
+import { AddMemberToTeamResponse } from '@shared';
 
 @Component({
   selector: 'app-add-team',
@@ -19,7 +20,8 @@ export class AddTeamComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
-    private dialogService: DialogService) {
+    private dialogService: DialogService,
+    private loaderService: LoaderService) {
 
   }
 
@@ -39,6 +41,7 @@ export class AddTeamComponent implements OnInit {
   }
 
   public createTeam(): void {
+    this.loaderService.setVisible(true);
     this.dataService.createTeam(this.projectID, {
       name: this.teamName
     }, (teamID: string) => {
@@ -50,9 +53,12 @@ export class AddTeamComponent implements OnInit {
         });
 
         requests.push(subscription);
-        // combineLatest(requests, (res: AddMemberToTeamResponse) => {
-        //     //TODO: team successfully created
-        // });
+      });
+      combineLatest(requests, (res: AddMemberToTeamResponse) => {
+           //Tteam successfully created
+           this.loaderService.setVisible(false);
+           this.router.navigateByUrl('project/' + this.projectID);
+           this.dialogService.notification.show('success', 'Erfolg', 'Das Team wurde erfolgreich erstellt!');
       });
     });
   }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Workpackage, Milestone } from '@models';
 import { DialogService } from 'app/providers/dialog/dialog.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataService, LoaderService } from '@providers';
+import { combineLatest } from 'rxjs';
+import { Route } from '@angular/compiler/src/core';
 
 @Component({
     selector: 'app-add-project-part',
@@ -11,6 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 export class AddProjectPartComponent implements OnInit {
     name: string = '';
     position: number = 1;
+    teams: string[] = [];
+    teamToAdd: string = '';
     workpackages: { data: Workpackage, selected: boolean }[] = [
         {
             data: {
@@ -62,7 +67,10 @@ export class AddProjectPartComponent implements OnInit {
     private projectId: string = null;
 
     constructor(private dialogService: DialogService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private dataService: DataService,
+        private loaderService: LoaderService,
+        private router: Router) {
         this.projectId = route.snapshot.queryParams['id'];
         console.log(this.projectId);
     }
@@ -127,6 +135,23 @@ export class AddProjectPartComponent implements OnInit {
         if (!this.milestones[0].selected) {
             this.onChangeSelectionForMilestones(this.milestones[idx - 1]);
         }
+    }
+
+    onAddTeam(): void{
+        if(this.teamToAdd == '') return;
+        if(this.teams.includes(this.teamToAdd)){
+            this.dialogService.dialog.show('error',
+                                            'Ungültiger Eintrag',
+                                            'Dieses Team wurde schon hinzugefügt!');
+            return;
+        }
+
+        this.teams.push(this.teamToAdd);
+        this.teamToAdd = '';
+    }
+
+    onDeleteTeam(team: string): void {
+        this.teams.splice(this.teams.indexOf(team));
     }
 
     onSaveWorkpackage(): void {
@@ -222,6 +247,93 @@ export class AddProjectPartComponent implements OnInit {
     }
 
     onSave(): void {
+        if(name == ''){
+            this.dialogService.dialog.show(
+                'error',
+                'Fehlender Wert',
+                'Der Name eines Projekt-Abschnitts muss angegeben werden!');
+            return;
+        }
 
+        if(this.workpackages.length == 0){
+            this.dialogService.dialog.show(
+                'error',
+                'Fehlender Wert',
+                'Ein Projekt-Abschnitt muss mindestens einem Team zugewiesen werden!');
+            return;
+        }
+
+        if(this.workpackages.length <= 1){
+            this.dialogService.dialog.show(
+                'error',
+                'Fehlender Wert',
+                'Ein Projekt-Abschnitt muss mindestens ein Arbeitspaket beinhalten!');
+            return;
+        }
+
+        if(this.milestones.length <= 1){
+            this.dialogService.dialog.show(
+                'error',
+                'Fehlender Wert',
+                'Ein Projekt-Abschnitt muss mindestens einen Meilenstein beinhalten!');
+            return;
+        }
+
+        this.loaderService.setVisible(true);
+        
+        //create project part
+        this.dataService.addProjectPart(this.projectId, {
+            name: this.name,
+            position: this.position
+        }, (partId: string) => {
+            let workpackageRequests = [];
+            //create workpackages
+            this.workpackages.forEach(entry => {
+                let w: Workpackage = entry.data;
+                const req = this.dataService.createWorkPackage(partId, {
+                    name: w.name,
+                    description: w.description,
+                    plannedEndDate: w.plannedEndDate,
+                    realEndDate: w.realEndDate,
+                    startDate: w.startDate
+                });
+                workpackageRequests.push(req);  
+            });
+
+            //wait for all workpackages to be created
+            combineLatest(workpackageRequests, () => {
+                let milestoneRequests = [];
+                //create all milestones
+                this.milestones.forEach(entry => {
+                    let m: Milestone = entry.data;
+                    const req = this.dataService.addMileStone(partId, {
+                        name: m.name,
+                        description: m.description,
+                        reachDate: m.reachDate,
+                    });
+                    milestoneRequests.push(req);
+                });
+
+                //wait for all milestones to be created
+                combineLatest(milestoneRequests, () => {
+                    //add teams to projkect part
+                    let teamRequests = [];
+                    this.teams.forEach(t => {
+                        const req = this.dataService.addTeamToProjectPart(t, partId);
+                        teamRequests.push(req);
+                    });
+
+                    //wait for all teams to be created
+                    combineLatest(teamRequests, () => {
+                        //process finished!
+                        this.loaderService.setVisible(false);
+                        this.router.navigateByUrl('project/' + this.projectId);
+                        this.dialogService.notification.show('success', 
+                                                            'Erfolg',
+                                                            'Der Projekt-Abschnitt wurde erfolgreich erstellt!');
+                    });
+                });
+            });
+        });
     }
 }

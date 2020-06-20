@@ -6,7 +6,7 @@
     </div>
     <div class="nav">
         <a [routerLink]="['/']">
-            <div class="dashboard icon icon-active">
+            <div class="dashboard icon icon-active" [ngClass]="{'icon-inactive': router.url !== '/dashboard'}">
                 <i class="fas fa-tachometer-alt"></i>
             </div>
             <h3>
@@ -15,7 +15,7 @@
         </a>
         <ul>
             <li class="icon">
-                <a [routerLink]="['/projects']">
+                <a [routerLink]="['/projects']" [ngClass]="{'nav-active': router.url.startsWith('/project')}">
                     <div>
                         <i class="fas fa-clipboard-list"></i>
                     </div>
@@ -24,7 +24,7 @@
                     </span>
                 </a>
             </li>
-            <li class="icon" (click)="test($event)">
+            <!--<li class="icon" (click)="test($event)">
                 <a [routerLink]="['/tasks']">
                     <div>
                         <i class="fas fa-briefcase"></i>
@@ -43,7 +43,7 @@
                         Teams
                     </span>
                 </a>
-            </li>
+            </li>-->
         </ul>
     </div>
 </div>

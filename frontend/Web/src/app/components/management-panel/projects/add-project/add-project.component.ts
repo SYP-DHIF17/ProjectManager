@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'app/providers/dialog/dialog.service';
-import { DataService } from '@providers';
+import { DataService, LoaderService } from '@providers';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,7 +17,7 @@ export class AddProjectComponent implements OnInit {
   addMember: string = '';
   members: string[] = [];
 
-  constructor(private _dialog: DialogService, private _data: DataService, private _router: Router) {
+  constructor(private _dialog: DialogService, private _data: DataService, private _router: Router, private _loader: LoaderService) {
   }
 
   ngOnInit(): void {
@@ -32,6 +32,8 @@ export class AddProjectComponent implements OnInit {
       );
     }
 
+    this._loader.setVisible(true);
+
     const { name, budget, startDate, endDate } = this;
 
     const start = new Date(startDate);
@@ -43,7 +45,9 @@ export class AddProjectComponent implements OnInit {
       plannedEndDate: end,
       startDate: start
     }, (projectID) => {
-      this._router.navigate(['/project', projectID])
+      this._loader.setVisible(false);
+      this._dialog.notification.show('success', 'Erfolg', 'Das Projektr wurde erfolgreich erstellt!');
+      this._router.navigate(['/project', projectID]);
     });
   }
 }

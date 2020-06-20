@@ -42,7 +42,7 @@ const routes: Routes = [
         component: ProjectsComponent
       },
       {
-        path: 'add-project',
+        path: 'project/add',
         component: AddProjectComponent
       },
       {

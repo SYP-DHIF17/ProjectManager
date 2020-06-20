@@ -13,4 +13,4 @@
 <router-outlet></router-outlet>
 
 <!-- Loader -->
-<app-loader *ngIf="loader.isVisible()"></app-loader>
+<app-loader [hidden]="!loader.isVisible()"></app-loader>

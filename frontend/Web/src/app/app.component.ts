@@ -11,6 +11,6 @@ export class AppComponent {
   title = 'Web';
 
   constructor(public loader: LoaderService) {
-
+    loader.setVisible(false);
   }
 }

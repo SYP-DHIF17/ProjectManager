@@ -8,6 +8,21 @@
             <p>Position</p>
             <input type="number" placeholder="Position" [(ngModel)]="position">
         </div>
+        <div>
+            <p>Team(s)</p>
+            <div>
+                <input class="add-team" type="text" placeholder="Team-Name" [(ngModel)]="teamToAdd">
+                <button (click)="onAddTeam()">Hinzufügen</button>
+            </div>
+            <div>
+                <ul class="add-team-list">
+                    <li *ngFor="let team of teams">
+                        <span>{{team}}</span>
+                        <i (click)="onDeleteTeam(team)" class="fas fa-times"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <h2>Arbeitspakete</h2>
         <div class="work-packages">
             <ul>
@@ -45,7 +60,7 @@
                 <input type="text" placeholder="Name" [(ngModel)]="editableWorkpackage.name">
             </div>
             <div>
-                <textarea placeholder="Beschreibung" [(ngModel)]="editableWorkpackage.description"></textarea>
+                <textarea maxlength="300" placeholder="Beschreibung" [(ngModel)]="editableWorkpackage.description"></textarea>
             </div>
             <div>
                 <p>Start-Datum</p>
@@ -63,7 +78,7 @@
                 <input type="text" placeholder="Name" [(ngModel)]="editableMilestone.name">
             </div>
             <div>
-                <textarea placeholder="Beschreibung" [(ngModel)]="editableMilestone.description"></textarea>
+                <textarea maxlength="300" placeholder="Beschreibung" [(ngModel)]="editableMilestone.description"></textarea>
             </div>
             <div>
                 <p>Geplante Fertigstellung</p>

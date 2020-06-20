@@ -7,6 +7,7 @@ import { UserService } from '../user/user.service';
 import { CreateProjectRequest, UpdateUserRequest, UpdateProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddProjectPart, UpdateProjectPart, AddWorkPackage, UpdateWorkPackage } from '@shared';
 import { map } from 'rxjs/operators';
 import { DialogService } from '@providers/dialog/dialog.service';
+import { LoaderService } from '@providers/loader/loader.service';
 
 let headers = new HttpHeaders({
   "Content-Type": "application/json; charset=utf-8",
@@ -25,7 +26,7 @@ export class DataService {
   public packages: BehaviorSubject<Workpackage[]> = new BehaviorSubject([]);
   public milestones: BehaviorSubject<Milestone[]> = new BehaviorSubject([]);
 
-  constructor(private _http: HttpClient, private _user: UserService, private _dialog: DialogService) {
+  constructor(private _http: HttpClient, private _user: UserService, private _dialog: DialogService, private _loader: LoaderService) {
     // handle the login token
     _user.token.subscribe((token) => {
       if (token) {
@@ -136,10 +137,12 @@ export class DataService {
   addTeamMember(teamID: string, request: AddTeamMemberRequest, then = () => { }) {
     if (!this._user.isLoggedIn()) return;
 
-    return this._http.post(URLS.TEAMS.ID(teamID), request, { headers })
+    const s = this._http.post(URLS.TEAMS.ID(teamID), request, { headers })
       .subscribe(() => {
         then();
       }, this.errorHandler);
+
+      return s;
   }
 
   getProjectParts(projectID: string, then = () => { }) {
@@ -153,13 +156,13 @@ export class DataService {
       }, this.errorHandler);
   }
 
-  addProjectPart(projectID: string, request: AddProjectPart, then = () => { }) {
+  addProjectPart(projectID: string, request: AddProjectPart, then = (id: string) => { }) {
     if (!this._user.isLoggedIn()) return;
 
     const s = this._http.post(URLS.PROJECTPARTS.ALL(projectID), request, { headers })
       .subscribe((res: DefaultResponse) => {
         s.unsubscribe();
-        then();
+        then(res.id);
         const part: ProjectPart = { ...request, projectPartID: res.id };
         this.parts.next([...this.parts.getValue(),])
       }, this.errorHandler);
@@ -175,14 +178,16 @@ export class DataService {
       }, this.errorHandler);
   }
 
-  addTeamToProjectPart(teamID: string, partID: string, then = () => { }) {
+  addTeamToProjectPart(teamName: string, partID: string, then = () => { }) {
     if (!this._user.isLoggedIn()) return;
 
-    const s = this._http.post(URLS.PROJECTPARTS.WITHTEAM(partID, teamID), {}, { headers })
+    const s = this._http.post(URLS.PROJECTPARTS.WITHTEAM(partID, teamName), {}, { headers })
       .subscribe(() => {
         s.unsubscribe();
         then();
       }, this.errorHandler);
+
+      return s;
   }
 
   getMileStones(partID: string, then = () => { }) {
@@ -205,7 +210,9 @@ export class DataService {
         const milestone: Milestone = { ...request, milestoneId: res.id, projectPartId: partID };
         this.milestones.next([...this.milestones.getValue(), milestone])
         then(res.id);
-      })
+      });
+
+      return s;
   }
 
   changeMileStone(milestoneID: string, request: UpdateMileStone, then = () => { }) {
@@ -239,6 +246,8 @@ export class DataService {
         const workpackage: Workpackage = { ...request, workpackageId: res.id };
         this.packages.next([...this.packages.getValue(), workpackage]);
       }, this.errorHandler);
+
+      return s;
   }
 
   changeWorkPackage(workpackageID: string, request: UpdateWorkPackage, then = () => { }) {
@@ -252,6 +261,7 @@ export class DataService {
   }
 
   errorHandler(err: any) {
+    this._loader.setVisible(false);
     this._dialog.dialog.show(
       "error",
       "Server Error",
