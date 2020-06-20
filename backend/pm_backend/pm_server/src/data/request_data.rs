@@ -30,7 +30,7 @@ impl From<CreateUserRequest> for User {
         } = req;
 
         Self {
-            user_id: Uuid::new_v4(),
+            user_id: crate::utils::create_void_uuid(),
             created_on: chrono::Local::now().date().naive_local(),
             firstname,
             lastname,
@@ -76,7 +76,7 @@ impl From<CreateProjectWrapper> for Project {
             overall_budget,
         } = req;
         Self {
-            project_id: Uuid::new_v4(),
+            project_id: crate::utils::create_void_uuid(),
             name,
             start_date,
             planned_enddate,
@@ -118,6 +118,70 @@ pub struct UpdateTeamRequest {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct UpdateProjectPartRequest {
+    pub name: Option<String>,
+    pub position: Option<i32>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct AddTeamMemberRequest {
     pub user: Uuid,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateProjectPartRequest {
+    pub name: String,
+    pub position: i32,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateMileStoneRequest {
+    #[serde(rename = "reachDate")]
+    pub reach_date: chrono::NaiveDate,
+
+    pub name: String,
+
+    pub description: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct UpdateMilestoneRequest {
+    #[serde(rename = "reachDate")]
+    pub reach_date: Option<chrono::NaiveDate>,
+
+    pub name: Option<String>,
+
+    pub description: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CreateWorkpackageRequest {
+    pub name: String,
+
+    #[serde(rename = "startDate")]
+    pub start_date: chrono::NaiveDate,
+
+    #[serde(rename = "plannedEndDate")]
+    pub planned_enddate: chrono::NaiveDate,
+
+    #[serde(rename = "realEndDate")]
+    pub real_enddate: Option<chrono::NaiveDate>,
+
+    pub description: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct UpdateWorkpackageRequest {
+    pub name: Option<String>,
+
+    #[serde(rename = "startDate")]
+    pub start_date: Option<chrono::NaiveDate>,
+
+    #[serde(rename = "plannedEndDate")]
+    pub planned_enddate: Option<chrono::NaiveDate>,
+
+    #[serde(rename = "realEndDateChange")]
+    pub real_enddate_change: RealEndDateChange,
+
+    pub description: Option<String>,
 }

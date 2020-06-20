@@ -5,7 +5,6 @@ use uuid::Uuid;
 #[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
 #[pg_mapper(table = "projects")]
 pub struct Project {
-
     #[serde(rename = "projectID")]
     pub project_id: Uuid,
 
@@ -32,11 +31,12 @@ pub struct ProjectPart {
     #[serde(rename = "projectPartID")]
     pub project_part_id: Uuid,
     pub name: String,
+    pub position: i32,
 }
 
 #[derive(PartialEq, Debug, Serialize, Deserialize, Clone, PostgresMapper)]
 #[pg_mapper(table = "team_parts")]
-pub struct TeamTask{
+pub struct TeamTask {
     #[serde(rename = "projectPartID")]
     pub project_part_id: Uuid,
     #[serde(rename = "teamID")]

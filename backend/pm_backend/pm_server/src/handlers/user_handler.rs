@@ -23,9 +23,9 @@ pub async fn create_user(
     }).await?;
 
     let client = get_db_client(&pool).await?;
-    let User{user_id, created_on, firstname, lastname, email, password, birthdate } = user;
+    let User{created_on, firstname, lastname, email, password, birthdate, ..} = user;
 
-    query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_user.sql"), &[&user_id, &created_on, &firstname, &lastname, &email, &password ,&birthdate]).await?;
+    query_none(&client, include_str!("../../../../sql/queries/insert_queries/insert_user.sql"), &[&created_on, &firstname, &lastname, &email, &password ,&birthdate]).await?;
     
     Ok(HttpResponse::Ok().finish())
 }
