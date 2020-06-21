@@ -33,7 +33,7 @@ export class AddProjectComponent implements OnInit {
     }
 
     this._loader.setVisible(true);
-
+  
     const { name, budget, startDate, endDate } = this;
 
     const start = new Date(startDate);

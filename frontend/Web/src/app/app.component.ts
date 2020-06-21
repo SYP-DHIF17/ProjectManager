@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoaderService } from './providers/loader/loader.service';
 import { Team } from "@models";
 
@@ -7,10 +7,14 @@ import { Team } from "@models";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.styl']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Web';
 
   constructor(public loader: LoaderService) {
-    loader.setVisible(false);
+    
+  }
+
+  ngOnInit(): void {
+    this.loader.setVisible(false);
   }
 }
