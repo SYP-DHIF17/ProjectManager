@@ -107,8 +107,11 @@ pub async fn add_member_to_team(
     authorize_team_leader(&affected_team, &auth_user.user_id, &client).await?;
 
     let new_member = new_member.into_inner();
+    let AddTeamMemberRequest { user } = new_member;
 
-    query_none(&client, "INSERT INTO teammembers (team_id, user_id) VALUES ($1, $2);", &[&affected_team, &new_member.user]).await?;
+    let new_member_id: Uuid = query_one_map(&client, "SELECT user_id FROM users WHERE email = $1;", &[&user], APIError::NotFound, |row| Ok(row.get("user_id"))).await?;
+
+    query_none(&client, "INSERT INTO teammembers (team_id, user_id) VALUES ($1, $2);", &[&affected_team, &new_member_id]).await?;
 
 
     Ok(HttpResponse::Ok().finish())

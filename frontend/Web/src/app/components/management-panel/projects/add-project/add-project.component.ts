@@ -42,11 +42,11 @@ export class AddProjectComponent implements OnInit {
     this._data.createProject({
       name,
       overallBudget: budget,
-      plannedEndDate: end,
-      startDate: start
+      plannedEndDate: end.toISOString().split('T')[0],
+      startDate: start.toISOString().split('T')[0]
     }, (projectID) => {
       this._loader.setVisible(false);
-      this._dialog.notification.show('success', 'Erfolg', 'Das Projektr wurde erfolgreich erstellt!');
+      this._dialog.notification.show('success', 'Erfolg', 'Das Projekt wurde erfolgreich erstellt!');
       this._router.navigate(['/project', projectID]);
     });
   }

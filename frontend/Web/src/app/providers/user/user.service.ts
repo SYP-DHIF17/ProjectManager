@@ -33,7 +33,7 @@ export class UserService {
     let user = this._storage.get("VORTEX.USER.USER");
     let tokenExpiration = this._storage.get("VORTEX.USER.EXPIRE");
 
-    return !(token || user || tokenExpiration || (new Date(tokenExpiration) < new Date())) // should also work
+    return token || user || tokenExpiration || (new Date(tokenExpiration) < new Date()) // should also work
     // return !(token == '' || token == null || user == '' || user == null || tokenExpiration == '' || tokenExpiration == null || (new Date(tokenExpiration) < new Date()));
   }
 
@@ -46,7 +46,7 @@ export class UserService {
   }
 
   public register(user: CreateUserRequest): Observable<any> {
-    return this._http.post(URLS.USER.REGISTER, user, {
+    return this._http.post(URLS.USER.INFO, user, {
       headers: {
         'Access-Control-Allow-Origin': '*'
       }

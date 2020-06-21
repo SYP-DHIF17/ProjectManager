@@ -1,7 +1,7 @@
 import { User } from './user';
 
 export interface Project {
-  readonly projectId: string;
+  readonly projectID: string;
   name: string;
   startDate: Date;
   plannedEndDate: Date;

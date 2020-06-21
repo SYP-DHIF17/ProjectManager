@@ -1,5 +1,5 @@
 export interface Milestone {
-  readonly milestoneId: string;
+  milestoneId: string;
   name: string;
   description: string;
   projectPartId: string;

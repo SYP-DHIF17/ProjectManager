@@ -1,12 +1,13 @@
 <div id="project-details" *ngIf="project">
+    <h1>Projektdetails</h1>
     <div class="top-part">
         <h2>{{ project.name }}</h2>
         <div class="short-info">
             <div class="date">
-                Startdate: {{ project.startDate.toLocaleDateString() }}
+                Startdatum: {{ project.startDate.toLocaleDateString() }}
             </div>
             <div class="date">
-                Planned Enddate:
+                geplantes Enddatum:
                 {{ project.plannedEndDate.toLocaleDateString() }}
             </div>
         </div>
@@ -14,14 +15,34 @@
     <div class="lower-part">
         <div class="teams">
             <h2>Teams</h2>
+            <button (click)="addTeam()">Team hinzufügen</button>
             <ul class="teams">
                 <li *ngFor="let team of teams">
                     {{ team.name }}
                 </li>
             </ul>
         </div>
+        <div class="project-parts">
+            <h2>Projektabschnitte</h2>
+            <button [routerLink]="['/project/' + project.projectID + '/parts/add']">Projektabschnitt hinzufügen</button>
+            <div class="project-part-list">
+                <ul>
+                    <li *ngFor="let part of projectParts">
+                        <ul>
+                            <li *ngFor="let entry of part.entries" [ngClass]="{'selected': entry.selected}">
+                                <h4>{{ entry.name }}</h4>
+                                <p>{{ entry.description }}</p>
+                                <span *ngIf="!entry.isMilestone">Start: {{ entry.startDate == null ? '-' : entry.startDate.toLocaleString() }}</span>
+                                <span *ngIf="!entry.isMilestone">Geplantes Ende: {{ entry.plannedEndDate == null ? '-' : entry.plannedEndDate.toLocaleString() }}</span>
+                                <span>Ist-Ende: {{ entry.endDate == null ? '-' : entry.endDate.toLocaleString() }}</span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
-<div id="project-details" *ngIf="!project">
-    Project not found!
+<div id="project-details" *ngIf="project == undefined || project == null">
+    Projekt konnte nicht gefunden werden
 </div>

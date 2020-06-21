@@ -44,8 +44,8 @@ constructor(private _loader: LoaderService,
       this._user.token.next(res.token);
       this._user.tokenExpiration.next(new Date(res.expiration));
       this._user.save();
-      this._router.navigateByUrl("/dashboard");
       this._loader.setVisible(false);
+      this._router.navigateByUrl("/dashboard");
     }, err => {
       // TODO add dialog
       console.error(err);

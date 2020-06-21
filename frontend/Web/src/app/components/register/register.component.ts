@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
       lastname,
       email,
       password: password_1,
-      birthdate: new Date(year, month - 1, day)
+      birthdate: new Date(year, month - 1, day).toISOString().split('T')[0]
     })
       .subscribe(() => {
         r.unsubscribe();
@@ -76,6 +76,7 @@ export class RegisterComponent implements OnInit {
             this._user.tokenExpiration.next(new Date(res.expiration));
             this._user.user.next(res.user);
             this._user.save();
+            this.loader.setVisible(false);
             this._router.navigateByUrl("/")
           }, err => {
             // TODO display err msg

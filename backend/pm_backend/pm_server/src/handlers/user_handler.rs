@@ -18,7 +18,7 @@ pub async fn create_user(
 ) -> Result<HttpResponse, APIError> 
 {
     // wrapped in block since the password is hashed during conversion
-    let user:User = web::block(|| {
+    let user = web::block(|| {
         Ok(create_data.into_inner().into())
     }).await?;
 

@@ -9,6 +9,7 @@ use std::include_str;
 use crate::data::response_data::*;
 use crate::data::request_data::*;
 use pm_database::models::project::Project;
+use crate::data::query_data::*;
 use uuid::Uuid;
 
 pub async fn create_project(
@@ -68,4 +69,24 @@ pub async fn update_project (
     }
 
     Ok(HttpResponse::Ok().finish())
+}
+
+pub async fn get_project_part_info(
+    pool: web::Data<Pool>,
+    project_id: web::Path<Uuid>,
+) -> Result<HttpResponse, APIError> {
+    let project_id = project_id.into_inner();
+    let client = get_db_client(&pool).await?;
+    
+    let project_parts: Vec<QueryProjectPart> = query_multiple(&client, include_str!("../../../../sql/queries/retrieve_queries/get_project_details.sql"), &[&project_id]).await?;
+
+    let mut response_parts:Vec<ResponseProjectPart> = Vec::with_capacity(project_parts.len());
+
+    for part in project_parts.into_iter() {
+        let milestones:Vec<QueryMileStone> = query_multiple(&client, include_str!("../../../../sql/queries/retrieve_queries/get_milestone_details.sql"), &[&part.project_part_id]).await?;
+        let workpackages:Vec<QueryWorkpackage> = query_multiple(&client, include_str!("../../../../sql/queries/retrieve_queries/get_workpackage_details.sql"), &[&part.project_part_id]).await?;
+        response_parts.push(ResponseProjectPart::from_parts(part, workpackages, milestones));
+    }
+
+    Ok(HttpResponse::Ok().json(response_parts))
 }

@@ -1,4 +1,4 @@
-import { User } from '@models';
+import { User, Workpackage, Milestone } from '@models';
 
 export interface LoginResponse {
   token: string;
@@ -12,4 +12,12 @@ export interface DefaultResponse {
 
 export interface AddMemberToTeamResponse {
     
+}
+
+export interface ProjectPartResponse {
+  projectPartID: string;
+  name: string;
+  position: number;
+  workpackages: Workpackage[];
+  milestones: Milestone[];
 }

@@ -71,12 +71,12 @@ export class AddProjectPartComponent implements OnInit {
         private dataService: DataService,
         private loaderService: LoaderService,
         private router: Router) {
-        this.projectId = route.snapshot.queryParams['id'];
-        console.log(this.projectId);
     }
 
     ngOnInit(): void {
+        this.projectId = this.router.url.split('/')[2];
 
+        console.log(this.router.url.split('/')[2]);
     }
 
     onChangeSelectionForWorkpackage(entry: { data: Workpackage, selected: boolean }): void {
@@ -112,7 +112,7 @@ export class AddProjectPartComponent implements OnInit {
     onChangeSelectionForMilestones(entry: { data: Milestone, selected: boolean }): void {
         this.milestones.forEach(e => e.selected = false);
         entry.selected = true;
-        console.log(entry)
+
         if (entry.data.milestoneId == 'add') {
             this.editableMilestone = {
                 name: '',
@@ -247,7 +247,7 @@ export class AddProjectPartComponent implements OnInit {
     }
 
     onSave(): void {
-        if(name == ''){
+        if(this.name == ''){
             this.dialogService.dialog.show(
                 'error',
                 'Fehlender Wert',
@@ -288,52 +288,64 @@ export class AddProjectPartComponent implements OnInit {
         }, (partId: string) => {
             let workpackageRequests = [];
             //create workpackages
-            this.workpackages.forEach(entry => {
-                let w: Workpackage = entry.data;
-                const req = this.dataService.createWorkPackage(partId, {
-                    name: w.name,
-                    description: w.description,
-                    plannedEndDate: w.plannedEndDate,
-                    realEndDate: w.realEndDate,
-                    startDate: w.startDate
-                });
-                workpackageRequests.push(req);  
+            this.workpackages.forEach((entry, index) => {
+                if(index != 0){
+                    let w: Workpackage = entry.data;
+                    const req = this.dataService.createWorkPackage(partId, {
+                        name: w.name,
+                        description: w.description,
+                        plannedEndDate: w.plannedEndDate.toISOString().split('T')[0],
+                        realEndDate: null,
+                        startDate: w.startDate.toISOString().split('T')[0]
+                    }); 
+                    workpackageRequests.push(req);
+                }
             });
 
-            //wait for all workpackages to be created
-            combineLatest(workpackageRequests, () => {
-                let milestoneRequests = [];
-                //create all milestones
-                this.milestones.forEach(entry => {
+            let milestoneRequests = [];
+            //create all milestones
+            this.milestones.forEach((entry, index) => {
+                if(index != 0){
                     let m: Milestone = entry.data;
                     const req = this.dataService.addMileStone(partId, {
                         name: m.name,
                         description: m.description,
-                        reachDate: m.reachDate,
+                        reachDate: m.reachDate.toISOString().split('T')[0],
                     });
                     milestoneRequests.push(req);
-                });
+                }
+            });
+
+            let teamRequests = [];
+            this.teams.forEach(t => {
+                const req = this.dataService.addTeamToProjectPart(t, partId);
+                teamRequests.push(req);
+            });
+
+            setTimeout(() => {
+                //process finished!
+                this.loaderService.setVisible(false);
+                this.router.navigateByUrl('project/' + this.projectId);
+                this.dialogService.notification.show('success', 
+                                                    'Erfolg',
+                                                    'Der Projekt-Abschnitt wurde erfolgreich erstellt!');
+            }, 1000);
+            /*
+            //wait for all workpackages to be created
+            combineLatest(workpackageRequests, () => {
+                
 
                 //wait for all milestones to be created
                 combineLatest(milestoneRequests, () => {
                     //add teams to projkect part
-                    let teamRequests = [];
-                    this.teams.forEach(t => {
-                        const req = this.dataService.addTeamToProjectPart(t, partId);
-                        teamRequests.push(req);
-                    });
+                   
 
                     //wait for all teams to be created
                     combineLatest(teamRequests, () => {
-                        //process finished!
-                        this.loaderService.setVisible(false);
-                        this.router.navigateByUrl('project/' + this.projectId);
-                        this.dialogService.notification.show('success', 
-                                                            'Erfolg',
-                                                            'Der Projekt-Abschnitt wurde erfolgreich erstellt!');
+                        
                     });
                 });
-            });
+            });*/
         });
     }
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService, LoaderService } from '@providers';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { DialogService } from 'app/providers/dialog/dialog.service';
 import { AddMemberToTeamResponse } from '@shared';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-add-team',
@@ -54,12 +55,12 @@ export class AddTeamComponent implements OnInit {
 
         requests.push(subscription);
       });
-      combineLatest(requests, (res: AddMemberToTeamResponse) => {
-           //Tteam successfully created
-           this.loaderService.setVisible(false);
-           this.router.navigateByUrl('project/' + this.projectID);
-           this.dialogService.notification.show('success', 'Erfolg', 'Das Team wurde erfolgreich erstellt!');
-      });
+     
+      setTimeout(() => {
+        this.loaderService.setVisible(false);
+        this.router.navigateByUrl('project/' + this.projectID);
+        this.dialogService.notification.show('success', 'Erfolg', 'Das Team wurde erfolgreich erstellt!');
+      }, 500);
     });
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '@providers';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,8 @@ export class HeaderComponent implements OnInit {
 
   amountUnseenMessages: number = 2;
 
-  constructor(){
-
+  constructor(public userService: UserService){
+    
   }
 
   ngOnInit(): void{

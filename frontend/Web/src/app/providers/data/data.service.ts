@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Project, User, Team, ProjectPart, Workpackage, Milestone } from '@models';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { URLS, DefaultResponse, CreateMileStone, UpdateMileStone, AddTeamMemberRequest } from '@shared';
+import { URLS, DefaultResponse, CreateMileStone, UpdateMileStone, AddTeamMemberRequest, ProjectPartResponse } from '@shared';
 import { UserService } from '../user/user.service';
 import { CreateProjectRequest, UpdateUserRequest, UpdateProjectRequest, CreateTeamRequest, UpdateTeamRequest, AddProjectPart, UpdateProjectPart, AddWorkPackage, UpdateWorkPackage } from '@shared';
 import { map } from 'rxjs/operators';
@@ -73,10 +73,15 @@ export class DataService {
 
     const s = this._http.get(URLS.PROJECTS.ALL, { headers })
       .subscribe((projects: Project[]) => {
+        for(let project of projects) {
+          project.startDate = new Date(project.startDate);
+          project.plannedEndDate = new Date(project.plannedEndDate);
+          project.realEndDate = new Date(project.realEndDate);
+        }
         this.projects.next(projects);
         then();
         s.unsubscribe();
-      }, this.errorHandler)
+      }, this.errorHandler);
   }
 
   createProject(request: CreateProjectRequest, then = (projectID: string) => { }) {
@@ -85,7 +90,9 @@ export class DataService {
     const s = this._http.post(URLS.PROJECTS.ALL, request, { headers })
       .subscribe((res: DefaultResponse) => {
         s.unsubscribe();
-        const project: Project = { ...request, projectId: res.id, leaderID: this._user.user.getValue().userId };
+        const startDate = new Date(request.startDate);
+        const plannedEndDate = new Date(request.plannedEndDate);
+        const project: Project = { name: request.name, overallBudget: request.overallBudget, startDate, plannedEndDate: plannedEndDate, realEndDate: null, projectID: res.id, leaderID: this._user.user.getValue().userId };
         this.projects.next([...this.projects.getValue(), project])
         then(res.id);
       }, this.errorHandler);
@@ -159,7 +166,7 @@ export class DataService {
   addProjectPart(projectID: string, request: AddProjectPart, then = (id: string) => { }) {
     if (!this._user.isLoggedIn()) return;
 
-    const s = this._http.post(URLS.PROJECTPARTS.ALL(projectID), request, { headers })
+    const s = this._http.post(URLS.PROJECTPARTS.ADD, request, { headers })
       .subscribe((res: DefaultResponse) => {
         s.unsubscribe();
         then(res.id);
@@ -207,7 +214,8 @@ export class DataService {
     const s = this._http.post(URLS.MILESTONES.ALL(partID), request, { headers })
       .subscribe((res: DefaultResponse) => {
         s.unsubscribe();
-        const milestone: Milestone = { ...request, milestoneId: res.id, projectPartId: partID };
+        const reachDate = new Date(request.reachDate);
+        const milestone: Milestone = { name: request.name, reachDate, description: request.description, milestoneId: res.id, projectPartId: partID };
         this.milestones.next([...this.milestones.getValue(), milestone])
         then(res.id);
       });
@@ -243,7 +251,12 @@ export class DataService {
       .subscribe((res: DefaultResponse) => {
         s.unsubscribe();
         then();
-        const workpackage: Workpackage = { ...request, workpackageId: res.id };
+        const workpackage: Workpackage = { name: request.name,
+            description: request.description, 
+            startDate: new Date(request.startDate),  
+            plannedEndDate: new Date(request.plannedEndDate),
+            realEndDate: null,
+            workpackageId: res.id };
         this.packages.next([...this.packages.getValue(), workpackage]);
       }, this.errorHandler);
 
@@ -260,13 +273,23 @@ export class DataService {
       }, this.errorHandler);
   }
 
+  getAllProjectPartsForProject(projectID: string, then = (res: ProjectPartResponse[]) => { }){
+    if (!this._user.isLoggedIn()) return;
+
+    const s = this._http.get(URLS.PROJECTS.PARTS(projectID), { headers })
+    .subscribe((res: ProjectPartResponse[]) => {
+      s.unsubscribe();
+      then(res);
+    }, this.errorHandler);
+  }
+
   errorHandler(err: any) {
-    this._loader.setVisible(false);
-    this._dialog.dialog.show(
+    // this._loader.setVisible(false);
+    /*this._dialog.dialog.show(
       "error",
       "Server Error",
       "An server error occured! Please contact the admin and send him the output in the console. (Ctrl+Shift+I to open the developer console)"
-    );
+    );*/
     console.error(JSON.stringify(err));
   }
 
@@ -277,7 +300,7 @@ export class DataService {
   getProjectFromID(id: string) {
     return this.getObservableProjects()
       .pipe(
-        map(projects => projects.find(project => project.projectId === id))
+        map(projects => projects.find(project => project.projectID === id))
       );
   }
 }

@@ -1,9 +1,9 @@
 export class URLS {
-  private static readonly BASE: string = 'localhost/api';
+  private static readonly BASE: string = 'http://localhost:8080/api';
 
   public static USER = class {
-    public static readonly LOGIN: string = URLS.BASE + '/login';
-    public static readonly REGISTER: string = URLS.BASE + '/register';
+    public static readonly LOGIN: string = URLS.BASE + '/auth/login';
+    public static readonly REGISTER: string = URLS.BASE + '/user/create';
     // TODO get a better name for the url lol
     public static readonly INFO: string = URLS.BASE + '/user';
     public static ID(userID: string) {
@@ -12,7 +12,10 @@ export class URLS {
   }
 
   public static PROJECTS = class {
-    public static readonly ALL: string = URLS.BASE + '/projects';
+    public static readonly ALL: string = URLS.BASE + '/project';
+    public static PARTS(projectID: string): string{
+      return URLS.BASE + `/project/${projectID}/parts/all`;
+    }
     public static ID(projectID: string) {
       return URLS.BASE + `/project/${projectID}`
     }
@@ -28,6 +31,7 @@ export class URLS {
   }
 
   public static PROJECTPARTS = class {
+    public static ADD = URLS.BASE + "/team/part";
     public static ALL(projectID: string): string {
       return URLS.PROJECTS.ID(projectID) + "/parts";
     }

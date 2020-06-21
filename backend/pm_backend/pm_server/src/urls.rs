@@ -32,7 +32,8 @@ fn project_urls_config(cfg: &mut web::ServiceConfig) {
             .route("", web::post().to(create_project))
             .route("/{id}", web::put().to(update_project))
             .route("/{id}/teams", web::post().to(create_team))
-            .route("/{id}/teams", web::get().to(get_teams_for_project)),
+            .route("/{id}/teams", web::get().to(get_teams_for_project))
+            .route("/{id}/parts/all", web::get().to(get_project_part_info)),
     );
 }
 

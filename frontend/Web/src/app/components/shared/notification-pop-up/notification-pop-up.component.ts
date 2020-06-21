@@ -32,4 +32,8 @@ export class NotificationPopUpComponent implements OnInit {
       this.isVisible = false;
     }, this.dialogFadeOutTime);
   }
+
+  public close(): void{
+    this.isVisible = false;
+  }
 }

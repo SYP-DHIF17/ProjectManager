@@ -4,6 +4,7 @@ import { switchMap } from "rxjs/operators";
 import { DataService } from '@providers';
 import { Project, Team, Workpackage, ProjectPart, Milestone } from '@models';
 import { Observable } from 'rxjs';
+import { ProjectPartResponse } from '@shared';
 
 @Component({
   selector: 'app-project-details',
@@ -17,6 +18,21 @@ export class ProjectDetailsComponent implements OnInit {
   public parts: ProjectPart[];
   public packages: Workpackage[];
   public milestones: Milestone[];
+  public projectParts: {
+    readonly projectPartID: string;
+    name: string;
+    position: number;
+    entries: {
+      id: string;
+      name: string;
+      description: string;
+      startDate: Date;
+      plannendEndDate: Date;
+      endDate: Date;
+      sortDate: Date;
+      isMilestone: boolean;
+    }[];
+  }[] = [];
 
   constructor(
     private _route: ActivatedRoute,
@@ -29,20 +45,58 @@ export class ProjectDetailsComponent implements OnInit {
       switchMap(params => this._data.getProjectFromID(params.get("id")))
     ).subscribe(project => {
       this.project = project;
-      this._data.getTeams(this.project.projectId);
+      this._data.getTeams(this.project.projectID);
+
+      this._data.teams.subscribe(teams => {
+        this.teams = teams;
+      });
+      this._data.getAllProjectPartsForProject(this.project.projectID, (res: ProjectPartResponse[]) => {
+        //also contains "selected" field
+        res.forEach(e => {
+          const entry = {
+            projectPartID: e.projectPartID,
+            name: e.name,
+            position: e.position,
+            entries: []
+          };
+
+          e.workpackages.forEach(w => {
+            entry.entries.push({
+              id: w.workpackageId,
+              name: w.name,
+              description: w.description,
+              startDate: new Date(w.startDate),
+              plannedEndDate: new Date(w.plannedEndDate),
+              endDate: new Date(w.plannedEndDate),
+              sortDate: new Date(w.startDate),
+              isMilestone: false
+            });
+          });
+
+          e.milestones.forEach(m => {
+            entry.entries.push({
+              id: m.milestoneId,
+              name: m.name,
+              description: m.description,
+              startDate: null,
+              plannedEndDate: null,
+              endDate: new Date(m.reachDate),
+              sortDate: new Date(m.reachDate),
+              isMilestone: false
+            });
+          });
+
+          entry.entries.sort((a, b) => a.sortDate.getTime() - b.sortDate.getTime());
+
+          this.projectParts.push(entry);
+        });
+      });
     });
-    this._data.teams.subscribe(teams => {
-      this.teams = teams;
-    });
-    this._data.parts.subscribe(parts => {
-      this.parts = parts;
-    })
-    this._data.packages.subscribe(packages => {
-      this.packages = packages;
-    });
-    this._data.milestones.subscribe(milestones => {
-      this.milestones = milestones;
-    })
+  }
+
+  addTeam() {
+    // project/:id/teams/add
+    this._router.navigate(['/project', this.project.projectID, 'teams', 'add']);
   }
 
 }

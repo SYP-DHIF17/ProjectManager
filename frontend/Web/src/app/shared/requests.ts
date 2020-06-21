@@ -8,7 +8,7 @@ export interface CreateUserRequest {
   lastname: string;
   email: string;
   password: string;
-  birthdate: Date;
+  birthdate: string;
 }
 
 export interface UpdateUserRequest {
@@ -21,18 +21,18 @@ export interface UpdateUserRequest {
 
 export interface CreateProjectRequest {
   name: string;
-  startDate: Date;
-  plannedEndDate: Date;
+  startDate: string;
+  plannedEndDate: string;
   overallBudget: number;
 }
 
 export interface UpdateProjectRequest {
   name: string;
-  plannedEndDate: Date;
+  plannedEndDate: string;
   overallBudget: number;
   realEndDateChange: {
     change: boolean;
-    date: Date;
+    date: string;
   }
 }
 
@@ -61,25 +61,25 @@ export interface UpdateProjectPart {
 export interface AddWorkPackage {
   name: string;
   description: string;
-  plannedEndDate: Date;
-  realEndDate: Date;
-  startDate: Date;
+  plannedEndDate: string;
+  realEndDate: string;
+  startDate: string;
 }
 
 export interface UpdateWorkPackage {
   name?: string;
-  reachDate?: Date;
+  reachDate?: string;
   description?: string
 }
 
 export interface CreateMileStone {
-  reachDate: Date;
+  reachDate: string;
   name: string;
   description: string;
 }
 
 export interface UpdateMileStone {
-  reachDate?: Date;
+  reachDate?: string;
   name?: string;
   description?: string;
 }

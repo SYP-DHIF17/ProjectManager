@@ -1,11 +1,11 @@
 <div id="projects">
     <div class="top">
-        <button [routerLink]="['/projects/add']">Add Project</button>
+        <button [routerLink]="['/project/add']">Projekt hinzufügen</button>
     </div>
     <div class="projects">
         <a
             *ngFor="let project of projects"
-            [routerLink]="['/project', project.projectId]"
+            [routerLink]="['/project', project.projectID]"
         >
             <app-project-item [project]="project"></app-project-item>
         </a>

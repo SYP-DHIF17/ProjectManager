@@ -125,7 +125,8 @@ pub struct UpdateProjectPartRequest {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AddTeamMemberRequest {
-    pub user: Uuid,
+    /// the email of she user
+    pub user: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
