@@ -9,13 +9,14 @@ import { AddProjectComponent } from './components/management-panel/projects/add-
 import { ProjectDetailsComponent } from '@components/management-panel/dashboard/project-details/project-details.component';
 import { AddTeamComponent } from '@components/management-panel/projects/add-team/add-team.component';
 import { AddProjectPartComponent } from '@components/management-panel/projects/add-project-part/add-project-part.component';
+import { AuthGuard } from '@shared/auth.guard';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: '/login',
-  //   pathMatch: 'full'
-  // },
+  /*{
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },*/
   {
     path: 'login',
     component: LoginComponent
@@ -26,6 +27,9 @@ const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [
+        AuthGuard
+    ],
     component: ManagementPanelComponent,
     children: [
       {

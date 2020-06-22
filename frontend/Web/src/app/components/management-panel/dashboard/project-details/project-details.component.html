@@ -1,40 +1,50 @@
 <div id="project-details" *ngIf="project">
     <h1>Projektdetails</h1>
-    <div class="top-part">
-        <h2>{{ project.name }}</h2>
-        <div class="short-info">
-            <div class="date">
-                Startdatum: {{ project.startDate.toLocaleDateString() }}
+    <div class="top">
+        <div class="left">
+            <div>
+                <p>Projekt-Name</p>
+                <input [readOnly]="true" [value]="project.name" />
             </div>
-            <div class="date">
-                geplantes Enddatum:
-                {{ project.plannedEndDate.toLocaleDateString() }}
+            <div>
+                <p>Start</p>
+                <input [readOnly]="true" [value]="project.startDate.toLocaleDateString()" />
+            </div>
+            <div>
+                <p>Geplantes Ende</p>
+                <input [readOnly]="true" [value]="project.plannedEndDate.toLocaleDateString()" />
+            </div>
+            <div>
+                <p>Budget</p>
+                <input [readOnly]="true" [value]="project.overallBudget + ' €'" />
+            </div>
+        </div>
+        <div class="right">
+            <div class="teams">
+                <span class="inline-header">Teams</span>
+                <button (click)="addTeam()" class="add">Team hinzufügen</button>
+                <ul class="team-list">
+                    <li *ngFor="let team of teams">
+                        {{ team.name }}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="lower-part">
-        <div class="teams">
-            <h2>Teams</h2>
-            <button (click)="addTeam()">Team hinzufügen</button>
-            <ul class="teams">
-                <li *ngFor="let team of teams">
-                    {{ team.name }}
-                </li>
-            </ul>
-        </div>
+    <div class="bottom">
         <div class="project-parts">
-            <h2>Projektabschnitte</h2>
-            <button [routerLink]="['/project/' + project.projectID + '/parts/add']">Projektabschnitt hinzufügen</button>
+            <span class="inline-header">Projektabschnitte</span>
+            <button class="add" [routerLink]="['/project/' + project.projectID + '/parts/add']">Projektabschnitt hinzufügen</button>
             <div class="project-part-list">
-                <ul>
-                    <li *ngFor="let part of projectParts">
+                <ul class="outer-list">
+                    <li class="outer-item" *ngFor="let part of projectParts">
                         <ul>
-                            <li *ngFor="let entry of part.entries" [ngClass]="{'selected': entry.selected}">
-                                <h4>{{ entry.name }}</h4>
+                            <li *ngFor="let entry of part.entries" [ngClass]="{'selected': entry.selected}" (click)="onChangeSelection(entry)">
+                                <h4>{{ (entry.name) + (entry.isMilestone ? ' (M)' : ' (A)') }}</h4>
                                 <p>{{ entry.description }}</p>
-                                <span *ngIf="!entry.isMilestone">Start: {{ entry.startDate == null ? '-' : entry.startDate.toLocaleString() }}</span>
-                                <span *ngIf="!entry.isMilestone">Geplantes Ende: {{ entry.plannedEndDate == null ? '-' : entry.plannedEndDate.toLocaleString() }}</span>
-                                <span>Ist-Ende: {{ entry.endDate == null ? '-' : entry.endDate.toLocaleString() }}</span>
+                                <span *ngIf="!entry.isMilestone" class="outer-span"><span>Start:</span> {{ entry.startDate == null ? '-' : entry.startDate.toLocaleString() }}</span>
+                                <span class="outer-span"><span>Geplantes Ende:</span> {{ entry.plannendEndDate == null ? '-' : entry.plannendEndDate.toLocaleString() }}</span>
+                                <span class="outer-span"><span>Ist-Ende:</span> {{ entry.endDate == null ? '-' : entry.endDate.toLocaleString() }}</span>
                             </li>
                         </ul>
                     </li>

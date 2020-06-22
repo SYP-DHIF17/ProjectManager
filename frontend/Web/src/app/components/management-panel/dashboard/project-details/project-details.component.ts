@@ -5,6 +5,7 @@ import { DataService } from '@providers';
 import { Project, Team, Workpackage, ProjectPart, Milestone } from '@models';
 import { Observable } from 'rxjs';
 import { ProjectPartResponse } from '@shared';
+import { NullTemplateVisitor } from '@angular/compiler';
 
 @Component({
   selector: 'app-project-details',
@@ -38,7 +39,84 @@ export class ProjectDetailsComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router,
     private _data: DataService
-  ) { }
+  ) {
+      /*
+        Test Data
+      this.project = <any>{
+        name: "Hello World",
+        startDate: new Date(),
+        plannedEndDate: new Date(),
+        overallBudget: 1000
+      };
+
+      this.teams = [
+        {
+            name: "Alpha",
+            teamID: null
+        },
+        {
+            name: "Beta",
+            teamID: null
+        }
+      ];
+
+      this.projectParts = [
+        {
+            name: "Abschnitt 1",
+            position: 1,
+            projectPartID: null,
+            entries: [
+                {
+                    name: "This is the name",
+                    description: "This is the description",
+                    endDate: null,
+                    startDate: new Date(),
+                    sortDate: new Date(),
+                    id: null,
+                    isMilestone: false,
+                    plannendEndDate: new Date()
+                },
+                {
+                    name: "This is the name",
+                    description: "This is the description",
+                    plannendEndDate: new Date(),
+                    startDate: null,
+                    sortDate: new Date(),
+                    id: null,
+                    isMilestone: true,
+                    endDate: null
+                }
+            ]
+        },
+        {
+            name: "Abschnitt 1",
+            position: 1,
+            projectPartID: null,
+            entries: [
+                {
+                    name: "This is the name",
+                    description: "This is the description",
+                    endDate: null,
+                    startDate: new Date(),
+                    sortDate: new Date(),
+                    id: null,
+                    isMilestone: false,
+                    plannendEndDate: new Date()
+                },
+                {
+                    name: "This is the name",
+                    description: "This is the description",
+                    plannendEndDate: new Date(),
+                    startDate: null,
+                    sortDate: new Date(),
+                    id: null,
+                    isMilestone: true,
+                    endDate: null
+                }
+            ]
+        }
+      ];*/
+  }
 
   ngOnInit(): void {
     this._route.paramMap.pipe(
@@ -79,8 +157,8 @@ export class ProjectDetailsComponent implements OnInit {
               name: m.name,
               description: m.description,
               startDate: null,
-              plannedEndDate: null,
-              endDate: new Date(m.reachDate),
+              plannedEndDate: new Date(m.reachDate),
+              endDate: null,
               sortDate: new Date(m.reachDate),
               isMilestone: false
             });
@@ -99,4 +177,13 @@ export class ProjectDetailsComponent implements OnInit {
     this._router.navigate(['/project', this.project.projectID, 'teams', 'add']);
   }
 
+  onChangeSelection(entry: any): void {
+      entry.selected = !entry.selected;
+
+      if(entry.selected){
+          entry.endDate = new Date();
+      }else{
+          entry.endDate = null;
+      }
+  }
 }
