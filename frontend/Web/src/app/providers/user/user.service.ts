@@ -68,7 +68,7 @@ export class UserService {
 
   public save(): void {
     this._storage.put("VORTEX.USER.TOKEN", this.token.getValue());
-    this._storage.put("VORTEX.USER.USER", JSON.stringify(this.user));
+    this._storage.put("VORTEX.USER.USER", JSON.stringify(this.user.getValue()));
     this._storage.put("VORTEX.USER.EXPIRE", this.tokenExpiration.getValue().toJSON());
   }
 

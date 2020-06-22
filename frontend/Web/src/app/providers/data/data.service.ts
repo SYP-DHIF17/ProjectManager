@@ -275,7 +275,7 @@ export class DataService {
 
   getAllProjectPartsForProject(projectID: string, then = (res: ProjectPartResponse[]) => { }){
     if (!this._user.isLoggedIn()) return;
-
+    console.log("URL -> " + URLS.PROJECTS.PARTS(projectID))
     const s = this._http.get(URLS.PROJECTS.PARTS(projectID), { headers })
     .subscribe((res: ProjectPartResponse[]) => {
       s.unsubscribe();

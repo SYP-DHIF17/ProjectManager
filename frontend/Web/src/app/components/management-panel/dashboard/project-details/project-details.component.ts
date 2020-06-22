@@ -130,6 +130,7 @@ export class ProjectDetailsComponent implements OnInit {
       });
       this._data.getAllProjectPartsForProject(this.project.projectID, (res: ProjectPartResponse[]) => {
         //also contains "selected" field
+        console.log(res)
         res.forEach(e => {
           const entry = {
             projectPartID: e.projectPartID,
@@ -160,7 +161,7 @@ export class ProjectDetailsComponent implements OnInit {
               plannedEndDate: new Date(m.reachDate),
               endDate: null,
               sortDate: new Date(m.reachDate),
-              isMilestone: false
+              isMilestone: true
             });
           });
 
