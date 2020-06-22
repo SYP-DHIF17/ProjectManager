@@ -15,7 +15,16 @@ import { SidebarComponent } from './components/management-panel/sidebar/sidebar.
 import { HeaderComponent } from './components/management-panel/dashboard/header/header.component';
 import { DashboardComponent } from './components/management-panel/dashboard/dashboard/dashboard.component';
 import { VersionComponent } from './components/management-panel/dashboard/version/version.component';
-import { TicketsComponent } from './components/management-panel/dashboard/tickets/tickets.component';
+import { ProjectsComponent } from './components/management-panel/projects/projects.component';
+import { ProjectItemComponent } from './components/management-panel/projects/project-item/project-item.component';
+import { AddProjectComponent } from './components/management-panel/projects/add-project/add-project.component';
+import { ProjectDetailsComponent } from './components/management-panel/dashboard/project-details/project-details.component';
+import { NgbModule, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AddTeamComponent } from './components/management-panel/projects/add-team/add-team.component';
+import { NotificationPopUpComponent } from '@components/shared/notification-pop-up/notification-pop-up.component';
+import { DialogComponent } from '@components/shared/dialog/dialog.component';
+import { AddProjectPartComponent } from './components/management-panel/projects/add-project-part/add-project-part.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +37,14 @@ import { TicketsComponent } from './components/management-panel/dashboard/ticket
     HeaderComponent,
     DashboardComponent,
     VersionComponent,
-    TicketsComponent
+    ProjectsComponent,
+    ProjectItemComponent,
+    AddProjectComponent,
+    ProjectDetailsComponent,
+    AddTeamComponent,
+    NotificationPopUpComponent,
+    DialogComponent,
+    AddProjectPartComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +52,11 @@ import { TicketsComponent } from './components/management-panel/dashboard/ticket
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
+    NgbDatepickerModule,
+    NgbTimepickerModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

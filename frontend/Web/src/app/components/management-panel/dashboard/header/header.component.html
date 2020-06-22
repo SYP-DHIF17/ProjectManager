@@ -2,7 +2,7 @@
     <div id="inner-header">
         <div class="left-side">
             <div id="new-project" class="button-field">
-                <button class="plus">
+                <button class="plus" [routerLink]="['/project/add']">
                     <div id="plus">
                         <i class="fas fa-plus"></i>
                     </div>
@@ -14,15 +14,15 @@
             <div class="button-field"><button>Vortex</button></div>
         </div>
         <div class="right-side">
-            <div class="button-field flag">
+            <!--<div class="button-field flag">
                 <button>
                     <i class="fas fa-flag"></i>
                     <span *ngIf="amountUnseenMessages > 0">{{ amountUnseenMessages }}</span>
                 </button>
-            </div>
+            </div>-->
             <div class="button-field">
                 <button>
-                    Max Mustermann
+                    {{ userService.user.getValue().firstname + ' ' + userService.user.getValue().lastname }}
                     <img src="../../../../assets/test-user.png" alt="user" />
                 </button>
             </div>

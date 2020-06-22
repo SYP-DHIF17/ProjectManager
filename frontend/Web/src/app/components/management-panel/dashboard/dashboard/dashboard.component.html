@@ -3,11 +3,22 @@
         <app-header></app-header>
     </div>
     <div class="content">
-        <div id="version" class="card">
-            <app-version></app-version>
+        <div class="content-left">
+            <div id="version" class="card">
+                <app-version></app-version>
+            </div>
         </div>
-        <div id="tickets" class="card">
-            <app-tickets></app-tickets>
+        <div class="content-right">
+            <div class="card">
+                <h4>Projekte</h4>
+                <div id="project-list">
+                    <a
+                        [routerLink]="['/project', project.projectID]"
+                        *ngFor="let project of projects">
+                        {{ project.name }}
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

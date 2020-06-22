@@ -8,13 +8,38 @@ darkgray = #333
 gray = rgba(49, 60, 77, .8)
 lightgray = #cbced9
 
+//for dialog
+green = #56C28E
+green_dark = #42b07b
+blue = #5AA4ED
+blue_dark = #4d93d8
+red = #E05F71
+red_dark = #c13c4f
+yellow = #F1A43C
+yellow_dark = #d48e2f
+super_light = #f3f3f3
+very_light = #EEEDEC
+light = #BFBFBF
+very_dark = #28293A
+dark = #2C2E3E
+medium = #8B94A9
+light_dark = #405189
+gray = #333
+light_gray =#555
+shadow_color = #b5b5b5
+border_light = #e1e1e1
+
 seperation_border = #EDF4F5
 
 shadow_icon = 0px 0px 5px rgba(34, 34, 34, 0.35)
 outer_radius = 15px
-shadow_container = 0px 0px 4px 0px rgba(51, 51, 51, 0.35)
+shadow_container = 0px 0px 1px 0px rgba(51, 51, 51, 0.35)
 
 font = 'Quicksand', sans-serif
+
+*
+  box-sizing border-box
+  font-family font
 
 html, body
     display block
@@ -34,11 +59,11 @@ input:focus
    outline none
 
 input[type="button"], button{
-   outline:none;
+   outline none
 }
 input[type="button"]::-moz-focus-inner,
 button::-moz-focus-inner {
-   border: 0;
+   border 0
 }
 
 input[type="button"]:focus,
@@ -74,7 +99,7 @@ h5
     font-weight bold
     padding 0
     margin 0
-  
+
 .card
     width auto
     height auto
@@ -82,3 +107,12 @@ h5
     border-radius 8px
     background white
     box-shadow shadow_container
+
+
+ngb-datepicker
+    background: white
+    bottom 100px;
+    right 20px;
+    left auto !important
+    top auto !important
+    transform: none !important

@@ -1,16 +1,59 @@
 @import "../../../../../styles.styl"
 
 #dashboard
+    display flex
+    flex-direction column
+    height 100%
     .content
-        padding 0px 30px 30px 30px
-        width calc(100% - 60px)
+        padding 0px 25px 25px 25px
+        width 100%
         height auto
         display flex
         flex-direction row
         flex-wrap wrap
         justify-content space-between
+        flex-grow 1
+        flex-basis 0
 
-    #version,
-    #tickets
-        width 430px
-        max-height 300px
+        & > div
+            flex-grow 1
+            flex-basis 0
+
+        .content-left
+            margin-right: 5px
+            display flex
+            height auto
+            justify-content space-between
+            flex-wrap wrap
+
+            #version,
+            #tickets
+                width 380px
+                max-height 300px
+
+            #calendar
+                width 100%
+                margin-top 30px
+
+        .content-right
+            margin-left 5px
+            height 100%
+
+#project-list
+    width 100%
+    margin-top: 10px
+    height 100%
+
+    a
+        margin-top: 10px
+        padding 10px 20px
+        background primary_light
+        color secondary_light
+        border-radius 5px
+        width 100%
+        display block
+        cursor pointer
+        transition background 500ms
+
+    a:hover
+        background primary_dark

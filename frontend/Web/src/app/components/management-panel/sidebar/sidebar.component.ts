@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
 
-	constructor(private router: Router) {
+	constructor(public router: Router) {
         
 	}
 
 	ngOnInit(): void {
-
+        
 	}
 
 	public test(event: MouseEvent): void {

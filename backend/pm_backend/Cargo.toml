@@ -4,5 +4,9 @@ members = [
     "pm_server",
     "pm_database",
     "pm_errors",
-    "pm_testing",
+    "pm_debug",
 ]
+
+[profile.release]
+lto = "fat"
+codegen-units = 1

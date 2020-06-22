@@ -1,0 +1,21 @@
+<div id="add-project">
+    <h1>Add Project</h1>
+    <div>
+        <input type="text" placeholder="Name" [(ngModel)]="name" />
+    </div>
+    <div>
+        <p>Budget (in €)</p>
+        <input type="number" placeholder="Budget" [(ngModel)]="budget" />
+    </div>
+    <div>
+        <p>Von</p>
+        <input type="date" placeholder="Von" [(ngModel)]="startDate" />
+    </div>
+    <div>
+        <p>Bis</p>
+        <input type="date" placeholder="Bis" [(ngModel)]="endDate" />
+    </div>
+    <div>
+        <button id="create" (click)="createProject()">Erstellen</button>
+    </div>
+</div>

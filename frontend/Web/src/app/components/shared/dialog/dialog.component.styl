@@ -1,0 +1,109 @@
+@import "./../../../../styles.styl";
+
+#dialog
+    width 100%
+    height 100%
+    position absolute
+    top 0
+    left 0
+    z-index 100000000
+    background rgba(0, 0, 0, 0.7)
+    display flex
+    justify-content center
+    align-items center
+    align-content center
+
+    .dialog-box
+        width 450px
+        height auto
+        border-radius 0px
+        overflow hidden
+
+        .dialog-title
+            width 100%
+            background blue
+            height auto
+            padding 14px 10px
+            
+            p
+                color white
+                font-weight 700
+                font-size 20px
+                margin 0
+
+        .dialog-text
+            padding 15px 10px
+            width 100%
+            height auto
+            min-height 60px
+            text-align center
+            color #333
+            background white
+            display flex
+            justify-content center
+            align-items center
+            align-content center
+
+            p
+                font-size 18px
+                margin 0
+                padding 0
+
+        .btn-ok
+            width 100%
+            height auto
+            text-align center
+            border-top solid 1px very_light
+
+            button
+                width 100%
+                height auto
+                background white
+                color #444
+                transition all 300ms
+                cursor pointer
+                padding 15px 20px
+                border none
+                border-radius 0px
+                font-size 16px
+
+                &:hover
+                    background very_light
+                    opacity 1
+
+        .btn-question
+            display flex
+            justify-content space-between
+            align-content center
+            align-items center
+            idth 100%
+            height auto
+            text-align center
+            flex-direction row
+            border-top solid 1px very_light
+
+            button
+                width 50%
+                height auto
+                border-radius 0px
+                background white
+                color #444
+                cursor pointer
+                transition all 300ms
+                font-size 16px
+
+                &:hover
+                    background very_light
+                    opacity 1
+
+            button:first-child
+                border-right solid 1px very_light
+
+    .invisible
+        display none !important
+
+    .red
+        background #E24D4D !important
+
+    .green
+        background green !important
